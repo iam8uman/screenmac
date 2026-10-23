@@ -1,0 +1,127 @@
+@import "tailwindcss";
+@import "../../../../packages/design-tokens/src/tokens.css";
+
+@theme inline {
+  --color-paper: var(--sm-paper);
+  --color-paper-raised: var(--sm-paper-raised);
+  --color-paper-sunk: var(--sm-paper-sunk);
+  --color-line: var(--sm-line);
+  --color-line-strong: var(--sm-line-strong);
+  --color-ink: var(--sm-ink);
+  --color-ink-muted: var(--sm-ink-muted);
+  --color-ink-faint: var(--sm-ink-faint);
+  --color-accent: var(--sm-accent);
+  --color-accent-hover: var(--sm-accent-hover);
+  --color-accent-soft: var(--sm-accent-soft);
+  --color-accent-ink: var(--sm-accent-ink);
+  --color-stage: var(--sm-stage);
+  --color-stage-raised: var(--sm-stage-raised);
+  --color-stage-line: var(--sm-stage-line);
+  --color-stage-ink: var(--sm-stage-ink);
+  --color-stage-ink-muted: var(--sm-stage-ink-muted);
+  --color-signal: var(--sm-signal);
+  --color-success: var(--sm-success);
+  --color-warning: var(--sm-warning);
+  --color-danger: var(--sm-danger);
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --ease-out-soft: var(--sm-ease-out);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--sm-paper);
+    color: var(--sm-ink);
+    font-feature-settings: "ss01", "cv11";
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: var(--sm-accent-soft);
+    color: var(--sm-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--sm-accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  kbd {
+    font-family: var(--font-mono);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Capture marquee: the hero's selection rectangle draws itself once. */
+@keyframes sm-marquee-in {
+  from {
+    clip-path: inset(0 100% 100% 0);
+    opacity: 0.4;
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+    opacity: 1;
+  }
+}
+
+@keyframes sm-pop {
+  from {
+    opacity: 0;
+    transform: translateY(4px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.sm-marquee-in {
+  animation: sm-marquee-in 900ms var(--sm-ease-out) 150ms both;
+}
+
+.sm-pop {
+  animation: sm-pop 380ms var(--sm-ease-out) 900ms both;
+}
+
+/* Checkerboard behind transparent exports. */
+.sm-checker {
+  background-color: #2a2932;
+  background-image:
+    linear-gradient(45deg, #24232b 25%, transparent 25%),
+    linear-gradient(-45deg, #24232b 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #24232b 75%),
+    linear-gradient(-45deg, transparent 75%, #24232b 75%);
+  background-size: 16px 16px;
+  background-position: 0 0, 0 8px, 8px -8px, -8px 0;
+}
+
+.sm-scrollbar-none {
+  scrollbar-width: none;
+}
+.sm-scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+.sm-toast {
+  animation: sm-pop 240ms var(--sm-ease-out) both;
+}
