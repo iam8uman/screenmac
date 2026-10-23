@@ -1,0 +1,10 @@
+packages:
+  - "apps/website"
+  - "packages/*"
+
+allowBuilds:
+  unrs-resolver: false
+  sharp: true
+
+overrides:
+  baseline-browser-mapping: 2.11.30

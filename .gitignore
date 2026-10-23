@@ -1,0 +1,49 @@
+# Dependencies
+node_modules
+.pnpm-store
+
+# Next.js
+apps/website/.next
+apps/website/out
+apps/website/.turbo
+apps/website/next-env.d.ts
+
+# Testing
+apps/website/coverage
+apps/website/playwright-report
+apps/website/test-results
+apps/website/blob-report
+
+# Native
+apps/macos/build
+apps/macos/DerivedData
+*.xcuserstate
+*.xccheckout
+*.xcscmblueprint
+xcuserdata/
+*.moved-aside
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Env and secrets
+.env
+.env*.local
+*.p12
+*.mobileprovision
+*.certSigningRequest
+AuthKey_*.p8
+
+# OS / editor
+.DS_Store
+.idea
+.vscode
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+*.tgz

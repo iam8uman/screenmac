@@ -1,0 +1,45 @@
+/* Screenmac design tokens. Source of truth for web; mirrored in src/index.ts and the Mac asset catalog. */
+:root {
+  /* Surfaces */
+  --sm-paper: #f5f4ef;
+  --sm-paper-raised: #fbfaf7;
+  --sm-paper-sunk: #ecebe4;
+  --sm-line: #e3e1d9;
+  --sm-line-strong: #cfccc1;
+
+  /* Ink */
+  --sm-ink: #17161c;
+  --sm-ink-muted: #55535c;
+  --sm-ink-faint: #75737c;
+
+  /* Accent: blue-violet "iris" */
+  --sm-accent: #5b4cf5;
+  --sm-accent-hover: #4a3ae6;
+  --sm-accent-soft: #ebe9fe;
+  --sm-accent-ink: #3a2fb8;
+
+  /* Product stage (editor chrome, dark showcase) */
+  --sm-stage: #1c1b22;
+  --sm-stage-raised: #26252e;
+  --sm-stage-line: #34333d;
+  --sm-stage-ink: #ecebf2;
+  --sm-stage-ink-muted: #a3a1ae;
+
+  /* Status */
+  --sm-signal: #f0443a;
+  --sm-success: #1f7a52;
+  --sm-warning: #a15c00;
+  --sm-danger: #b42318;
+
+  /* Shape */
+  --sm-radius-sm: 6px;
+  --sm-radius-md: 10px;
+  --sm-radius-lg: 16px;
+  --sm-radius-xl: 24px;
+
+  /* Motion */
+  --sm-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --sm-motion-fast: 120ms;
+  --sm-motion-base: 200ms;
+  --sm-motion-slow: 420ms;
+}

@@ -1,0 +1,20 @@
+{
+  "name": "screenmac",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Screenmac: native macOS screenshot and recording app, plus its website",
+  "packageManager": "pnpm@11.22.0",
+  "scripts": {
+    "dev": "pnpm --filter @screenmac/website dev",
+    "build": "pnpm --filter @screenmac/website build",
+    "start": "pnpm --filter @screenmac/website start",
+    "lint": "pnpm --filter @screenmac/website lint",
+    "typecheck": "pnpm --filter @screenmac/website typecheck",
+    "test": "pnpm --filter @screenmac/website test",
+    "test:e2e": "pnpm --filter @screenmac/website test:e2e",
+    "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm build",
+    "macos:generate": "python3 apps/macos/scripts/generate_xcodeproj.py",
+    "macos:build": "xcodebuild -project apps/macos/Screenmac.xcodeproj -scheme Screenmac -configuration Debug -destination 'platform=macOS' build",
+    "macos:test": "xcodebuild -project apps/macos/Screenmac.xcodeproj -scheme Screenmac -destination 'platform=macOS' test"
+  }
+}
