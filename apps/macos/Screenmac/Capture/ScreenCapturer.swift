@@ -45,6 +45,18 @@ extension NSScreen {
     }
 }
 
+extension CaptureError {
+    /// ScreenCaptureKit reports a missing Screen Recording grant as `userDeclined`,
+    /// even when the quick preflight check says yes. Treat it as a permission problem.
+    static func from(_ error: Error) -> CaptureError {
+        if let capture = error as? CaptureError { return capture }
+        if let scError = error as? SCStreamError, scError.code == .userDeclined { return .permissionDenied }
+        let ns = error as NSError
+        if ns.domain == SCStreamErrorDomain, ns.code == SCStreamError.Code.userDeclined.rawValue { return .permissionDenied }
+        return .failed(error.localizedDescription)
+    }
+}
+
 @MainActor
 final class ScreenCapturer {
     static var hasPermission: Bool { CGPreflightScreenCaptureAccess() }
@@ -64,7 +76,7 @@ final class ScreenCapturer {
             return try await SCShareableContent.excludingDesktopWindows(false, onScreenWindowsOnly: true)
         } catch {
             if !Self.hasPermission { throw CaptureError.permissionDenied }
-            throw CaptureError.failed(error.localizedDescription)
+            throw CaptureError.from(error)
         }
     }
 
@@ -95,7 +107,7 @@ final class ScreenCapturer {
                 let image = try await SCScreenshotManager.captureImage(contentFilter: filter, configuration: config)
                 result.append(DisplaySnapshot(screen: screen, displayID: id, display: display, image: image))
             } catch {
-                throw CaptureError.failed(error.localizedDescription)
+                throw CaptureError.from(error)
             }
         }
         guard !result.isEmpty else { throw CaptureError.noDisplays }
@@ -109,6 +121,8 @@ final class ScreenCapturer {
         do {
             return try await SCScreenshotManager.captureImage(contentFilter: filter, configuration: config)
         } catch {
+            let mapped = CaptureError.from(error)
+            if case .permissionDenied = mapped { throw mapped }
             throw CaptureError.windowUnavailable
         }
     }

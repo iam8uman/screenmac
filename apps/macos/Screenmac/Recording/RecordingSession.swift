@@ -134,6 +134,8 @@ final class RecordingSession: NSObject, SCStreamOutput, SCStreamDelegate, AVCapt
             try await stream.startCapture()
         } catch {
             captureSession?.stopRunning()
+            let mapped = CaptureError.from(error)
+            if case .permissionDenied = mapped { throw mapped }
             throw RecordingError.stream(error.localizedDescription)
         }
     }

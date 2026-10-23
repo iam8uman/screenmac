@@ -4,7 +4,6 @@ import SwiftUI
 struct OnboardingView: View {
     @ObservedObject var model: AppModel
     let close: () -> Void
-    private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
@@ -55,7 +54,13 @@ struct OnboardingView: View {
         }
         .padding(24)
         .frame(width: 520, height: 460)
-        .onReceive(timer) { _ in model.refreshPermission() }
+        .task {
+            // Notice the permission change as soon as it's granted in System Settings.
+            while !Task.isCancelled {
+                model.refreshPermission()
+                try? await Task.sleep(nanoseconds: 1_000_000_000)
+            }
+        }
     }
 
     private func step(_ n: Int, _ title: String, _ detail: String, done: Bool) -> some View {

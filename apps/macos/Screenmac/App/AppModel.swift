@@ -71,8 +71,12 @@ final class AppModel: ObservableObject {
 
     // MARK: - Permissions
 
+    /// Set when ScreenCaptureKit refused even though the preflight check passed
+    /// (for example after a rebuild changed the app's signature). Cleared by a successful capture.
+    private var captureDeclined = false
+
     func refreshPermission() {
-        hasScreenPermission = ScreenCapturer.hasPermission
+        hasScreenPermission = ScreenCapturer.hasPermission && !captureDeclined
     }
 
     /// Returns true if capture can proceed. Otherwise explains what to do; never fakes a capture.
@@ -162,6 +166,8 @@ final class AppModel: ObservableObject {
 
     /// Store a finished screenshot and run the after-capture actions.
     private func deliver(_ image: CGImage, screen: NSScreen?) {
+        captureDeclined = false
+        hasScreenPermission = true
         if preferences.playSound { CaptureSound.play() }
         let item: HistoryItem
         do {
@@ -310,8 +316,9 @@ final class AppModel: ObservableObject {
                 try history.paths.ensureDirectories()
                 let url = FileNaming.uniqueURL(in: history.paths.captures, base: FileNaming.baseName(prefix: "Screenmac Recording"), ext: "mp4")
                 let session = RecordingSession(url: url, options: options)
-                session.onUnexpectedStop = { [weak self] _ in
-                    guard let self, self.isRecording else { return }
+                // AppModel lives for the whole app run, so a strong capture here is fine.
+                session.onUnexpectedStop = { _ in
+                    guard self.isRecording else { return }
                     self.stopRecording(reason: "Recording was stopped by macOS.")
                 }
                 let ownApp = content.applications.first { $0.processID == ProcessInfo.processInfo.processIdentifier }
@@ -320,9 +327,9 @@ final class AppModel: ObservableObject {
                 recordingState = .recording(paused: false)
                 recordingElapsed = 0
                 showRecordingHUD()
-                recordingTimer = Timer.scheduledTimer(withTimeInterval: 0.25, repeats: true) { [weak self] _ in
+                recordingTimer = Timer.scheduledTimer(withTimeInterval: 0.25, repeats: true) { _ in
                     MainActor.assumeIsolated {
-                        guard let self, let session = self.session else { return }
+                        guard let session = self.session else { return }
                         self.recordingElapsed = session.elapsed()
                     }
                 }
@@ -444,6 +451,12 @@ final class AppModel: ObservableObject {
     // MARK: - Errors
 
     func present(_ error: Error, title: String = "Screenmac") {
+        if case .permissionDenied = CaptureError.from(error) {
+            captureDeclined = true
+            hasScreenPermission = false
+            showOnboarding()
+            return
+        }
         if case CaptureError.permissionDenied = error {
             refreshPermission()
             showOnboarding()
