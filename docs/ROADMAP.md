@@ -43,7 +43,7 @@ The inherited draft claimed Phases 1–2 complete. Audit findings:
 
 ## Phase 3 — Native screenshot MVP
 
-The app **builds on a real Mac with 0 errors and 0 warnings**, launches as a menu bar app, and shows the menu and onboarding correctly. Capture, editor, and recording rows stay 🟡 until they're exercised with Screen Recording granted and XCTest has run on the Mac.
+The app **builds on a real Mac with 0 errors and 0 warnings**, launches as a menu bar app, and shows the menu and onboarding correctly. All 44 XCTest tests pass on the Mac (2026-10-24). Capture, editor, and recording rows stay 🟡 until they're exercised with Screen Recording granted.
 
 | Item | Status |
 |---|---|
@@ -77,4 +77,4 @@ Signing with a Developer ID team, notarization, `.dmg`, clean-machine install, r
 
 ## Current focus
 
-Compile and test the native app on a Mac, fix what the compiler finds, then a manual pass through every Phase 3–4 row.
+Builds and XCTest are green on the Mac. Next: a manual pass through every Phase 3–4 row.

@@ -29,7 +29,7 @@ Tick an item only after it was verified. The log at the bottom records what was 
 - [ ] P3-6 Editor + flattening
 - [ ] P3-7 History
 - [ ] P3-8 Settings, onboarding, permissions
-- [ ] P3-9 XCTest suite passes
+- [x] P3-9 XCTest suite passes (44/44 on Mac)
 - [ ] P3-10 Manual run on a Mac
 
 ## Phase 4 — Recording (builds on Mac; not yet exercised)
@@ -51,4 +51,5 @@ Tick an item only after it was verified. The log at the bottom records what was 
 | 2026-10-23 | MacBook Air, Xcode | Run after warning fixes | Build succeeded: 0 errors, 0 warnings; app running under debugger |
 | 2026-10-23 | MacBook Air | Menu bar menu | All items present with ⌥⇧⌘ shortcuts; onboarding window and Dock/accessory switching work |
 | 2026-10-23 | MacBook Air | Capture Area without Screen Recording grant | Refused honestly (no fake capture); now routes to onboarding |
-| — | MacBook Air | XCTest (⌘U), real area/window/full-screen capture, recording | Not run yet: needs Screen Recording granted by the user |
+| 2026-10-24 | MacBook Air, Xcode | Test navigator › run ScreenmacTests | 44/44 passed (Annotation, DocumentHistory, FileNaming, Geometry, HistoryStore, RecordingClock, Renderer, Shortcut) |
+| — | MacBook Air | Real area/window/full-screen capture, recording | Not run yet: needs Screen Recording granted by the user |
