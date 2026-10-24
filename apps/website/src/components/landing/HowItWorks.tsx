@@ -83,9 +83,9 @@ const STEPS = [
 
 export function HowItWorks() {
   return (
-    <section id="how-it-works" aria-labelledby="how-title" className="scroll-mt-20 border-t border-line bg-paper-sunk/60 px-4 py-20 md:px-6 md:py-28">
+    <section id="how-it-works" aria-labelledby="how-title" className="scroll-mt-20 px-4 py-20 md:px-6 md:py-28">
       <div className="mx-auto max-w-6xl">
-        <h2 id="how-title" className="max-w-2xl text-[clamp(2rem,4.4vw,3.25rem)] font-semibold leading-[1.04] tracking-[-0.04em] text-ink">
+        <h2 id="how-title" className="mx-auto max-w-2xl text-balance text-center text-[clamp(2rem,4.4vw,3.25rem)] font-semibold leading-[1.04] tracking-[-0.04em] text-ink">
           Three steps. Usually under ten seconds.
         </h2>
         <ol className="mt-14 grid gap-10 md:grid-cols-3 md:gap-8">

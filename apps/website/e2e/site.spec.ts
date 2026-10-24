@@ -117,3 +117,24 @@ test("reduced motion disables the hero animation", async ({ browser }) => {
     .toBeLessThan(0.01);
   await context.close();
 });
+
+test("the live demo sits under the hero, install sits right under the demo, then how it works", async ({ page }) => {
+  await page.goto("/");
+  const order = await page.evaluate(() =>
+    ["editor", "install", "how-it-works"].map((id) => document.getElementById(id)!.getBoundingClientRect().top + window.scrollY),
+  );
+  expect(order[0]).toBeLessThan(order[1]);
+  expect(order[1]).toBeLessThan(order[2]);
+  const next = await page.evaluate(() => document.getElementById("editor")!.nextElementSibling?.id);
+  expect(next).toBe("install");
+});
+
+test("the header is dark over the night stage and light over the rest of the page", async ({ page }) => {
+  await page.goto("/");
+  const header = page.locator("header").first();
+  const bg = () => header.evaluate((el) => getComputedStyle(el).backgroundColor);
+  await expect.poll(bg).toMatch(/rgba?\(8, 8, 11/);
+  await page.locator("#how-it-works").scrollIntoViewIfNeeded();
+  await page.evaluate(() => window.scrollBy(0, 200));
+  await expect.poll(bg).not.toMatch(/rgba?\(8, 8, 11/);
+});

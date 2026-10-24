@@ -1,3 +1,4 @@
+import type { Viewport } from "next";
 import { Comparison } from "@/components/landing/Comparison";
 import { FAQ } from "@/components/landing/FAQ";
 import { FeaturesSection } from "@/components/landing/Features";
@@ -9,14 +10,20 @@ import { PricingSection } from "@/components/landing/PricingSection";
 import { Privacy } from "@/components/landing/Privacy";
 import { Showcase } from "@/components/landing/Showcase";
 
+// The landing page opens on the dark night stage, so the browser chrome should match it.
+export const viewport: Viewport = { themeColor: "#08080b" };
+
 export default function HomePage() {
   return (
     <>
-      <Hero />
-      <Showcase />
-      <FeaturesSection />
+      {/* Night stage: headline, the live editor, then how to install it. The header turns dark over it. */}
+      <div className="sm-night" data-header-dark="">
+        <Hero />
+        <Showcase />
+        <Install />
+      </div>
       <HowItWorks />
-      <Install />
+      <FeaturesSection />
       <Privacy />
       <Comparison />
       <PricingSection />

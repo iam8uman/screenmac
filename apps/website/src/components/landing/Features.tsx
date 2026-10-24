@@ -43,7 +43,7 @@ export function Features({ headingLevel = 2 }: { headingLevel?: 2 | 3 }) {
 
 export function FeaturesSection() {
   return (
-    <section id="features" aria-labelledby="features-title" className="scroll-mt-20 px-4 py-20 md:px-6 md:py-28">
+    <section id="features" aria-labelledby="features-title" className="scroll-mt-20 border-t border-line px-4 py-20 md:px-6 md:py-28">
       <div className="mx-auto max-w-6xl">
         <div className="grid gap-8 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-12">
           <h2 id="features-title" className="text-[clamp(2rem,4.4vw,3.25rem)] font-semibold leading-[1.04] tracking-[-0.04em] text-ink">

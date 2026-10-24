@@ -50,6 +50,7 @@ export function CopyCommand({ command }: { command: string }) {
         <code
           ref={codeRef}
           data-testid="install-command"
+          translate="no"
           className="min-w-0 flex-1 py-2 font-mono text-[0.8rem] leading-6 text-white/90 [overflow-wrap:anywhere] sm:text-[0.84rem]"
         >
           {command}

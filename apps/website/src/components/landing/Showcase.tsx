@@ -68,14 +68,8 @@ export function Showcase() {
   const flat = reduce || settled;
 
   return (
-    <section id="editor" aria-labelledby="editor-title" className="scroll-mt-20 overflow-x-clip px-3 pb-20 sm:px-4 md:px-6 md:pb-28">
+    <section id="editor" aria-labelledby="editor-title" className="scroll-mt-20 overflow-x-clip px-3 pb-10 sm:px-4 md:px-6 md:pb-14">
       <div className="mx-auto max-w-7xl">
-        <div className="mx-auto mb-5 flex max-w-6xl flex-col gap-2 px-1 md:flex-row md:items-baseline md:justify-between">
-          <h2 id="editor-title" className="text-lg font-semibold tracking-[-0.01em] text-ink">
-            This is the real editor. Go ahead.
-          </h2>
-          <p className="text-sm text-ink-muted">Mark up a sample, or drop in your own screenshot. It never leaves your browser.</p>
-        </div>
         <div ref={ref} className="relative [perspective:1800px]">
           {!flat ? (
             <>
@@ -108,8 +102,16 @@ export function Showcase() {
               setSettled(true);
             }}
           >
-            <Editor />
+            <div className="rounded-[24px] bg-white/[0.035] p-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.09),0_50px_120px_-40px_rgba(109,92,255,0.55)] md:rounded-[26px] md:p-2">
+              <Editor />
+            </div>
           </motion.div>
+        </div>
+        <div className="mx-auto mt-6 flex max-w-6xl flex-col items-center gap-1.5 px-1 text-center md:mt-7">
+          <h2 id="editor-title" className="text-base font-medium tracking-[-0.01em] text-white">
+            This is the real editor. Go ahead.
+          </h2>
+          <p className="text-sm text-white/55">Mark up a sample, or drop in your own screenshot. It never leaves your browser.</p>
         </div>
       </div>
     </section>

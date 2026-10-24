@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Install } from "@/components/install/Install";
 import { LinkButton } from "@/components/ui/Button";
 import { product } from "@/lib/product";
@@ -8,11 +8,15 @@ export const metadata: Metadata = {
   description: `Download Screenmac ${product.version} for macOS ${product.minimumMacOS} or later, or install it with one line in Terminal.`,
 };
 
+export const viewport: Viewport = { themeColor: "#08080b" };
+
 export default function DownloadPage() {
   return (
     <>
-      <Install headingLevel={1} />
-      <div className="px-4 pb-24 md:px-6">
+      <div className="sm-night" data-header-dark="">
+        <Install headingLevel={1} />
+      </div>
+      <div className="px-4 py-16 md:px-6 md:py-20">
         <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-2">
           <div className="rounded-[22px] bg-paper-raised p-6 ring-1 ring-line">
             <h2 className="font-semibold text-ink">Build it yourself</h2>
