@@ -26,3 +26,15 @@ test("the editor works with touch-sized layout", async ({ page }) => {
   await dragOnCanvas(page, [0.2, 0.2], [0.6, 0.6]);
   await expect.poll(() => annotationCount(page)).toBe(before + 1);
 });
+
+test("phone visitors can send the install link to their Mac", async ({ page, context }) => {
+  await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+  await page.goto("/#install");
+  // Headless Chromium has no share sheet, so the button falls back to copying the link.
+  await page.evaluate(() => Object.defineProperty(navigator, "share", { value: undefined, configurable: true }));
+  const card = page.getByTestId("send-to-mac");
+  await expect(card).toBeVisible();
+  await card.getByRole("button", { name: "Send the link to my Mac" }).click();
+  await expect(card.getByRole("button", { name: "Link copied" })).toBeVisible();
+  expect(await page.evaluate(() => navigator.clipboard.readText())).toBe("https://screenmac.vercel.app/#install");
+});

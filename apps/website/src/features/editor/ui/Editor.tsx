@@ -767,7 +767,7 @@ export function Editor({ variant = "showcase", className }: EditorProps) {
             type="button"
             onClick={() => void copyImage()}
             disabled={!image || busy !== null}
-            className="inline-flex h-8 items-center gap-1.5 rounded-lg px-3 text-[13px] text-stage-ink ring-1 ring-stage-line transition-colors hover:bg-white/8 disabled:opacity-50"
+            className="inline-flex h-8 items-center gap-1.5 whitespace-nowrap rounded-lg px-3 text-[13px] text-stage-ink ring-1 ring-stage-line transition-colors hover:bg-white/8 disabled:opacity-50"
           >
             {busy === "copy" ? <LoaderCircle className="size-3.5 animate-spin" aria-hidden="true" /> : <Copy className="size-3.5" aria-hidden="true" />}
             Copy
@@ -776,7 +776,7 @@ export function Editor({ variant = "showcase", className }: EditorProps) {
             type="button"
             onClick={() => void exportImage()}
             disabled={!image || busy !== null}
-            className="inline-flex h-8 items-center gap-1.5 rounded-lg bg-accent px-3.5 text-[13px] font-medium text-white shadow-[0_1px_0_rgba(255,255,255,0.2)_inset] transition-colors hover:bg-accent-hover disabled:opacity-50"
+            className="inline-flex h-8 items-center gap-1.5 whitespace-nowrap rounded-lg bg-accent px-3.5 text-[13px] font-medium text-white shadow-[0_1px_0_rgba(255,255,255,0.2)_inset] transition-colors hover:bg-accent-hover disabled:opacity-50"
           >
             {busy === "export" ? <LoaderCircle className="size-3.5 animate-spin" aria-hidden="true" /> : <Download className="size-3.5" aria-hidden="true" />}
             Export PNG

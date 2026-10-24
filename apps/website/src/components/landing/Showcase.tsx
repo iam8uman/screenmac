@@ -1,9 +1,10 @@
 "use client";
 
-import { motion, useMotionValueEvent, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
+import { motion, useMotionValueEvent, useScroll, useSpring, useTransform } from "motion/react";
 import { useRef, useState } from "react";
 import { Editor } from "@/features/editor/ui/Editor";
 import { shortcutText, shortcuts } from "@/lib/product";
+import { useReducedMotionSafe } from "@/lib/useReducedMotionSafe";
 
 /** Floating macOS pieces that frame the editor in depth. Decorative only. */
 function MenuBarMenu() {
@@ -50,7 +51,7 @@ function QuickAccessCard() {
 
 export function Showcase() {
   const ref = useRef<HTMLDivElement>(null);
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionSafe();
   // Once the editor has flattened we keep it flat, so pointer math is exact while you use it.
   const [settled, setSettled] = useState(false);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "start 0.3"] });

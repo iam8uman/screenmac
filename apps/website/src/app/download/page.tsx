@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { tokens } from "@screenmac/design-tokens";
 import { Install } from "@/components/install/Install";
 import { LinkButton } from "@/components/ui/Button";
 import { product } from "@/lib/product";
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
   description: `Download Screenmac ${product.version} for macOS ${product.minimumMacOS} or later, or install it with one line in Terminal.`,
 };
 
-export const viewport: Viewport = { themeColor: "#08080b" };
+export const viewport: Viewport = { themeColor: tokens.color.night };
 
 export default function DownloadPage() {
   return (

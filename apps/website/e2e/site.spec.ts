@@ -138,3 +138,25 @@ test("the header is dark over the night stage and light over the rest of the pag
   await page.evaluate(() => window.scrollBy(0, 200));
   await expect.poll(bg).not.toMatch(/rgba?\(8, 8, 11/);
 });
+
+test("the hero is headline, pill and actions only", async ({ page }) => {
+  await page.goto("/");
+  const hero = page.locator("section").first();
+  await expect(hero.getByText("A native Mac app for screenshots")).toHaveCount(0);
+  await expect(hero.getByText("Free while in beta")).toHaveCount(0);
+  await expect(hero.getByRole("link", { name: "Download free for Mac" })).toHaveAttribute("href", "/#install");
+  await expect(hero.getByRole("link", { name: /Free for macOS/ })).toHaveAttribute("href", "/#install");
+});
+
+test("the landing page hydrates cleanly with reduced motion on", async ({ browser }) => {
+  const context = await browser.newContext({ reducedMotion: "reduce" });
+  const page = await context.newPage();
+  const errors: string[] = [];
+  page.on("pageerror", (e) => errors.push(String(e)));
+  page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
+  await page.goto("/");
+  await expect(page.getByTestId("editor-surface").filter({ visible: true })).toBeVisible();
+  await page.waitForTimeout(500);
+  expect(errors).toEqual([]);
+  await context.close();
+});

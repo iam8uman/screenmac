@@ -21,8 +21,22 @@ const FAQS: { q: string; a: React.ReactNode }[] = [
     a: "Sometimes, once. Builds aren't signed with an Apple Developer ID yet, so macOS can treat an update as a new app and the old switch silently stops applying. The installer clears the old entry so macOS asks again. If captures ever fail, choose Fix Screen Recording Permission… from the menu bar icon.",
   },
   {
-    q: "Which versions of macOS will it support?",
-    a: `macOS ${product.minimumMacOS} Sonoma and later. Capture uses Apple's ScreenCaptureKit.`,
+    q: "Is it safe to paste a curl command into Terminal?",
+    a: (
+      <>
+        It&apos;s worth checking first, and you can:{" "}
+        <a href="/install.sh" className="text-ink underline underline-offset-2">
+          the whole script
+        </a>{" "}
+        is about 70 lines. It downloads the latest release from GitHub, checks it against its published SHA-256, copies
+        Screenmac into Applications and resets only Screenmac&apos;s own Screen Recording entry. It never asks for your
+        password.
+      </>
+    ),
+  },
+  {
+    q: "Which Macs does it run on?",
+    a: `Any Mac on macOS ${product.minimumMacOS} Sonoma or later. One download runs natively on both Apple silicon and Intel. Capture uses Apple's ScreenCaptureKit.`,
   },
   {
     q: "Are my screenshots uploaded anywhere?",

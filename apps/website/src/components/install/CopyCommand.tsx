@@ -43,7 +43,7 @@ export function CopyCommand({ command }: { command: string }) {
       <div className="flex min-w-0 flex-1 items-start gap-3">
         <span
           aria-hidden="true"
-          className="select-none py-2 font-mono text-sm leading-6 text-[#8c80ff]"
+          className="select-none py-2 font-mono text-sm leading-6 text-night-accent"
         >
           $
         </span>

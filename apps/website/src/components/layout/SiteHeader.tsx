@@ -65,8 +65,8 @@ export function SiteHeader() {
         "sticky top-0 z-40 border-b transition-[background-color,border-color] duration-200",
         dark
           ? scrolled
-            ? "border-white/10 bg-[#08080b]/75 backdrop-blur-md"
-            : "border-transparent bg-[#08080b]"
+            ? "border-white/10 bg-night/75 backdrop-blur-md"
+            : "border-transparent bg-night"
           : scrolled || open
             ? "border-line bg-paper/90 backdrop-blur-md"
             : "border-transparent bg-paper",
@@ -76,7 +76,7 @@ export function SiteHeader() {
         <Link href="/" aria-label="Screenmac home" className="shrink-0 rounded-md" onClick={() => setOpen(false)}>
           <Logo tone={dark ? "dark" : "light"} />
         </Link>
-        <nav className="hidden items-center gap-1 md:flex" aria-label="Primary">
+        <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary">
           {links.map((link) => {
             const active = link.href === pathname;
             return (
@@ -85,7 +85,7 @@ export function SiteHeader() {
                 href={link.href}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "rounded-full px-3.5 py-1.5 text-sm transition-colors",
+                  "whitespace-nowrap rounded-full px-3.5 py-1.5 text-sm transition-colors",
                   dark
                     ? active
                       ? "bg-white/10 text-white"
@@ -100,7 +100,7 @@ export function SiteHeader() {
             );
           })}
         </nav>
-        <div className="hidden items-center gap-2 md:flex">
+        <div className="hidden items-center gap-2 lg:flex">
           <a
             href={product.repoUrl}
             aria-label="Screenmac on GitHub"
@@ -119,7 +119,7 @@ export function SiteHeader() {
         <button
           type="button"
           className={cn(
-            "-mr-2 inline-flex size-10 items-center justify-center rounded-full md:hidden",
+            "-mr-2 inline-flex size-10 items-center justify-center rounded-full lg:hidden",
             dark ? "text-white hover:bg-white/10" : "text-ink hover:bg-paper-sunk",
           )}
           aria-expanded={open}
@@ -130,7 +130,7 @@ export function SiteHeader() {
           {open ? <X className="size-5" /> : <Menu className="size-5" />}
         </button>
       </div>
-      <div id="mobile-nav" hidden={!open} className="border-t border-line bg-paper md:hidden">
+      <div id="mobile-nav" hidden={!open} className="border-t border-line bg-paper lg:hidden">
         <nav className="mx-auto flex max-w-[75rem] flex-col px-4 py-3" aria-label="Mobile">
           {links.map((link) => (
             <Link

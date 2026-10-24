@@ -1,4 +1,5 @@
 import type { Viewport } from "next";
+import { tokens } from "@screenmac/design-tokens";
 import { Comparison } from "@/components/landing/Comparison";
 import { FAQ } from "@/components/landing/FAQ";
 import { FeaturesSection } from "@/components/landing/Features";
@@ -11,7 +12,7 @@ import { Privacy } from "@/components/landing/Privacy";
 import { Showcase } from "@/components/landing/Showcase";
 
 // The landing page opens on the dark night stage, so the browser chrome should match it.
-export const viewport: Viewport = { themeColor: "#08080b" };
+export const viewport: Viewport = { themeColor: tokens.color.night };
 
 export default function HomePage() {
   return (

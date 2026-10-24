@@ -37,12 +37,12 @@ export function CaptureMarquee({ children, tone = "light" }: { children: ReactNo
 
   return (
     <div ref={ref} className="relative -mx-2 px-2 py-2 sm:-mx-5 sm:px-5 sm:py-3">
-      <div aria-hidden="true" className={`sm-marquee-in pointer-events-none absolute inset-0 rounded-[2px] outline-[1.5px] -outline-offset-[0.75px] outline-dashed ${dark ? "bg-[#8c80ff]/[0.07] outline-[#8c80ff]" : "bg-accent/[0.045] outline-accent"}`} />
+      <div aria-hidden="true" className={`sm-marquee-in pointer-events-none absolute inset-0 rounded-[2px] outline-[1.5px] -outline-offset-[0.75px] outline-dashed ${dark ? "bg-night-accent/[0.07] outline-night-accent" : "bg-accent/[0.045] outline-accent"}`} />
       <div aria-hidden="true" className="sm-pop pointer-events-none absolute inset-0">
         {HANDLES.map(([left, top]) => (
           <span
             key={`${left}-${top}`}
-            className={`absolute size-2.5 -translate-x-1/2 -translate-y-1/2 rounded-[3px] border-[1.5px] ${dark ? "border-[#8c80ff] bg-[#0b0b10]" : "border-accent bg-paper-raised"}`}
+            className={`absolute size-2.5 -translate-x-1/2 -translate-y-1/2 rounded-[3px] border-[1.5px] ${dark ? "border-night-accent bg-night-raised" : "border-accent bg-paper-raised"}`}
             style={{ left: `${left}%`, top: `${top}%` }}
           />
         ))}

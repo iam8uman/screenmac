@@ -10,7 +10,7 @@
   /* Ink */
   --sm-ink: #17161c;
   --sm-ink-muted: #55535c;
-  --sm-ink-faint: #75737c;
+  --sm-ink-faint: #68666f;
 
   /* Accent: blue-violet "iris" */
   --sm-accent: #5b4cf5;
@@ -24,6 +24,22 @@
   --sm-stage-line: #34333d;
   --sm-stage-ink: #ecebf2;
   --sm-stage-ink-muted: #a3a1ae;
+
+  /* Night stage (landing hero, demo, install) */
+  --sm-night: #08080b;
+  --sm-night-ink: #ffffff;
+  --sm-night-glow: rgba(109, 92, 255, 0.22);
+  --sm-night-star: rgba(255, 255, 255, 0.45);
+  --sm-night-star-dim: rgba(255, 255, 255, 0.3);
+  --sm-night-selection: rgba(140, 128, 255, 0.35);
+  --sm-night-focus: #a99fff;
+  --sm-night-accent: #8c80ff;
+  --sm-night-raised: #0b0b10;
+  --sm-night-orb: #6d5cff;
+
+  /* Transparent-image checkerboard */
+  --sm-checker-a: #2a2932;
+  --sm-checker-b: #24232b;
 
   /* Status */
   --sm-signal: #f0443a;
