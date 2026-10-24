@@ -72,6 +72,8 @@ private struct GeneralSettings: View {
                         if !model.hasScreenPermission {
                             Button("Open System Settings") { ScreenCapturer.openPrivacySettings() }
                         }
+                        Button("Fix…") { model.fixScreenPermission() }
+                            .help("Clears Screenmac's Screen Recording entry so macOS asks again. Use this if captures fail after an update or rebuild.")
                     }
                 }
             }

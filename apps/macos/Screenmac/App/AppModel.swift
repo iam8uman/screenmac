@@ -73,10 +73,24 @@ final class AppModel: ObservableObject {
 
     /// Set when ScreenCaptureKit refused even though the preflight check passed
     /// (for example after a rebuild changed the app's signature). Cleared by a successful capture.
-    private var captureDeclined = false
+    @Published private(set) var captureDeclined = false
+
+    /// macOS says the permission is on, but ScreenCaptureKit still refused: the entry belongs to an older build.
+    var permissionIsStale: Bool { captureDeclined && ScreenCapturer.hasPermission }
 
     func refreshPermission() {
         hasScreenPermission = ScreenCapturer.hasPermission && !captureDeclined
+    }
+
+    /// Resets Screenmac's own Screen Recording entry and asks macOS again.
+    /// The person then turns Screenmac back on in System Settings and reopens it.
+    func fixScreenPermission() {
+        ScreenCapturer.resetOwnPermission()
+        captureDeclined = false
+        refreshPermission()
+        ScreenCapturer.requestPermission()
+        ScreenCapturer.openPrivacySettings()
+        showOnboarding()
     }
 
     /// Returns true if capture can proceed. Otherwise explains what to do; never fakes a capture.

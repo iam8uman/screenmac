@@ -26,6 +26,14 @@ struct OnboardingView: View {
             if model.hasScreenPermission {
                 Label("Screen Recording is allowed. You're ready.", systemImage: "checkmark.circle.fill")
                     .foregroundStyle(.green)
+            } else if model.permissionIsStale {
+                VStack(alignment: .leading, spacing: 6) {
+                    Label("macOS is holding a permission from an older copy of Screenmac.", systemImage: "exclamationmark.triangle.fill")
+                        .foregroundStyle(.orange)
+                    Text("The switch in System Settings looks on, but it no longer applies to this copy. Click Fix Permission, turn Screenmac on again when macOS asks, then Quit & Reopen.")
+                        .font(.callout)
+                        .foregroundStyle(.secondary)
+                }
             } else {
                 Text("Open System Settings → Privacy & Security → Screen & System Audio Recording and turn on Screenmac.")
                     .font(.callout)
@@ -40,6 +48,10 @@ struct OnboardingView: View {
                         model.captureArea()
                     }
                     .keyboardShortcut(.defaultAction)
+                } else if model.permissionIsStale {
+                    Button("Fix Permission") { model.fixScreenPermission() }
+                        .keyboardShortcut(.defaultAction)
+                    Button("Quit & Reopen") { relaunch() }
                 } else {
                     Button("Open System Settings") {
                         ScreenCapturer.requestPermission()

@@ -99,6 +99,7 @@ struct MenuBarContent: View {
         Button("Open Image in Editor…") { model.openImageFile() }
         Button("Capture History") { model.openHistory() }
         Button("Settings…") { model.openSettings() }
+        Button("Fix Screen Recording Permission…") { model.fixScreenPermission() }
             .keyboardShortcut(",", modifiers: .command)
 
         Divider()

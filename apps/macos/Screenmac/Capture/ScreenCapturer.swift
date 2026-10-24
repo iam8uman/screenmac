@@ -49,11 +49,34 @@ extension CaptureError {
     /// ScreenCaptureKit reports a missing Screen Recording grant as `userDeclined`,
     /// even when the quick preflight check says yes. Treat it as a permission problem.
     static func from(_ error: Error) -> CaptureError {
-        if let capture = error as? CaptureError { return capture }
-        if let scError = error as? SCStreamError, scError.code == .userDeclined { return .permissionDenied }
-        let ns = error as NSError
-        if ns.domain == SCStreamErrorDomain, ns.code == SCStreamError.Code.userDeclined.rawValue { return .permissionDenied }
-        return .failed(error.localizedDescription)
+        if let capture = error as? CaptureError {
+            if case .failed(let reason) = capture, isDeclinedText(reason) { return .permissionDenied }
+            return capture
+        }
+        return isPermissionRefusal(error) ? .permissionDenied : .failed(error.localizedDescription)
+    }
+
+    /// ScreenCaptureKit's refusal arrives as `SCStreamError.userDeclined` (-3801), but depending on the
+    /// API and macOS version it can come wrapped, or in a differently spelled domain. Match all of them.
+    static func isPermissionRefusal(_ error: Error) -> Bool {
+        if let scError = error as? SCStreamError, scError.code == .userDeclined { return true }
+        var current: NSError? = error as NSError
+        var depth = 0
+        while let ns = current, depth < 4 {
+            if ns.code == SCStreamError.Code.userDeclined.rawValue,
+               ns.domain == SCStreamErrorDomain || ns.domain.contains("ScreenCaptureKit") {
+                return true
+            }
+            if isDeclinedText(ns.localizedDescription) { return true }
+            current = ns.userInfo[NSUnderlyingErrorKey] as? NSError
+            depth += 1
+        }
+        return false
+    }
+
+    static func isDeclinedText(_ text: String) -> Bool {
+        let lower = text.lowercased()
+        return lower.contains("declined tcc") || (lower.contains("declined") && lower.contains("capture"))
     }
 }
 
@@ -64,6 +87,27 @@ final class ScreenCapturer {
     /// Shows the system prompt the first time; afterwards macOS only allows changes in System Settings.
     @discardableResult
     static func requestPermission() -> Bool { CGRequestScreenCaptureAccess() }
+
+    /// Clears Screenmac's own Screen Recording entry so macOS asks again.
+    /// Needed when the entry belongs to an earlier build: builds without a fixed signing identity look
+    /// like a new app to macOS, so the switch shows "on" but captures are refused.
+    /// Only ever touches this app's own bundle identifier.
+    @discardableResult
+    static func resetOwnPermission() -> Bool {
+        guard let bundleID = Bundle.main.bundleIdentifier else { return false }
+        let task = Process()
+        task.executableURL = URL(fileURLWithPath: "/usr/bin/tccutil")
+        task.arguments = ["reset", "ScreenCapture", bundleID]
+        task.standardOutput = FileHandle.nullDevice
+        task.standardError = FileHandle.nullDevice
+        do {
+            try task.run()
+            task.waitUntilExit()
+            return task.terminationStatus == 0
+        } catch {
+            return false
+        }
+    }
 
     static func openPrivacySettings() {
         if let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_ScreenCapture") {
