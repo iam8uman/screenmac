@@ -640,10 +640,15 @@ export function EditorCanvas(props: EditorCanvasProps) {
     ? `${image.alt} ${doc.annotations.length} annotation${doc.annotations.length === 1 ? "" : "s"}.`
     : "Loading image";
 
+  // Only trap the wheel when the canvas itself is zoomed past the stage and has something to scroll.
+  // Otherwise the wheel must reach the page, or the landing page can't be scrolled over the editor.
+  const canvasScrolls =
+    displayWidth + pad * 2 > stageSize.width + 1 || displayHeight + pad * 2 > stageSize.height + 1;
+
   return (
     <div
       ref={scrollRef}
-      className="sm-checker relative min-h-0 flex-1 overflow-auto overscroll-contain"
+      className={`sm-checker relative min-h-0 flex-1 overflow-auto ${canvasScrolls ? "overscroll-contain" : ""}`}
       onDragOver={onDragOver}
       onDragLeave={() => setDropActive(false)}
       onDrop={onDrop}
