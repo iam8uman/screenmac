@@ -7,13 +7,13 @@ export type Availability = "editor" | "building" | "planned";
 
 export const AVAILABILITY_LABEL: Record<Availability, string> = {
   editor: "Try it in the editor",
-  building: "Coming in the Mac app",
+  building: "In the Mac beta",
   planned: "Planned",
 };
 
 export const AVAILABILITY_DESCRIPTION: Record<Availability, string> = {
   editor: "Works today in the browser editor on this site.",
-  building: "Being built in the native Mac app, which isn't a public download yet.",
+  building: "In the native Mac app, available as a free beta download.",
   planned: "On the roadmap. Not built yet.",
 };
 

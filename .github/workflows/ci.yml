@@ -1,0 +1,153 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  website:
+    name: Website (lint, types, unit, build, e2e)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint
+      - run: pnpm typecheck
+      - run: pnpm test
+      - run: pnpm build
+      - name: Install Playwright Chromium
+        run: pnpm --filter @screenmac/website exec playwright install --with-deps chromium
+      - name: End-to-end tests
+        run: pnpm test:e2e
+        env:
+          CI: "true"
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: apps/website/playwright-report
+          retention-days: 7
+
+  macos:
+    name: Mac app (build, XCTest, universal app, release)
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Toolchain
+        run: |
+          xcodebuild -version
+          swift --version
+
+      - name: Unit tests (XCTest)
+        run: |
+          set -o pipefail
+          xcodebuild -project apps/macos/Screenmac.xcodeproj -scheme Screenmac \
+            -destination 'platform=macOS' -derivedDataPath build/TestData \
+            CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual DEVELOPMENT_TEAM= \
+            test 2>&1 | tee test.log | grep -E "Test Suite|Test Case.*(passed|failed)|error:|\*\* TEST" || true
+          grep -q "\*\* TEST SUCCEEDED \*\*" test.log || {
+            grep -E "error:|failed" test.log | sort -u | head -60 > failures.txt
+            echo "::error title=XCTest failed::$(awk '{gsub(/%/,"%25"); printf "%s%%0A", $0}' failures.txt)"
+            exit 1
+          }
+
+      - name: Work out the version
+        id: version
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VERSION=$(grep -m1 'MARKETING_VERSION = ' apps/macos/Screenmac.xcodeproj/project.pbxproj | sed -E 's/.*= *"?([^";]+)"?;.*/\1/')
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          # Release when main carries a version that hasn't been released yet, or when a v* tag is pushed.
+          if [[ "$GITHUB_REF_TYPE" == "tag" ]]; then
+            echo "release=true" >> "$GITHUB_OUTPUT"
+          elif [[ "$GITHUB_REF" == "refs/heads/main" && "$GITHUB_EVENT_NAME" != "pull_request" ]] \
+               && ! gh release view "v$VERSION" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "release=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "release=false" >> "$GITHUB_OUTPUT"
+          fi
+          echo "Version $VERSION"
+
+      - name: Build Screenmac.app (Release, universal)
+        run: VERSION="${{ steps.version.outputs.version }}" BUILD_NUMBER="$GITHUB_RUN_NUMBER" apps/macos/scripts/build-app.sh
+
+      - name: Smoke test the app
+        run: |
+          set -euo pipefail
+          APP=apps/macos/build/Screenmac.app
+          BIN=$APP/Contents/MacOS/Screenmac
+          plutil -lint $APP/Contents/Info.plist
+          test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' $APP/Contents/Info.plist)" = "${{ steps.version.outputs.version }}"
+          test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' $APP/Contents/Info.plist)" = "app.screenmac.Screenmac"
+          echo "Architectures: $(lipo -archs $BIN)"
+          lipo -archs $BIN | grep -q arm64
+          lipo -archs $BIN | grep -q x86_64
+          codesign --verify --deep --strict $APP
+          codesign -d --entitlements - $APP 2>/dev/null | grep -q audio-input
+          # Launch the real app and make sure it stays up. CI has no Screen Recording grant,
+          # so it shows onboarding and waits; it must not crash.
+          $BIN > launch.log 2>&1 &
+          PID=$!
+          sleep 10
+          if kill -0 $PID 2>/dev/null; then
+            echo "Screenmac launched and is still running after 10s"
+            kill $PID
+          else
+            echo "::error title=Launch crash::Screenmac exited during launch: $(tail -20 launch.log | tr '\n' ' ')"
+            ls -t ~/Library/Logs/DiagnosticReports 2>/dev/null | head -3
+            exit 1
+          fi
+
+      - name: Zip
+        run: |
+          cd apps/macos/build
+          ditto -c -k --sequesterRsrc --keepParent Screenmac.app Screenmac.zip
+          shasum -a 256 Screenmac.zip | tee Screenmac.zip.sha256
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Screenmac
+          path: |
+            apps/macos/build/Screenmac.zip
+            apps/macos/build/Screenmac.zip.sha256
+
+      - name: Publish release
+        if: steps.version.outputs.release == 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.version.outputs.version }}
+          name: Screenmac ${{ steps.version.outputs.version }}
+          target_commitish: ${{ github.sha }}
+          make_latest: true
+          prerelease: false
+          files: |
+            apps/macos/build/Screenmac.zip
+            apps/macos/build/Screenmac.zip.sha256
+          generate_release_notes: true
+          body: |
+            **Quickest:** paste this in Terminal. It installs the latest Screenmac into Applications and opens it:
+
+            ```
+            curl -fsSL https://screenmac.vercel.app/install.sh | bash
+            ```
+
+            **Or download `Screenmac.zip`**, unzip it and drag Screenmac into Applications. Needs macOS 14 or later (Apple silicon and Intel).
+
+            Screenmac isn't notarized yet, so the first time you open a downloaded copy macOS asks first. On macOS 15: System Settings → Privacy & Security → **Open Anyway**. On macOS 14: right-click Screenmac → **Open**. Then allow **Screen Recording** when asked, reopen Screenmac, and press **⌥⇧⌘4**.

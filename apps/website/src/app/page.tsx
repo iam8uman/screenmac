@@ -2,6 +2,7 @@ import { Comparison } from "@/components/landing/Comparison";
 import { FAQ } from "@/components/landing/FAQ";
 import { FeaturesSection } from "@/components/landing/Features";
 import { FinalCTA } from "@/components/landing/FinalCTA";
+import { Install } from "@/components/install/Install";
 import { Hero } from "@/components/landing/Hero";
 import { HowItWorks } from "@/components/landing/HowItWorks";
 import { PricingSection } from "@/components/landing/PricingSection";
@@ -15,6 +16,7 @@ export default function HomePage() {
       <Showcase />
       <FeaturesSection />
       <HowItWorks />
+      <Install />
       <Privacy />
       <Comparison />
       <PricingSection />

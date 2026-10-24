@@ -1,6 +1,32 @@
 # Screenmac
 
+[![CI](https://github.com/iam8uman/screenmac/actions/workflows/ci.yml/badge.svg)](https://github.com/iam8uman/screenmac/actions/workflows/ci.yml)
+
 A native macOS app for screenshots and screen recordings, plus its website with a working in-browser annotation editor.
+
+**Website:** https://screenmac.vercel.app · **Download:** [latest release](https://github.com/iam8uman/screenmac/releases/latest)
+
+## Install
+
+Paste this into Terminal. It downloads the latest release, checks its checksum, puts Screenmac in Applications and opens it:
+
+```bash
+curl -fsSL https://screenmac.vercel.app/install.sh | bash
+```
+
+Or download [`Screenmac.zip`](https://github.com/iam8uman/screenmac/releases/latest/download/Screenmac.zip), unzip it and drag Screenmac into Applications. It needs macOS 14 or later and runs natively on Apple silicon and Intel. Builds aren't notarized yet, so the first launch of a downloaded copy needs **System Settings → Privacy & Security → Open Anyway** (macOS 15) or right-click → **Open** (macOS 14). Then allow Screen Recording, reopen Screenmac, and press **⌥⇧⌘4**.
+
+If captures fail after an update, choose **Fix Screen Recording Permission…** from the menu bar icon, or run `tccutil reset ScreenCapture app.screenmac.Screenmac` and reopen Screenmac.
+
+## Continuous integration and releases
+
+`.github/workflows/ci.yml` runs on every push and pull request:
+
+- **Website** (Ubuntu): lint, typecheck, Vitest, production build, Playwright e2e on desktop and phone.
+- **Mac app** (macOS 15): XCTest, a universal Release build (`apps/macos/scripts/build-app.sh`), a smoke test that checks the bundle, architectures, signature and entitlements and launches the app for 10 seconds, then `Screenmac.zip` + SHA-256 as a build artifact.
+- **Release:** when `main` carries a `MARKETING_VERSION` that has no GitHub release yet (or a `v*` tag is pushed), the zip is published as the latest release. To ship a new version, bump `MARKETING_VERSION` in `apps/macos/scripts/generate_xcodeproj.py`, regenerate the project, update `version` in `apps/website/src/lib/product.ts` (a unit test checks they match), and push.
+
+The website deploys to Vercel from `main` (project root directory: `apps/website`).
 
 ```text
 screenmac/

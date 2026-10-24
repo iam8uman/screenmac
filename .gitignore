@@ -47,3 +47,4 @@ AuthKey_*.p8
 npm-debug.log*
 pnpm-debug.log*
 *.tgz
+*.tsbuildinfo

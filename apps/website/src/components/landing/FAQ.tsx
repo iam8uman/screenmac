@@ -7,13 +7,18 @@ const FAQS: { q: string; a: React.ReactNode }[] = [
     q: "Can I download Screenmac today?",
     a: (
       <>
-        Not yet. The Mac app is in development and there&apos;s no signed build to download. You can{" "}
-        <Link href="/download" className="text-ink underline underline-offset-2">
-          join the beta list
+        Yes. Version {product.version} is a free beta.{" "}
+        <Link href="/#install" className="text-ink underline underline-offset-2">
+          Install it with one line in Terminal
         </Link>{" "}
-        and try the editor on this page in the meantime.
+        or download the zip. It isn&apos;t notarized by Apple yet, so the first launch of a downloaded copy needs an extra
+        click in System Settings.
       </>
     ),
+  },
+  {
+    q: "Do I have to allow Screen Recording again after updating?",
+    a: "Sometimes, once. Builds aren't signed with an Apple Developer ID yet, so macOS can treat an update as a new app and the old switch silently stops applying. The installer clears the old entry so macOS asks again. If captures ever fail, choose Fix Screen Recording Permission… from the menu bar icon.",
   },
   {
     q: "Which versions of macOS will it support?",

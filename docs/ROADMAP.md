@@ -73,7 +73,13 @@ OCR (Vision), floating screenshots, scrolling capture (tested matrix only), back
 
 ## Phase 6 — Release
 
-Signing with a Developer ID team, notarization, `.dmg`, clean-machine install, real download URL, claims audit. ⬜
+| Item | Status |
+|---|---|
+| CI on every push: website checks + e2e, Mac XCTest, universal Release build, launch smoke test | 🟡 workflow added 2026-10-24; first run pending |
+| GitHub release with `Screenmac.zip` + SHA-256 when a new version lands on `main` | 🟡 |
+| One-line installer (`/install.sh`) and site Install section pointing at the latest release | ✅ e2e-tested |
+| Stale Screen Recording permission detected and repaired from the app | 🟡 (CaptureErrorTests) |
+| Developer ID signing, notarization, `.dmg` | ⬜ needs an Apple Developer account |
 
 ## Current focus
 

@@ -4,15 +4,23 @@
  */
 export const product = {
   name: "Screenmac",
-  siteUrl: "https://screenmac.app",
+  siteUrl: "https://screenmac.vercel.app",
+  /** Must match MARKETING_VERSION in apps/macos (a unit test checks this). */
+  version: "0.2.0",
+  repoUrl: "https://github.com/iam8uman/screenmac",
   tagline: "Capture anything. Make it clear. Share it instantly.",
   headline: "Your screen, captured beautifully.",
   description:
     "A native Mac app for screenshots and screen recordings. Capture an area, a window, or a whole display, mark it up, hide what's private, and share it in seconds.",
   minimumMacOS: "14",
   email: "hello@screenmac.app",
-  /** Set to the notarized .dmg URL once a signed build exists. */
-  downloadUrl: null as string | null,
+  /** Built and published by .github/workflows/ci.yml on every new version pushed to main. */
+  downloadUrl: "https://github.com/iam8uman/screenmac/releases/latest/download/Screenmac.zip" as string | null,
+  checksumUrl: "https://github.com/iam8uman/screenmac/releases/latest/download/Screenmac.zip.sha256",
+  releasesUrl: "https://github.com/iam8uman/screenmac/releases",
+  installCommand: "curl -fsSL https://screenmac.vercel.app/install.sh | bash",
+  /** Ad-hoc signed by CI. Flip once builds are signed with a Developer ID and notarized. */
+  notarized: false,
   billingLive: false,
   cloudLive: false,
   copyrightYear: 2026,
@@ -24,7 +32,7 @@ export function hasDownloadArtifact(): boolean {
 
 export function primaryCta(): { href: string; label: string } {
   return hasDownloadArtifact()
-    ? { href: "/download", label: "Download for Mac" }
+    ? { href: "/#install", label: "Download for Mac" }
     : { href: "/download", label: "Join the Mac beta" };
 }
 

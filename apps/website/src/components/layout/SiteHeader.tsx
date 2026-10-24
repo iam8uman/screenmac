@@ -7,11 +7,13 @@ import { useEffect, useState } from "react";
 import { Logo } from "@/components/brand/Logo";
 import { LinkButton } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
-import { primaryCta } from "@/lib/product";
+import { GitHubMark } from "@/components/install/GitHubMark";
+import { primaryCta, product } from "@/lib/product";
 
 const links = [
   { href: "/#features", label: "Features" },
   { href: "/#how-it-works", label: "How it works" },
+  { href: "/#install", label: "Install" },
   { href: "/pricing", label: "Pricing" },
   { href: "/editor", label: "Editor" },
 ];
@@ -67,7 +69,15 @@ export function SiteHeader() {
             );
           })}
         </nav>
-        <div className="hidden md:block">
+        <div className="hidden items-center gap-2 md:flex">
+          <a
+            href={product.repoUrl}
+            aria-label="Screenmac on GitHub"
+            className="inline-flex h-8 items-center gap-1.5 rounded-full px-3 text-sm text-ink-muted transition-colors hover:bg-paper-sunk hover:text-ink"
+          >
+            <GitHubMark className="size-4" />
+            <span className="hidden lg:inline">GitHub</span>
+          </a>
           <LinkButton href={cta.href} size="sm">
             {cta.label}
           </LinkButton>
@@ -95,6 +105,10 @@ export function SiteHeader() {
               {link.label}
             </Link>
           ))}
+          <a href={product.repoUrl} className="flex items-center gap-2 rounded-lg px-2 py-3 text-[1.05rem] text-ink hover:bg-paper-sunk">
+            <GitHubMark className="size-4" />
+            GitHub
+          </a>
           <LinkButton href={cta.href} className="mt-3" onClick={() => setOpen(false)}>
             {cta.label}
           </LinkButton>

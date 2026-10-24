@@ -22,7 +22,7 @@ export const plans: Plan[] = [
     cadence: "for everyone in the Mac beta",
     summary: "The full local workflow on your Mac. No account, no watermark, no time limit during the beta.",
     available: true,
-    cta: { label: "Join the Mac beta", href: "/download" },
+    cta: { label: "Download for Mac", href: "/download" },
     features: [
       "Area, window, and full-screen capture",
       "All fourteen annotation tools",

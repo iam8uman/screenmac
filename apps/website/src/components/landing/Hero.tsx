@@ -30,7 +30,7 @@ export function Hero() {
               </LinkButton>
             </div>
             <p className="mt-4 text-sm text-ink-faint">
-              Free while in beta. Needs macOS {product.minimumMacOS} or later.
+              Version {product.version}, free while in beta. macOS {product.minimumMacOS}+, Apple silicon and Intel.
             </p>
           </div>
           <dl className="grid grid-cols-3 gap-x-6 gap-y-2 text-sm md:grid-cols-1 md:text-right" aria-label="Default shortcuts">

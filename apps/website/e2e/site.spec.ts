@@ -8,11 +8,31 @@ test("landing page explains the product and every primary CTA has a destination"
   await page.getByRole("main").getByRole("link", { name: "Try the editor" }).click();
   await expect(page).toHaveURL(/#editor$/);
 
-  const ctas = page.getByRole("link", { name: "Join the Mac beta" });
+  const ctas = page.getByRole("link", { name: "Download for Mac" });
   expect(await ctas.count()).toBeGreaterThan(1);
   for (const href of await ctas.evaluateAll((links) => links.map((l) => l.getAttribute("href")))) {
-    expect(href).toBe("/download");
+    expect(["/#install", "/download"]).toContain(href);
   }
+});
+
+test("install section offers the one-liner, a real download, and the script", async ({ page, context, browserName }) => {
+  await page.goto("/#install");
+  const install = page.locator("#install");
+  await expect(install.getByRole("heading", { name: "Install in a minute." })).toBeVisible();
+  await expect(install.getByTestId("install-command")).toHaveText("curl -fsSL https://screenmac.vercel.app/install.sh | bash");
+  await expect(install.getByRole("link", { name: "Download Screenmac.zip" })).toHaveAttribute(
+    "href",
+    "https://github.com/iam8uman/screenmac/releases/latest/download/Screenmac.zip",
+  );
+  if (browserName === "chromium") {
+    await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+    await install.getByRole("button", { name: "Copy install command" }).click();
+    await expect(install.getByRole("button", { name: "Copied" })).toBeVisible();
+    expect(await page.evaluate(() => navigator.clipboard.readText())).toContain("install.sh | bash");
+  }
+  const script = await page.request.get("/install.sh");
+  expect(script.status()).toBe(200);
+  expect(await script.text()).toContain("releases/latest/download/Screenmac.zip");
 });
 
 test("primary navigation reaches real sections and pages", async ({ page }) => {
@@ -65,22 +85,16 @@ test("FAQ opens and matches the privacy claims", async ({ page }) => {
   await expect(page.getByText(/never sent to a server/)).toBeVisible();
 });
 
-test("download page is honest that there is no build and the waitlist reports real outcomes", async ({ page }) => {
+test("download page offers the real build and the waitlist API never fakes success", async ({ page }) => {
   await page.goto("/download");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("The Mac app isn't ready to download yet.");
-  await expect(page.getByRole("link", { name: /download for mac/i })).toHaveCount(0);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Install in a minute.");
+  await expect(page.getByRole("link", { name: "Download Screenmac.zip" })).toHaveAttribute("href", /releases\/latest\/download\/Screenmac\.zip$/);
+  await expect(page.getByRole("link", { name: "View the source" })).toHaveAttribute("href", "https://github.com/iam8uman/screenmac");
 
-  const form = page.locator("main form").first();
-  await form.getByLabel("Email address").fill("not-an-email");
-  await form.getByRole("button", { name: "Join the beta list" }).click();
-  await expect(form.getByRole("status")).toHaveText("Enter a valid email address.");
-  await expect(form.getByLabel("Email address")).toHaveAttribute("aria-invalid", "true");
-
-  await form.getByLabel("Email address").fill("dev@example.com");
-  await form.getByRole("button", { name: "Join the beta list" }).click();
   // No webhook is configured in tests, so the API must say so rather than claim success.
-  await expect(form.getByRole("status")).toContainText("not configured", { timeout: 20_000 });
-  await expect(form.getByRole("status")).not.toContainText("You're on the list");
+  const response = await page.request.post("/api/waitlist", { data: { email: "dev@example.com" } });
+  expect(response.status()).toBe(503);
+  expect(JSON.stringify(await response.json())).toContain("not configured");
 });
 
 test("keyboard users can skip to content and see focus", async ({ page }) => {

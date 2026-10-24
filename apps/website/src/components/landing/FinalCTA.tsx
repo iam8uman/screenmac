@@ -14,14 +14,19 @@ export function FinalCTA() {
         </h2>
         <p className="mt-4 max-w-xl text-lg leading-8 text-white/80">
           {ready
-            ? `A signed build for macOS ${product.minimumMacOS} and later.`
+            ? `Version ${product.version} for macOS ${product.minimumMacOS} and later. Free while in beta, Apple silicon and Intel.`
             : "We'll email you once when there's a signed beta build to download. Nothing else."}
         </p>
         <div className="mt-8 max-w-xl">
           {ready && product.downloadUrl ? (
-            <LinkButton href={product.downloadUrl} size="lg" className="bg-white text-ink hover:bg-white/90">
-              Download for Mac
-            </LinkButton>
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <LinkButton href="/#install" size="lg" className="bg-white text-ink hover:bg-white/90">
+                Download for Mac
+              </LinkButton>
+              <LinkButton href={product.repoUrl} size="lg" className="bg-white/10 text-white ring-1 ring-white/25 hover:bg-white/20">
+                View on GitHub
+              </LinkButton>
+            </div>
           ) : (
             <WaitlistForm tone="accent" id="cta-email" />
           )}
