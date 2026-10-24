@@ -41,7 +41,12 @@ const EFFECTS = new Set(["blur", "pixelate"]);
 
 function Section({ title, children, className }: { title: string; children: ReactNode; className?: string }) {
   return (
-    <section className={cn("flex shrink-0 flex-col gap-2.5 lg:border-b lg:border-stage-line lg:px-4 lg:py-4", className)}>
+    <section
+      className={cn(
+        "flex min-w-0 flex-col gap-2.5 border-b border-stage-line pb-3.5 max-lg:last:border-b-0 max-lg:last:pb-0 lg:px-4 lg:py-4",
+        className,
+      )}
+    >
       <h3 className="text-xs font-medium text-stage-ink-muted">{title}</h3>
       {children}
     </section>
@@ -122,7 +127,7 @@ export function Inspector(props: InspectorProps) {
   return (
     <aside
       aria-label="Inspector"
-      className="flex shrink-0 gap-5 overflow-x-auto border-t border-stage-line px-4 py-3 sm-scrollbar-none lg:w-[248px] lg:flex-col lg:gap-0 lg:overflow-y-auto lg:overflow-x-hidden lg:border-l lg:border-t-0 lg:p-0"
+      className="flex shrink-0 flex-col gap-3.5 border-t border-stage-line px-4 py-3 lg:w-[248px] lg:gap-0 lg:overflow-y-auto lg:border-l lg:border-t-0 lg:p-0"
     >
       {cropMode ? (
         <Section title="Crop">
@@ -256,7 +261,7 @@ export function Inspector(props: InspectorProps) {
       ) : null}
 
       {!cropMode ? (
-        <Section title="Background" className="lg:border-b-0">
+        <Section title="Background" className="order-first lg:order-none lg:border-b-0">
           <div role="radiogroup" aria-label="Background" className="flex flex-wrap gap-1.5">
             {BACKDROPS.map((preset) => {
               const active = props.backdrop.id === preset.id;
@@ -282,7 +287,7 @@ export function Inspector(props: InspectorProps) {
             })}
           </div>
           {props.backdrop.id !== "none" ? (
-            <div className="flex min-w-48 flex-col gap-2">
+            <div className="flex w-full min-w-0 flex-col gap-2">
               <label className="flex items-center justify-between text-xs text-stage-ink-muted">
                 Padding
                 <span className="font-mono text-stage-ink">{props.backdrop.padding}%</span>

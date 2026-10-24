@@ -17,11 +17,16 @@ export function Hero() {
       <div className="mx-auto flex w-full max-w-5xl flex-col items-center">
         <Link
           href="/#install"
-          className="sm-rise group inline-flex max-w-full items-center gap-3 rounded-full bg-paper-raised py-1.5 pl-4 pr-1.5 text-left text-sm text-ink-muted ring-1 ring-inset ring-line transition-[background-color,color] duration-150 hover:bg-paper-sunk hover:text-ink"
+          className="sm-rise group inline-flex max-w-full items-center gap-3 rounded-2xl bg-paper-raised py-2 pl-4 pr-1.5 text-left text-sm leading-5 text-ink-muted ring-1 ring-inset ring-line transition-[background-color,color] duration-150 hover:bg-paper-sunk hover:text-ink sm:rounded-full sm:py-1.5 sm:leading-normal"
         >
-          <span>
-            <span className="font-medium text-ink">Free for macOS</span>, with
-            the source on GitHub. Install it in one line
+          <span className="min-w-0">
+            <span className="font-medium text-ink">Free for macOS</span>
+            <span className="hidden sm:inline">, with the source on GitHub. Install it in one line</span>
+            <span className="sm:hidden">
+              , with the source on GitHub.
+              <br />
+              Install it in one line
+            </span>
           </span>
           <span
             className="grid size-7 shrink-0 place-items-center rounded-full bg-paper-sunk transition-transform duration-200 ease-out group-hover:translate-x-0.5"

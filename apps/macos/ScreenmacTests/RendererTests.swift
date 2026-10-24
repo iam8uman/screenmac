@@ -68,6 +68,19 @@ final class RendererTests: XCTestCase {
         XCTAssertEqual(Array(pixel(out, 10, 49).prefix(3)), [255, 255, 255])
     }
 
+    func testBackdropAddsPaddingAndPaintsFrame() throws {
+        let base = solidImage()
+        var doc = EditorDocument()
+        doc.backdrop = Backdrop(id: .violet, padding: 10, radius: 16, shadow: false)
+        let out = try XCTUnwrap(Renderer.flatten(doc, base: base, effects: EffectCache(base: base)))
+        XCTAssertEqual(out.width, 240)
+        XCTAssertEqual(out.height, 140)
+        let frame = pixel(out, 2, 2)
+        XCTAssertNotEqual(Array(frame.prefix(3)), [255, 0, 0], "padding is the backdrop, not the capture")
+        XCTAssertGreaterThan(Int(frame[2]), 180, "Iris starts blue-violet")
+        XCTAssertEqual(Array(pixel(out, 30, 30).prefix(3)), [255, 0, 0], "screenshot pixels stay inside the frame")
+    }
+
     func testCropChangesOutputSize() throws {
         let base = solidImage()
         var doc = EditorDocument()

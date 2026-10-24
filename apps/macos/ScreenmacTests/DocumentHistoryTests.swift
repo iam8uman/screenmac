@@ -68,6 +68,18 @@ final class DocumentHistoryTests: XCTestCase {
         XCTAssertTrue(h.canRedo)
     }
 
+    func testBackdropChangeIsUndoable() {
+        var h = DocumentHistory()
+        var next = EditorDocument()
+        next.backdrop.id = .violet
+        h.commit(next)
+        XCTAssertEqual(h.present.backdrop.id, .violet)
+        h.undo()
+        XCTAssertEqual(h.present.backdrop.id, .none)
+        h.redo()
+        XCTAssertEqual(h.present.backdrop.id, .violet)
+    }
+
     func testHistoryIsCapped() {
         var h = DocumentHistory()
         for n in 1...(DocumentHistory.limit + 20) { h.commit(doc(n % 7 == 0 ? n : n)) }

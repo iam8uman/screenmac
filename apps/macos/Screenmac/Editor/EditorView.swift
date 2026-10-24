@@ -85,7 +85,9 @@ struct EditorView: View {
             .padding(2)
             .background(RoundedRectangle(cornerRadius: 8).strokeBorder(Color.white.opacity(0.1)))
 
-            let size = (model.document.crop ?? model.fullRect).size
+            let size = model.tool == .crop
+                ? (model.pendingCrop ?? model.fullRect).size
+                : model.outputLayout.outputSize
             Text("\(Int(size.width)) × \(Int(size.height))")
                 .font(.system(size: 11.5, design: .monospaced))
                 .foregroundStyle(.secondary)
@@ -179,6 +181,7 @@ private struct InspectorView: View {
                         }
                     }
                     if model.selected != nil { selectionSection }
+                    backgroundSection
                 }
             }
             .padding(16)
@@ -278,6 +281,80 @@ private struct InspectorView: View {
                 IconButton(symbol: "square.3.layers.3d.top.filled", label: "Bring to Front") { model.bringToFront() }
                 IconButton(symbol: "square.3.layers.3d.bottom.filled", label: "Send to Back") { model.sendToBack() }
                 IconButton(symbol: "trash", label: "Delete") { model.deleteSelection() }
+            }
+        }
+    }
+
+    private var backgroundSection: some View {
+        section("Background") {
+            HStack(spacing: 6) {
+                ForEach(BackdropID.allCases) { id in
+                    let active = model.document.backdrop.id == id
+                    Button { model.setBackdropID(id) } label: {
+                        ZStack {
+                            if let stops = id.stops {
+                                LinearGradient(
+                                    colors: [Color(nsColor: stops.0.nsColor), Color(nsColor: stops.1.nsColor)],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                )
+                            } else {
+                                Color.clear
+                                Rectangle()
+                                    .fill(Color.white.opacity(0.4))
+                                    .frame(width: 22, height: 1)
+                                    .rotationEffect(.degrees(-45))
+                            }
+                        }
+                        .frame(width: 28, height: 28)
+                        .clipShape(RoundedRectangle(cornerRadius: 6, style: .continuous))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 6, style: .continuous)
+                                .strokeBorder(Color.white.opacity(active ? 1 : 0.18), lineWidth: active ? 2 : 1)
+                        )
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel(id == .none ? "No background" : "\(id.label) background")
+                    .accessibilityAddTraits(active ? .isSelected : [])
+                    .help(id.label)
+                }
+            }
+            if model.document.backdrop.id != .none {
+                VStack(alignment: .leading, spacing: 8) {
+                    HStack {
+                        Text("Padding").font(.system(size: 11.5)).foregroundStyle(.secondary)
+                        Spacer()
+                        Text("\(model.document.backdrop.padding)%")
+                            .font(.system(size: 11.5, design: .monospaced))
+                    }
+                    Slider(
+                        value: Binding(
+                            get: { Double(model.document.backdrop.padding) },
+                            set: { value in
+                                var next = model.document.backdrop
+                                next.padding = Int(value.rounded())
+                                model.setBackdrop(next)
+                            }
+                        ),
+                        in: 2...16,
+                        step: 1
+                    )
+                    .tint(Color(red: 0.549, green: 0.502, blue: 1))
+                    .accessibilityLabel("Background padding")
+                    Toggle(
+                        "Shadow",
+                        isOn: Binding(
+                            get: { model.document.backdrop.shadow },
+                            set: { value in
+                                var next = model.document.backdrop
+                                next.shadow = value
+                                model.setBackdrop(next)
+                            }
+                        )
+                    )
+                    .toggleStyle(.checkbox)
+                    .font(.system(size: 11.5))
+                }
             }
         }
     }

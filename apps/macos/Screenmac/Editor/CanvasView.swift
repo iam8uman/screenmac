@@ -54,11 +54,12 @@ final class CanvasView: NSView, NSTextFieldDelegate {
     override var acceptsFirstResponder: Bool { true }
     override func acceptsFirstMouse(for event: NSEvent?) -> Bool { true }
 
-    /// Size the view to the visible region (crop, or whole image while cropping).
+    /// Size the view to the output bitmap (screenshot plus backdrop padding).
     func syncFrame() {
-        let visible = model.visibleRect
-        let size = CGSize(width: visible.width / pixelsPerPoint, height: visible.height / pixelsPerPoint)
+        let layout = model.outputLayout
+        let size = CGSize(width: layout.outputSize.width / pixelsPerPoint, height: layout.outputSize.height / pixelsPerPoint)
         if frame.size != size { setFrameSize(size) }
+        layer?.shadowOpacity = layout.framed ? 0 : 0.35
         needsDisplay = true
     }
 
@@ -67,13 +68,13 @@ final class CanvasView: NSView, NSTextFieldDelegate {
     private var tolerance: CGFloat { 7 * pixelsPerPoint / magnification }
 
     private func toImage(_ viewPoint: CGPoint) -> CGPoint {
-        let o = model.visibleRect.origin
-        return CGPoint(x: viewPoint.x * pixelsPerPoint + o.x, y: viewPoint.y * pixelsPerPoint + o.y)
+        let output = CGPoint(x: viewPoint.x * pixelsPerPoint, y: viewPoint.y * pixelsPerPoint)
+        return model.outputLayout.imagePoint(fromOutput: output)
     }
 
     private func toView(_ imagePoint: CGPoint) -> CGPoint {
-        let o = model.visibleRect.origin
-        return CGPoint(x: (imagePoint.x - o.x) / pixelsPerPoint, y: (imagePoint.y - o.y) / pixelsPerPoint)
+        let output = model.outputLayout.outputPoint(fromImage: imagePoint)
+        return CGPoint(x: output.x / pixelsPerPoint, y: output.y / pixelsPerPoint)
     }
 
     private func toView(_ r: CGRect) -> CGRect {
@@ -89,14 +90,13 @@ final class CanvasView: NSView, NSTextFieldDelegate {
 
     override func draw(_ dirtyRect: NSRect) {
         guard let ctx = NSGraphicsContext.current?.cgContext else { return }
-        let visible = model.visibleRect
+        let layout = model.outputLayout
         ctx.saveGState()
         ctx.scaleBy(x: 1 / pixelsPerPoint, y: 1 / pixelsPerPoint)
-        ctx.translateBy(x: -visible.minX, y: -visible.minY)
         var options = Renderer.Options()
         options.extra = draft
         if let editing = editingText, !editing.isNew { options.hiddenIDs = [editing.id] }
-        Renderer.draw(model.document, base: model.base, baseImage: model.baseImage, effects: model.effects, options: options)
+        Renderer.drawOutput(model.document, base: model.base, baseImage: model.baseImage, effects: model.effects, layout: layout, options: options)
         ctx.restoreGState()
 
         if model.tool == .crop { drawCropOverlay() } else { drawSelection() }
@@ -558,20 +558,21 @@ struct CanvasContainer: NSViewRepresentable {
         weak var canvas: CanvasView?
         private var cancellables: Set<AnyCancellable> = []
         private var didInitialFit = false
-        private var lastVisible: CGRect = .zero
+        private var lastOutput: CGSize = .zero
 
         func attach(scroll: NSScrollView, canvas: CanvasView, model: EditorViewModel) {
             self.scroll = scroll
             self.canvas = canvas
-            lastVisible = model.visibleRect
+            lastOutput = model.outputLayout.outputSize
 
             model.objectWillChange
                 .receive(on: RunLoop.main)
                 .sink { [weak self, weak model] in
                     guard let self, let model, let canvas = self.canvas else { return }
                     canvas.syncFrame()
-                    if model.visibleRect != self.lastVisible {
-                        self.lastVisible = model.visibleRect
+                    let output = model.outputLayout.outputSize
+                    if output != self.lastOutput {
+                        self.lastOutput = output
                         self.fit()
                     }
                 }

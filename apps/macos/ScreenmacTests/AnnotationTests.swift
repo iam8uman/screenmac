@@ -53,6 +53,34 @@ final class AnnotationTests: XCTestCase {
         XCTAssertEqual(Tool.allCases.count, 14)
     }
 
+    func testLayoutWithoutBackdropMatchesImage() {
+        let layout = OutputLayout.compute(crop: nil, backdrop: .default, imageSize: CGSize(width: 1600, height: 1000))
+        XCTAssertEqual(layout.outputSize, CGSize(width: 1600, height: 1000))
+        XCTAssertEqual(layout.offset, .zero)
+        XCTAssertFalse(layout.framed)
+    }
+
+    func testLayoutAddsProportionalPadding() {
+        var backdrop = Backdrop.default
+        backdrop.id = .violet
+        backdrop.padding = 5
+        let layout = OutputLayout.compute(crop: nil, backdrop: backdrop, imageSize: CGSize(width: 1600, height: 1000))
+        XCTAssertEqual(layout.offset.x, 80)
+        XCTAssertEqual(layout.outputSize, CGSize(width: 1760, height: 1160))
+        XCTAssertTrue(layout.framed)
+    }
+
+    func testLayoutMapsOutputToImageThroughPadding() {
+        var backdrop = Backdrop.default
+        backdrop.id = .mint
+        backdrop.padding = 5
+        let crop = CGRect(x: 200, y: 100, width: 400, height: 300)
+        let layout = OutputLayout.compute(crop: crop, backdrop: backdrop, imageSize: CGSize(width: 1600, height: 1000))
+        XCTAssertEqual(layout.offset.x, 20)
+        XCTAssertEqual(layout.imagePoint(fromOutput: CGPoint(x: 20, y: 20)), crop.origin)
+        XCTAssertEqual(layout.outputPoint(fromImage: crop.origin), CGPoint(x: 20, y: 20))
+    }
+
     func testSimplifyKeepsEndpoints() {
         let points = (0...100).map { CGPoint(x: CGFloat($0) * 0.1, y: 0) }
         let simplified = simplifyStroke(points, minDistance: 2)

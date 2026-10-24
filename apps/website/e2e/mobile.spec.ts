@@ -1,5 +1,13 @@
 import { expect, test } from "@playwright/test";
-import { annotationCount, dragOnCanvas, tool, waitForEditor } from "./helpers";
+import { annotationCount, dragOnCanvas, editor, tool, waitForEditor } from "./helpers";
+
+test("hero pill wraps on a sentence, not mid-word", async ({ page }) => {
+  await page.goto("/");
+  const pill = page.getByRole("link", { name: /Free for macOS/ });
+  await expect(pill).toContainText("Install it in one line");
+  const overflow = await pill.evaluate((el) => el.scrollWidth - el.clientWidth);
+  expect(overflow).toBeLessThanOrEqual(1);
+});
 
 test("mobile menu opens, navigates, and closes", async ({ page }) => {
   await page.goto("/");
@@ -25,6 +33,17 @@ test("the editor works with touch-sized layout", async ({ page }) => {
   await tool(page, "Rectangle").click();
   await dragOnCanvas(page, [0.2, 0.2], [0.6, 0.6]);
   await expect.poll(() => annotationCount(page)).toBe(before + 1);
+});
+
+test("background presets are on screen and change the frame", async ({ page }) => {
+  await page.goto("/");
+  await waitForEditor(page);
+  const dusk = editor(page).getByRole("radio", { name: "Dusk background" });
+  await dusk.scrollIntoViewIfNeeded();
+  await expect(dusk).toBeVisible();
+  await dusk.click();
+  await expect(dusk).toBeChecked();
+  await expect(editor(page).getByRole("radio", { name: "Iris background" })).not.toBeChecked();
 });
 
 test("phone visitors can send the install link to their Mac", async ({ page, context }) => {

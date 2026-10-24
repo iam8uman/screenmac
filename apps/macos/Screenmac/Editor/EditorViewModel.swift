@@ -53,6 +53,11 @@ final class EditorViewModel: ObservableObject {
     /// The region the canvas shows: the full image while cropping, otherwise the crop.
     var visibleRect: CGRect { tool == .crop ? fullRect : (document.crop ?? fullRect) }
 
+    /// Output layout for the canvas and status bar. Crop mode hides the frame so the whole image is selectable.
+    var outputLayout: OutputLayout {
+        document.layout(imageSize: imageSize, ignoreBackdrop: tool == .crop)
+    }
+
     var selected: Annotation? { selectedID.flatMap { document.annotation($0) } }
 
     init(image: CGImage, sourceURL: URL?, title: String) {
@@ -196,6 +201,19 @@ final class EditorViewModel: ObservableObject {
     private static let pixelTable: [Int: CGFloat] = [1: 9, 2: 15, 3: 26]
     var blurRadius: CGFloat { Self.blurTable[effectStrength, default: 14] * unit }
     var pixelBlock: CGFloat { Self.pixelTable[effectStrength, default: 15] * unit }
+
+    func setBackdrop(_ backdrop: Backdrop) {
+        var doc = document
+        guard doc.backdrop != backdrop else { return }
+        doc.backdrop = backdrop
+        commit(doc)
+    }
+
+    func setBackdropID(_ id: BackdropID) {
+        var next = document.backdrop
+        next.id = id
+        setBackdrop(next)
+    }
 
     // MARK: - Crop
 

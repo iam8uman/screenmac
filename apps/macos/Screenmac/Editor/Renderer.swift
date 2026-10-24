@@ -89,23 +89,69 @@ enum Renderer {
         }
     }
 
-    /// Flatten the document into a new bitmap at full resolution (crop applied).
+    /// Backdrop + clipped screenshot + marks, in output pixels. Same path for the canvas and export.
+    static func drawOutput(
+        _ document: EditorDocument,
+        base: CGImage,
+        baseImage: NSImage,
+        effects: EffectCache,
+        layout: OutputLayout,
+        options: Options = Options()
+    ) {
+        paintBackdrop(layout.framed ? document.backdrop : .default, layout: layout)
+        NSGraphicsContext.saveGraphicsState()
+        let shot = CGRect(origin: layout.offset, size: layout.view.size)
+        let radius = min(layout.radius, shot.width / 2, shot.height / 2)
+        if radius > 0 {
+            NSBezierPath(roundedRect: shot, xRadius: radius, yRadius: radius).addClip()
+        } else {
+            NSBezierPath(rect: shot).addClip()
+        }
+        NSGraphicsContext.current?.cgContext.translateBy(
+            x: layout.offset.x - layout.view.minX,
+            y: layout.offset.y - layout.view.minY
+        )
+        draw(document, base: base, baseImage: baseImage, effects: effects, options: options)
+        NSGraphicsContext.restoreGraphicsState()
+    }
+
+    static func paintBackdrop(_ backdrop: Backdrop, layout: OutputLayout) {
+        guard let stops = backdrop.id.stops else { return }
+        let rect = CGRect(origin: .zero, size: layout.outputSize)
+        if let gradient = NSGradient(starting: stops.0.nsColor, ending: stops.1.nsColor) {
+            gradient.draw(from: .zero, to: CGPoint(x: layout.outputSize.width, y: layout.outputSize.height), options: [])
+        } else {
+            stops.0.nsColor.setFill()
+            rect.fill()
+        }
+        if backdrop.shadow {
+            let longEdge = max(layout.view.width, layout.view.height)
+            withShadow(blur: longEdge * 0.04, offset: longEdge * 0.014, alpha: 0.35) {
+                NSColor.black.setFill()
+                let shot = CGRect(origin: layout.offset, size: layout.view.size)
+                let radius = min(layout.radius, shot.width / 2, shot.height / 2)
+                NSBezierPath(roundedRect: shot, xRadius: max(0, radius), yRadius: max(0, radius)).fill()
+            }
+        }
+    }
+
+    /// Flatten the document into a new bitmap at full resolution (crop and backdrop applied).
     static func flatten(_ document: EditorDocument, base: CGImage, effects: EffectCache) -> CGImage? {
-        let full = CGRect(x: 0, y: 0, width: base.width, height: base.height)
-        let crop = (document.crop ?? full).integral.intersection(full)
-        guard crop.width >= 1, crop.height >= 1 else { return nil }
-        let width = Int(crop.width), height = Int(crop.height)
+        let imageSize = CGSize(width: base.width, height: base.height)
+        let layout = document.layout(imageSize: imageSize)
+        let width = Int(layout.outputSize.width)
+        let height = Int(layout.outputSize.height)
+        guard width >= 1, height >= 1 else { return nil }
         guard let space = CGColorSpace(name: CGColorSpace.sRGB),
               let ctx = CGContext(data: nil, width: width, height: height, bitsPerComponent: 8, bytesPerRow: 0, space: space,
                                   bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)
         else { return nil }
         ctx.translateBy(x: 0, y: CGFloat(height))
         ctx.scaleBy(x: 1, y: -1)
-        ctx.translateBy(x: -crop.minX, y: -crop.minY)
         let nsContext = NSGraphicsContext(cgContext: ctx, flipped: true)
         NSGraphicsContext.saveGraphicsState()
         NSGraphicsContext.current = nsContext
-        draw(document, base: base, baseImage: NSImage(cgImage: base, size: full.size), effects: effects)
+        drawOutput(document, base: base, baseImage: NSImage(cgImage: base, size: imageSize), effects: effects, layout: layout)
         NSGraphicsContext.restoreGraphicsState()
         return ctx.makeImage()
     }

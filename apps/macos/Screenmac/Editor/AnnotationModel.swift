@@ -129,6 +129,80 @@ struct RGBA: Equatable, Hashable, Sendable {
     static let redactFill = RGBA(hex: 0x0E0E12)
 }
 
+/// Screenshot frame behind the capture. Geometry stays in image pixels; padding
+/// only changes the output bitmap.
+enum BackdropID: String, CaseIterable, Identifiable, Sendable {
+    case none, violet, dusk, mint, sand, graphite
+
+    var id: String { rawValue }
+
+    var label: String {
+        switch self {
+        case .none: return "None"
+        case .violet: return "Iris"
+        case .dusk: return "Dusk"
+        case .mint: return "Mint"
+        case .sand: return "Sand"
+        case .graphite: return "Graphite"
+        }
+    }
+
+    /// Top-left → bottom-right gradient, matching the browser editor. Nil for none.
+    var stops: (RGBA, RGBA)? {
+        switch self {
+        case .none: return nil
+        case .violet: return (RGBA(hex: 0x6D6BFF), RGBA(hex: 0xC3B5FF))
+        case .dusk: return (RGBA(hex: 0xFF8E6E), RGBA(hex: 0x8A5CF6))
+        case .mint: return (RGBA(hex: 0x9BEBC8), RGBA(hex: 0x3A9F8C))
+        case .sand: return (RGBA(hex: 0xF6EBDA), RGBA(hex: 0xDDBF96))
+        case .graphite: return (RGBA(hex: 0x3A3A44), RGBA(hex: 0x121217))
+        }
+    }
+}
+
+struct Backdrop: Equatable, Sendable {
+    var id: BackdropID = .none
+    /// Padding around the screenshot as a percentage of its longer edge.
+    var padding: Int = 7
+    /// Corner radius at a 1600px reference width.
+    var radius: CGFloat = 16
+    var shadow: Bool = true
+
+    static let `default` = Backdrop()
+}
+
+/// Output bitmap size and where the screenshot sits inside it.
+struct OutputLayout: Equatable, Sendable {
+    var view: CGRect
+    var offset: CGPoint
+    var outputSize: CGSize
+    var radius: CGFloat
+
+    var framed: Bool { offset.x > 0 || offset.y > 0 }
+
+    static func compute(crop: CGRect?, backdrop: Backdrop, imageSize: CGSize) -> OutputLayout {
+        let view = crop ?? CGRect(origin: .zero, size: imageSize)
+        let framed = backdrop.id != .none
+        let longEdge = max(view.width, view.height)
+        let pad = framed ? (CGFloat(backdrop.padding) / 100 * longEdge).rounded() : 0
+        let radius = framed ? (backdrop.radius * (longEdge / 1600)).rounded() : 0
+        return OutputLayout(
+            view: view,
+            offset: CGPoint(x: pad, y: pad),
+            outputSize: CGSize(width: max(1, (view.width + pad * 2).rounded()), height: max(1, (view.height + pad * 2).rounded())),
+            radius: radius
+        )
+    }
+
+    func imagePoint(fromOutput point: CGPoint) -> CGPoint {
+        CGPoint(x: point.x - offset.x + view.minX, y: point.y - offset.y + view.minY)
+    }
+
+    func outputPoint(fromImage point: CGPoint) -> CGPoint {
+        CGPoint(x: point.x - view.minX + offset.x, y: point.y - view.minY + offset.y)
+    }
+}
+
 /// Fine / Medium / Bold, scaled to the image so marks look the same on 1× and Retina captures.
 enum StrokeSize: Int, CaseIterable, Identifiable, Sendable {
     case fine = 4, medium = 7, bold = 11
@@ -196,6 +270,11 @@ struct EditorDocument: Equatable, Sendable {
     var annotations: [Annotation] = []
     /// Crop in image pixels, or nil for the whole image.
     var crop: CGRect?
+    var backdrop: Backdrop = .default
+
+    func layout(imageSize: CGSize, ignoreBackdrop: Bool = false) -> OutputLayout {
+        OutputLayout.compute(crop: crop, backdrop: ignoreBackdrop ? .default : backdrop, imageSize: imageSize)
+    }
 
     func annotation(_ id: UUID) -> Annotation? { annotations.first { $0.id == id } }
 
