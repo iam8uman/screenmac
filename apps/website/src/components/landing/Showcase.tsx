@@ -103,16 +103,16 @@ export function Showcase() {
               setSettled(true);
             }}
           >
-            <div className="rounded-[24px] bg-white/[0.035] p-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.09),0_50px_120px_-40px_rgba(109,92,255,0.55)] md:rounded-[26px] md:p-2">
+            <div className="rounded-[24px] bg-paper-raised p-1.5 shadow-[0_0_0_1px_var(--sm-line),0_50px_100px_-50px_rgba(23,22,28,0.45)] md:rounded-[26px] md:p-2">
               <Editor />
             </div>
           </motion.div>
         </div>
         <div className="mx-auto mt-6 flex max-w-6xl flex-col items-center gap-1.5 px-1 text-center md:mt-7">
-          <h2 id="editor-title" className="text-base font-medium tracking-[-0.01em] text-white">
+          <h2 id="editor-title" className="text-base font-medium tracking-[-0.01em] text-ink">
             This is the real editor. Go ahead.
           </h2>
-          <p className="text-sm text-white/55">Mark up a sample, or drop in your own screenshot. It never leaves your browser.</p>
+          <p className="text-sm text-ink-muted">Mark up a sample, or drop in your own screenshot. It never leaves your browser.</p>
         </div>
       </div>
     </section>

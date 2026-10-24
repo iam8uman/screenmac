@@ -27,12 +27,6 @@
   --color-stage-line: var(--sm-stage-line);
   --color-stage-ink: var(--sm-stage-ink);
   --color-stage-ink-muted: var(--sm-stage-ink-muted);
-  --color-night: var(--sm-night);
-  --color-night-ink: var(--sm-night-ink);
-  --color-night-focus: var(--sm-night-focus);
-  --color-night-accent: var(--sm-night-accent);
-  --color-night-raised: var(--sm-night-raised);
-  --color-night-orb: var(--sm-night-orb);
   --color-signal: var(--sm-signal);
   --color-success: var(--sm-success);
   --color-warning: var(--sm-warning);
@@ -173,32 +167,3 @@
   animation: sm-rise 520ms cubic-bezier(0.23, 1, 0.32, 1) both;
 }
 
-/* The night stage behind the hero, demo and install: faint stars, an iris glow, no images. */
-.sm-night {
-  background-color: var(--sm-night);
-  background-image:
-    radial-gradient(1200px 560px at 50% -120px, var(--sm-night-glow), transparent 70%),
-    radial-gradient(1px 1px at 12% 18%, var(--sm-night-star), transparent 60%),
-    radial-gradient(1px 1px at 27% 62%, var(--sm-night-star-dim), transparent 60%),
-    radial-gradient(1.5px 1.5px at 41% 31%, var(--sm-night-star), transparent 60%),
-    radial-gradient(1px 1px at 58% 12%, var(--sm-night-star), transparent 60%),
-    radial-gradient(1px 1px at 66% 48%, var(--sm-night-star-dim), transparent 60%),
-    radial-gradient(1.5px 1.5px at 79% 24%, var(--sm-night-star), transparent 60%),
-    radial-gradient(1px 1px at 88% 67%, var(--sm-night-star-dim), transparent 60%),
-    radial-gradient(1px 1px at 6% 82%, var(--sm-night-star-dim), transparent 60%),
-    radial-gradient(1px 1px at 94% 9%, var(--sm-night-star), transparent 60%);
-  background-repeat: no-repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat;
-  background-size: auto, 520px 520px, 520px 520px, 520px 520px, 520px 520px, 520px 520px, 520px 520px, 520px 520px, 520px 520px, 520px 520px;
-  color: var(--sm-night-ink);
-  color-scheme: dark;
-  caret-color: var(--sm-night-focus);
-}
-
-.sm-night ::selection {
-  background: var(--sm-night-selection);
-  color: var(--sm-night-ink);
-}
-
-.sm-night :focus-visible {
-  outline-color: var(--sm-night-focus);
-}

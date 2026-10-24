@@ -4,7 +4,14 @@ import { Check, Copy } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 /** A Terminal command with a copy button that confirms, and falls back to selecting the text. */
-export function CopyCommand({ command }: { command: string }) {
+export function CopyCommand({
+  command,
+  tone = "light",
+}: {
+  command: string;
+  tone?: "light" | "onAccent";
+}) {
+  const light = tone === "light";
   const [state, setState] = useState<"idle" | "copied" | "select">("idle");
   const codeRef = useRef<HTMLElement>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -39,11 +46,17 @@ export function CopyCommand({ command }: { command: string }) {
   };
 
   return (
-    <div className="group flex flex-col gap-2 rounded-2xl bg-black/40 p-2 pl-4 ring-1 ring-white/10 focus-within:ring-white/25 sm:flex-row sm:items-center sm:gap-3">
+    <div
+      className={`group flex flex-col gap-2 rounded-2xl p-2 pl-4 ring-1 sm:flex-row sm:items-center sm:gap-3 ${
+        light
+          ? "bg-paper-sunk ring-line focus-within:ring-line-strong"
+          : "bg-black/25 ring-white/15 focus-within:ring-white/30"
+      }`}
+    >
       <div className="flex min-w-0 flex-1 items-start gap-3">
         <span
           aria-hidden="true"
-          className="select-none py-2 font-mono text-sm leading-6 text-night-accent"
+          className={`select-none py-2 font-mono text-sm leading-6 ${light ? "text-accent" : "text-white/70"}`}
         >
           $
         </span>
@@ -51,7 +64,7 @@ export function CopyCommand({ command }: { command: string }) {
           ref={codeRef}
           data-testid="install-command"
           translate="no"
-          className="min-w-0 flex-1 py-2 font-mono text-[0.8rem] leading-6 text-white/90 [overflow-wrap:anywhere] sm:text-[0.84rem]"
+          className={`min-w-0 flex-1 py-2 font-mono text-[0.8rem] leading-6 [overflow-wrap:anywhere] sm:text-[0.84rem] ${light ? "text-ink" : "text-white"}`}
         >
           {command}
         </code>
@@ -59,11 +72,18 @@ export function CopyCommand({ command }: { command: string }) {
       <button
         type="button"
         onClick={copy}
-        className="inline-flex h-10 shrink-0 items-center justify-center gap-1.5 sm:h-9 rounded-xl bg-white px-3.5 text-sm font-medium text-ink transition-[background-color,transform] hover:bg-white/90 active:scale-[0.97]"
+        className={`inline-flex h-10 shrink-0 items-center justify-center gap-1.5 rounded-xl px-3.5 text-sm font-medium transition-[background-color,transform] duration-150 ease-out active:scale-[0.97] sm:h-9 ${
+          light
+            ? "bg-ink text-paper hover:bg-ink/85"
+            : "bg-white text-ink hover:bg-white/90"
+        }`}
         aria-label={state === "copied" ? "Copied" : "Copy install command"}
       >
         {state === "copied" ? (
-          <Check className="size-4 text-success" aria-hidden="true" />
+          <Check
+            className={`size-4 ${light ? "text-paper" : "text-success"}`}
+            aria-hidden="true"
+          />
         ) : (
           <Copy className="size-4" aria-hidden="true" />
         )}

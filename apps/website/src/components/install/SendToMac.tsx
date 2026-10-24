@@ -13,7 +13,11 @@ export function SendToMac() {
   const url = `${product.siteUrl}/#install`;
 
   const send = async () => {
-    const share = { title: "Screenmac for Mac", text: "Install Screenmac on my Mac", url };
+    const share = {
+      title: "Screenmac for Mac",
+      text: "Install Screenmac on my Mac",
+      url,
+    };
     try {
       if (typeof navigator.share === "function") {
         await navigator.share(share);
@@ -34,18 +38,31 @@ export function SendToMac() {
   };
 
   return (
-    <div className="rounded-[20px] bg-white/[0.06] p-5 ring-1 ring-inset ring-white/10 md:hidden" data-testid="send-to-mac">
-      <p className="font-medium text-white">On your phone right now?</p>
-      <p className="mt-1 text-sm leading-6 text-white/60">Send the link to your Mac and install it there.</p>
+    <div
+      className="rounded-[20px] bg-accent-soft p-5 ring-1 ring-inset ring-accent/20 md:hidden"
+      data-testid="send-to-mac"
+    >
+      <p className="font-medium text-ink">On your phone right now?</p>
+      <p className="mt-1 text-sm leading-6 text-ink-muted">
+        Send the link to your Mac and install it there.
+      </p>
       <button
         type="button"
         onClick={send}
-        className="mt-4 inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-white font-medium text-ink transition-[background-color,transform] duration-150 ease-out hover:bg-white/90 active:scale-[0.97]"
+        className="mt-4 inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-ink font-medium text-paper transition-[background-color,transform] duration-150 ease-out hover:bg-ink/85 active:scale-[0.97]"
       >
-        {state === "copied" ? <Check className="size-4 text-success" aria-hidden="true" /> : <Send className="size-4" aria-hidden="true" />}
+        {state === "copied" ? (
+          <Check className="size-4" aria-hidden="true" />
+        ) : (
+          <Send className="size-4" aria-hidden="true" />
+        )}
         {state === "copied" ? "Link copied" : "Send the link to my Mac"}
       </button>
-      <p className="mt-2 min-h-[1lh] text-xs text-white/50" role="status" aria-live="polite">
+      <p
+        className="mt-2 min-h-[1lh] text-xs text-ink-muted"
+        role="status"
+        aria-live="polite"
+      >
         {state === "failed" ? `Couldn't open sharing. The link is ${url}` : ""}
       </p>
     </div>

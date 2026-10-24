@@ -129,14 +129,20 @@ test("the live demo sits under the hero, install sits right under the demo, then
   expect(next).toBe("install");
 });
 
-test("the header is dark over the night stage and light over the rest of the page", async ({ page }) => {
+test("the page is light from the top: header and hero use the paper background", async ({ page }) => {
   await page.goto("/");
-  const header = page.locator("header").first();
-  const bg = () => header.evaluate((el) => getComputedStyle(el).backgroundColor);
-  await expect.poll(bg).toMatch(/rgba?\(8, 8, 11/);
-  await page.locator("#how-it-works").scrollIntoViewIfNeeded();
-  await page.evaluate(() => window.scrollBy(0, 200));
-  await expect.poll(bg).not.toMatch(/rgba?\(8, 8, 11/);
+  const paper = "rgb(245, 244, 239)";
+  const bg = (selector: string) => page.locator(selector).first().evaluate((el) => getComputedStyle(el).backgroundColor);
+  await expect.poll(() => bg("header")).toBe(paper);
+  expect(await page.evaluate(() => getComputedStyle(document.body).backgroundColor)).toBe(paper);
+  const heading = page.getByRole("heading", { level: 1 });
+  expect(await heading.evaluate((el) => getComputedStyle(el).color)).toBe("rgb(23, 22, 28)");
+  // Scrolled anywhere, the header keeps dark text on paper.
+  const link = page.getByRole("navigation", { name: "Primary" }).getByRole("link", { name: "Features" });
+  for (const id of ["editor", "install", "how-it-works"]) {
+    await page.locator(`#${id}`).scrollIntoViewIfNeeded();
+    expect(await link.evaluate((el) => getComputedStyle(el).color)).toBe("rgb(85, 83, 92)");
+  }
 });
 
 test("the hero is headline, pill and actions only", async ({ page }) => {

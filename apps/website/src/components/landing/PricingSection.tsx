@@ -24,7 +24,7 @@ export function PricingSection({ as: Heading = "h2" }: { as?: "h1" | "h2" }) {
               className={cn(
                 "flex flex-col rounded-[20px] p-7 md:p-8",
                 plan.available
-                  ? "bg-stage text-stage-ink shadow-[0_30px_60px_-30px_rgba(23,22,28,0.6)]"
+                  ? "bg-paper-raised text-ink ring-2 ring-accent shadow-[0_30px_60px_-36px_rgba(58,47,184,0.45)]"
                   : "bg-paper-raised text-ink ring-1 ring-line",
               )}
             >
@@ -39,12 +39,12 @@ export function PricingSection({ as: Heading = "h2" }: { as?: "h1" | "h2" }) {
                 ) : null}
               </div>
               <p className="mt-6 text-5xl font-semibold tracking-[-0.04em]">{plan.price}</p>
-              <p className={cn("mt-1 text-sm", plan.available ? "text-stage-ink-muted" : "text-ink-muted")}>{plan.cadence}</p>
-              <p className={cn("mt-5 leading-7", plan.available ? "text-stage-ink-muted" : "text-ink-muted")}>{plan.summary}</p>
+              <p className={cn("mt-1 text-sm", "text-ink-muted")}>{plan.cadence}</p>
+              <p className={cn("mt-5 leading-7", "text-ink-muted")}>{plan.summary}</p>
               <ul className="mt-6 space-y-3 text-[0.9375rem]">
                 {plan.features.map((feature) => (
                   <li key={feature} className="flex gap-3">
-                    <Check className={cn("mt-0.5 size-4 shrink-0", plan.available ? "text-[#a99fff]" : "text-ink-faint")} aria-hidden="true" />
+                    <Check className={cn("mt-0.5 size-4 shrink-0", plan.available ? "text-accent" : "text-ink-faint")} aria-hidden="true" />
                     {feature}
                   </li>
                 ))}

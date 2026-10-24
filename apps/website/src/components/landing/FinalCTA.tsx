@@ -26,7 +26,7 @@ export function FinalCTA() {
         <div className="mt-8 max-w-2xl">
           {ready && product.downloadUrl ? (
             <div className="flex flex-col gap-4">
-              <CopyCommand command={product.installCommand} />
+              <CopyCommand command={product.installCommand} tone="onAccent" />
               <div className="flex flex-col gap-3 sm:flex-row">
                 <LinkButton href="/#install" size="lg" variant="inverse">
                   Download free for Mac
