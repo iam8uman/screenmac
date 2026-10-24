@@ -166,3 +166,31 @@ test("the landing page hydrates cleanly with reduced motion on", async ({ browse
   expect(errors).toEqual([]);
   await context.close();
 });
+
+test("shared links get a large preview image and a real title", async ({ page }) => {
+  await page.goto("/");
+  const meta = (selector: string) => page.locator(selector).first().getAttribute("content");
+  const ogImage = await meta('meta[property="og:image"]');
+  expect(ogImage).toMatch(/^https:\/\/screenmac\.vercel\.app\/opengraph-image\.png/);
+  expect(await meta('meta[property="og:image:width"]')).toBe("1200");
+  expect(await meta('meta[property="og:image:height"]')).toBe("630");
+  expect(await meta('meta[property="og:image:alt"]')).toContain("Screenmac");
+  expect(await meta('meta[property="og:title"]')).toContain("Screenmac");
+  expect(await meta('meta[property="og:url"]')).toBe("https://screenmac.vercel.app");
+  expect(await meta('meta[name="twitter:card"]')).toBe("summary_large_image");
+  expect(await meta('meta[name="twitter:image"]')).toMatch(/twitter-image\.png/);
+
+  // The images the tags point at are really served.
+  for (const path of [new URL(ogImage!).pathname + new URL(ogImage!).search, "/twitter-image.png", "/icon.png", "/apple-icon.png"]) {
+    const res = await page.request.get(path);
+    expect(res.status(), path).toBe(200);
+    expect(res.headers()["content-type"]).toContain("image/png");
+  }
+  expect((await page.request.get("/sitemap.xml")).status()).toBe(200);
+  expect(await (await page.request.get("/robots.txt")).text()).toContain("Sitemap: https://screenmac.vercel.app/sitemap.xml");
+});
+
+test("subpages share the same preview image", async ({ page }) => {
+  await page.goto("/download");
+  expect(await page.locator('meta[property="og:image"]').first().getAttribute("content")).toMatch(/opengraph-image\.png/);
+});

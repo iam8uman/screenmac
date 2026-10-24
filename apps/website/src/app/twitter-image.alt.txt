@@ -1,0 +1,1 @@
+Screenmac: a free, native Mac app for screenshots and screen recordings, shown with its annotation editor marking up a code screenshot.

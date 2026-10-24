@@ -6,6 +6,10 @@ import { SiteHeader } from "@/components/layout/SiteHeader";
 import { product } from "@/lib/product";
 import "./globals.css";
 
+const shareTitle = `${product.name}: free screenshot and screen recording app for Mac`;
+const shareDescription =
+  "Capture an area, a window or the whole screen, mark it up, hide what's private, and share it in seconds. Native, free, no account.";
+
 export const metadata: Metadata = {
   metadataBase: new URL(product.siteUrl),
   title: {
@@ -13,10 +17,20 @@ export const metadata: Metadata = {
     template: `%s · ${product.name}`,
   },
   description: product.description,
+  applicationName: product.name,
+  // The share image itself comes from app/opengraph-image.png and app/twitter-image.png.
   openGraph: {
-    title: `${product.name} — ${product.headline}`,
-    description: product.description,
     type: "website",
+    url: "/",
+    siteName: product.name,
+    locale: "en_US",
+    title: shareTitle,
+    description: shareDescription,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: shareTitle,
+    description: shareDescription,
   },
 };
 
