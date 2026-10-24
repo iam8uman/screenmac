@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>$title$</title>
+  $for(css)$<link rel="stylesheet" href="$css$">
+  $endfor$
+  <style>
+    /* Per-report page footer. Overrides the neutral fallback in the stylesheet.
+       Falls back to the brand name so a client's report never carries another
+       client's name. */
+    @page {
+      @bottom-center {
+        content: "$if(footer_text)$$footer_text$$else$$if(brand_name)$$brand_name$ · GEO Audit$else$GEO Audit$endif$$endif$";
+        font-family: 'Inter', sans-serif;
+        font-size: 7.5pt;
+        color: #94a3b8;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- COVER SECTION -->
+<div id="cover-section">
+  <p class="cover-eyebrow">Generative Engine Optimization Audit</p>
+  <h1>$if(brand_name)$$brand_name$$else$GEO Audit Report$endif$</h1>
+  <p class="cover-domain">$domain$</p>
+
+  <div class="geo-score-badge">
+    <span class="score-number">$if(geo_score)$$geo_score$$else$—$endif$</span>
+    <span class="score-denom">/100</span>
+    <span class="score-label">$score_label$</span>
+  </div>
+
+  <!-- Meta fields render only when supplied. Never default these to sample
+       data — an unset field silently inheriting another client's details is
+       how a report ships with the wrong company on the cover. -->
+  <div class="cover-meta-grid">
+    $if(date)$<div class="cover-meta-item">
+      <span class="label">Audit Date</span>
+      <span class="value">$date$</span>
+    </div>$endif$
+    $if(business_type)$<div class="cover-meta-item">
+      <span class="label">Business Type</span>
+      <span class="value">$business_type$</span>
+    </div>$endif$
+    $if(locations)$<div class="cover-meta-item">
+      <span class="label">Locations</span>
+      <span class="value">$locations$</span>
+    </div>$endif$
+    $if(platform)$<div class="cover-meta-item">
+      <span class="label">Platform</span>
+      <span class="value">$platform$</span>
+    </div>$endif$
+  </div>
+</div>
+
+<!-- REPORT BODY -->
+<div id="content">
+$body$
+</div>
+
+<script>
+// Color-code table cells containing score values (e.g. "40/100", "58/100")
+// and apply severity classes to finding sections
+(function() {
+  function scoreColor(n) {
+    if (n >= 80) return 'excellent';
+    if (n >= 65) return 'good';
+    if (n >= 50) return 'fair';
+    if (n >= 35) return 'poor';
+    return 'critical';
+  }
+
+  // Color-code table cells with "XX/100" patterns
+  document.querySelectorAll('td').forEach(function(td) {
+    var m = td.textContent.match(/^(\d{1,3})\/100$$/);
+    if (m) {
+      var score = parseInt(m[1]);
+      td.classList.add('score-' + scoreColor(score));
+      // Also style the row
+      var tr = td.parentElement;
+      tr.classList.add('score-' + scoreColor(score));
+    }
+  });
+
+  // Style finding sections by detecting severity keywords in h3 headings
+  document.querySelectorAll('h3').forEach(function(h3) {
+    var text = h3.textContent.toLowerCase();
+    var severity = null;
+    if (text.indexOf('critical') !== -1) severity = 'critical';
+    else if (text.indexOf('high priority') !== -1 || (text.indexOf('high') !== -1 && text.indexOf('priority') === -1 && text.indexOf('priority') === -1)) severity = 'high';
+    else if (text.indexOf('medium') !== -1) severity = 'medium';
+    else if (text.indexOf('low') !== -1) severity = 'low';
+
+    if (severity) {
+      // Wrap following paragraphs/lists until next heading
+      var sibling = h3.nextElementSibling;
+      while (sibling && !['H1','H2','H3','H4'].includes(sibling.tagName)) {
+        sibling.classList.add('finding-' + severity);
+        sibling = sibling.nextElementSibling;
+      }
+    }
+  });
+
+  // Add section-break class to major h2s that should start on new page
+  var breakBefore = [
+    'high priority',
+    'medium priority',
+    'generated schema',
+    '90-day roadmap',
+    'component score'
+  ];
+  document.querySelectorAll('h2').forEach(function(h2) {
+    var text = h2.textContent.toLowerCase();
+    breakBefore.forEach(function(kw) {
+      if (text.indexOf(kw) !== -1) h2.classList.add('section-break');
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

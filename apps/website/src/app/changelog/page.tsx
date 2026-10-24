@@ -8,6 +8,17 @@ export const metadata: Metadata = {
 
 const ENTRIES = [
   {
+    date: "2026-10-24",
+    title: "Mac app 0.2.0, the first public beta",
+    items: [
+      "Download Screenmac.zip from GitHub Releases or install with one line in Terminal. One universal build for Apple silicon and Intel, macOS 14 or later.",
+      "Capture an area, a window, or a full screen with global shortcuts, then annotate, copy, or save from the Quick Access preview.",
+      "Screen recording to MP4 with optional microphone, plus local capture history.",
+      "If captures fail after an update, Fix Screen Recording Permission… in the menu bar resets Screenmac's own permission so macOS asks again.",
+      "Every release is built and tested by GitHub Actions and published with a SHA-256 checksum. Builds aren't notarized by Apple yet.",
+    ],
+  },
+  {
     date: "2026-10-23",
     title: "Website and browser editor",
     items: [
@@ -23,7 +34,7 @@ export default function ChangelogPage() {
   return (
     <>
       <PageHeader title="Changelog">
-        <p>Shipped changes only, newest first. The Mac app will appear here with its first public build.</p>
+        <p>Shipped changes only, newest first.</p>
       </PageHeader>
       <div className="px-4 pb-24 md:px-6">
         <ol className="mx-auto max-w-6xl divide-y divide-line border-y border-line">

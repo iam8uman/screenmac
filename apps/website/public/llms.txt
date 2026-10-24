@@ -1,0 +1,32 @@
+# Screenmac
+
+> Screenmac is a free, native macOS app for screenshots and screen recordings: capture an area, a window or a whole display, annotate it, redact what's private, and copy, save or share it. No account, nothing uploaded.
+
+Key facts:
+- Platform: macOS 14 Sonoma or later; one universal build for Apple silicon and Intel.
+- Price: free during the beta. A paid Pro tier is planned but not built and not for sale.
+- Current version: 0.2.0 (beta). Builds are ad-hoc signed and not yet notarized by Apple.
+- Built with SwiftUI, AppKit and Apple's ScreenCaptureKit. Not Electron.
+- Privacy: captures and history stay in a folder on the Mac. There is no upload feature. Redact, blur and pixelate are flattened into the exported pixels.
+- Default shortcuts: Option-Shift-Command-4 area, Option-Shift-Command-2 window, Option-Shift-Command-3 full screen, Option-Shift-Command-5 record.
+- Install: `curl -fsSL https://screenmac.vercel.app/install.sh | bash`, or download Screenmac.zip from GitHub Releases.
+- Source: https://github.com/iam8uman/screenmac (by Suman Sharma).
+
+## Product
+
+- [Home](https://screenmac.vercel.app/): What Screenmac does, a live in-browser annotation editor, install instructions and FAQ.
+- [Download and install](https://screenmac.vercel.app/download): The one-line installer, the zip download, first-launch steps and building from source.
+- [Features](https://screenmac.vercel.app/features): Every capability with its status: in the Mac beta, in the browser editor, or planned.
+- [Browser editor](https://screenmac.vercel.app/editor): The annotation editor running in the browser; open your own screenshot, mark it up and export a PNG.
+- [Pricing](https://screenmac.vercel.app/pricing): Free beta; Pro is listed as not available.
+
+## Releases
+
+- [Latest release](https://github.com/iam8uman/screenmac/releases/latest): Screenmac.zip and its SHA-256 checksum, built by GitHub Actions.
+- [Changelog](https://screenmac.vercel.app/changelog): What changed in each version.
+
+## Optional
+
+- [Support](https://screenmac.vercel.app/support): Help with permissions and common problems.
+- [Privacy](https://screenmac.vercel.app/privacy): What the app and the website do and don't collect.
+- [Terms](https://screenmac.vercel.app/terms): Terms of use.

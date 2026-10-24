@@ -8,11 +8,13 @@ import { HowItWorks } from "@/components/landing/HowItWorks";
 import { PricingSection } from "@/components/landing/PricingSection";
 import { Privacy } from "@/components/landing/Privacy";
 import { Showcase } from "@/components/landing/Showcase";
+import { HomeStructuredData } from "@/components/seo/StructuredData";
 
 
 export default function HomePage() {
   return (
     <>
+      <HomeStructuredData />
       <Hero />
       <Showcase />
       <Install />

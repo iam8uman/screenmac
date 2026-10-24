@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Install } from "@/components/install/Install";
+import { DownloadStructuredData } from "@/components/seo/StructuredData";
 import { LinkButton } from "@/components/ui/Button";
 import { product } from "@/lib/product";
 
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
 export default function DownloadPage() {
   return (
     <>
+      <DownloadStructuredData />
       <Install headingLevel={1} />
       <div className="px-4 py-16 md:px-6 md:py-20">
         <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-2">

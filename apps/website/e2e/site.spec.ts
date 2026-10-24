@@ -194,3 +194,28 @@ test("subpages share the same preview image", async ({ page }) => {
   await page.goto("/download");
   expect(await page.locator('meta[property="og:image"]').first().getAttribute("content")).toMatch(/opengraph-image\.png/);
 });
+
+test("structured data describes the app truthfully and parses", async ({ page }) => {
+  await page.goto("/");
+  const blocks = await page.locator('script[type="application/ld+json"]').allTextContents();
+  const data = blocks.map((b) => JSON.parse(b));
+  const app = data.find((d) => d["@type"] === "SoftwareApplication");
+  expect(app.name).toBe("Screenmac");
+  expect(app.offers.price).toBe("0");
+  expect(app.operatingSystem).toContain("macOS 14");
+  expect(app.downloadUrl).toMatch(/releases\/latest\/download\/Screenmac\.zip$/);
+  expect(app).not.toHaveProperty("aggregateRating");
+  const faq = data.find((d) => d["@type"] === "FAQPage");
+  const onPage = await page.locator("#faq summary").count();
+  expect(faq.mainEntity).toHaveLength(onPage);
+  for (const q of faq.mainEntity) expect(q.acceptedAnswer.text.length).toBeGreaterThan(20);
+});
+
+test("llms.txt and robots.txt welcome search and AI crawlers", async ({ page }) => {
+  const llms = await page.request.get("/llms.txt");
+  expect(llms.status()).toBe(200);
+  expect(await llms.text()).toMatch(/^# Screenmac\n\n> /);
+  const robots = await (await page.request.get("/robots.txt")).text();
+  for (const bot of ["GPTBot", "ClaudeBot", "PerplexityBot"]) expect(robots).toContain(`User-Agent: ${bot}`);
+  expect(robots).not.toMatch(/Disallow: \/\n/);
+});

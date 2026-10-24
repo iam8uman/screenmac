@@ -2,9 +2,11 @@ import { Plus } from "lucide-react";
 import Link from "next/link";
 import { product } from "@/lib/product";
 
-const FAQS: { q: string; a: React.ReactNode }[] = [
+/** `plain` is the answer as plain text, for structured data, when `a` contains links. */
+export const FAQS: { q: string; a: React.ReactNode; plain?: string }[] = [
   {
     q: "Can I download Screenmac today?",
+    plain: `Yes. Version ${product.version} is a free beta. Install it with one line in Terminal or download the zip from GitHub. It isn't notarized by Apple yet, so the first launch of a downloaded copy needs an extra click in System Settings.`,
     a: (
       <>
         Yes. Version {product.version} is a free beta.{" "}
@@ -22,6 +24,8 @@ const FAQS: { q: string; a: React.ReactNode }[] = [
   },
   {
     q: "Is it safe to paste a curl command into Terminal?",
+    plain:
+      "It's worth checking first, and you can: the whole script is about 70 lines at screenmac.vercel.app/install.sh. It downloads the latest release from GitHub, checks it against its published SHA-256, copies Screenmac into Applications and resets only Screenmac's own Screen Recording entry. It never asks for your password.",
     a: (
       <>
         It&apos;s worth checking first, and you can:{" "}
