@@ -11,7 +11,7 @@ export default function PrivacyPage() {
   return (
     <>
       <PageHeader title="Privacy">
-        <p>Last updated 23 October 2026. This describes what Screenmac does today, not plans.</p>
+        <p>Last updated 25 October 2026. This describes what Screenmac does today, not plans.</p>
       </PageHeader>
       <Prose>
         <section>
@@ -43,8 +43,8 @@ export default function PrivacyPage() {
         <section>
           <h2>Analytics</h2>
           <p>
-            This site has no analytics or tracking scripts. If that changes, we will count page views and button use
-            only, never image content, text you type into the editor, or clipboard contents, and this page will say so.
+            This site uses Google Analytics to count page views. It does not collect image content, text you type into
+            the editor, or clipboard contents. The Mac app still does not send captures anywhere.
           </p>
         </section>
         <section>
