@@ -9,7 +9,12 @@ import { PricingSection } from "@/components/landing/PricingSection";
 import { Privacy } from "@/components/landing/Privacy";
 import { Showcase } from "@/components/landing/Showcase";
 import { HomeStructuredData } from "@/components/seo/StructuredData";
+import { shareOpenGraph } from "@/lib/share";
+import type { Metadata } from "next";
 
+export const metadata: Metadata = {
+  openGraph: { ...shareOpenGraph, url: "/" },
+};
 
 export default function HomePage() {
   return (

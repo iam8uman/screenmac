@@ -193,6 +193,19 @@ test("shared links get a large preview image and a real title", async ({ page })
 test("subpages share the same preview image", async ({ page }) => {
   await page.goto("/download");
   expect(await page.locator('meta[property="og:image"]').first().getAttribute("content")).toMatch(/opengraph-image\.png/);
+  expect(await page.locator('meta[property="og:title"]').first().getAttribute("content")).toContain("Screenmac");
+  // A shared subpage must not claim to be the homepage.
+  expect(await page.locator('meta[property="og:url"]').count()).toBe(0);
+});
+
+test("the favicon is Screenmac's own icon", async ({ page }) => {
+  const res = await page.request.get("/favicon.ico");
+  expect(res.status()).toBe(200);
+  const ico = await res.body();
+  // An .ico with 16, 32 and 48 px entries.
+  expect(ico.readUInt16LE(2)).toBe(1);
+  expect(ico.readUInt16LE(4)).toBe(3);
+  expect([0, 1, 2].map((i) => ico.readUInt8(6 + 16 * i))).toEqual([16, 32, 48]);
 });
 
 test("structured data describes the app truthfully and parses", async ({ page }) => {

@@ -6,11 +6,8 @@ import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { product } from "@/lib/product";
+import { shareDescription, shareOpenGraph, shareTitle } from "@/lib/share";
 import "./globals.css";
-
-const shareTitle = `${product.name}: free screenshot and screen recording app for Mac`;
-const shareDescription =
-  "Capture an area, a window or the whole screen, mark it up, hide what's private, and share it in seconds. Native, free, no account.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(product.siteUrl),
@@ -21,14 +18,7 @@ export const metadata: Metadata = {
   description: product.description,
   applicationName: product.name,
   // The share image itself comes from app/opengraph-image.png and app/twitter-image.png.
-  openGraph: {
-    type: "website",
-    url: "/",
-    siteName: product.name,
-    locale: "en_US",
-    title: shareTitle,
-    description: shareDescription,
-  },
+  openGraph: shareOpenGraph,
   twitter: {
     card: "summary_large_image",
     title: shareTitle,
