@@ -21,21 +21,38 @@ enum SelectionResult {
 /// Full-screen overlays (one per display) over frozen snapshots, for picking an area or a window.
 @MainActor
 final class SelectionOverlayController {
-    private let snapshots: [DisplaySnapshot]
-    private let windows: [SCWindow]
+    /// Takes fresh snapshots and the window list, used when the person switches desktops mid-selection.
+    typealias Refresh = @MainActor () async throws -> (snapshots: [DisplaySnapshot], windows: [SCWindow])
+
+    private var snapshots: [DisplaySnapshot]
+    private var windows: [SCWindow]
     private let purpose: SelectionPurpose
     private var overlays: [OverlayWindow] = []
     private var continuation: CheckedContinuation<SelectionResult, Never>?
     private(set) var mode: SelectionMode
     private let initialSelection: CGRect?
+    private let refresh: Refresh?
+    private let snapshotGeneration: Int
 
-    /// - Parameter initialSelection: a previous selection in Cocoa global coordinates, if remembered.
-    init(snapshots: [DisplaySnapshot], windows: [SCWindow], mode: SelectionMode, purpose: SelectionPurpose, initialSelection: CGRect?) {
+    private var spaceListener: UUID?
+    private var refreshTask: Task<Void, Never>?
+    private var spaceChanged = false
+    private var wasActive = false
+    private var previousApp: NSRunningApplication?
+
+    /// - Parameters:
+    ///   - initialSelection: a previous selection in Cocoa global coordinates, if remembered.
+    ///   - snapshotGeneration: `SpaceObserver.shared.generation` read before the snapshots were taken.
+    ///   - refresh: re-freezes the displays after a desktop switch so the overlay shows what's really there.
+    init(snapshots: [DisplaySnapshot], windows: [SCWindow], mode: SelectionMode, purpose: SelectionPurpose, initialSelection: CGRect?,
+         snapshotGeneration: Int? = nil, refresh: Refresh? = nil) {
         self.snapshots = snapshots
         self.windows = windows
         self.mode = mode
         self.purpose = purpose
         self.initialSelection = initialSelection
+        self.snapshotGeneration = snapshotGeneration ?? SpaceObserver.shared.generation
+        self.refresh = refresh
     }
 
     func run() async -> SelectionResult {
@@ -46,8 +63,10 @@ final class SelectionOverlayController {
     }
 
     private func present() {
-        NSApp.activate(ignoringOtherApps: true)
+        wasActive = NSApp.isActive
+        previousApp = wasActive ? nil : NSWorkspace.shared.frontmostApplication
         let pointer = NSEvent.mouseLocation
+        var keyWindow: OverlayWindow?
         for snapshot in snapshots {
             let window = OverlayWindow(snapshot: snapshot)
             let view = OverlayView(snapshot: snapshot, controller: self, windows: windows, purpose: purpose)
@@ -56,22 +75,57 @@ final class SelectionOverlayController {
                 view.selection = view.localRect(fromCocoa: initial).intersection(view.bounds)
             }
             overlays.append(window)
+            // Put the overlay on the current desktop *before* activating: activating an app with
+            // no window on this desktop makes macOS jump to a desktop where it has one.
             window.orderFrontRegardless()
-            if NSMouseInRect(pointer, snapshot.screen.frame, false) {
-                window.makeKeyAndOrderFront(nil)
-                window.makeFirstResponder(view)
-            }
+            if NSMouseInRect(pointer, snapshot.screen.frame, false) { keyWindow = window }
         }
-        if !overlays.contains(where: { $0.isKeyWindow }), let first = overlays.first {
-            first.makeKeyAndOrderFront(nil)
-            first.makeFirstResponder(first.contentView)
+        NSApp.activate(ignoringOtherApps: true)
+        if let key = keyWindow ?? overlays.first {
+            key.makeKeyAndOrderFront(nil)
+            key.makeFirstResponder(key.contentView)
         }
         NSCursor.crosshair.set()
+
+        spaceListener = SpaceObserver.shared.addListener { [weak self] in self?.spaceDidChange() }
+        // The person may have swiped to another desktop while the displays were being frozen.
+        if SpaceObserver.shared.generation != snapshotGeneration { spaceDidChange() }
     }
 
-    func toggleMode() {
-        guard !windows.isEmpty else { return }
-        mode = mode == .area ? .window : .area
+    private func spaceDidChange() {
+        guard continuation != nil else { return }
+        spaceChanged = true
+        // The overlay joins every desktop, so keep it frontmost and focused on the new one.
+        for overlay in overlays { overlay.orderFrontRegardless() }
+        if let key = overlays.first(where: { NSMouseInRect(NSEvent.mouseLocation, $0.frame, false) }) ?? overlays.first {
+            key.makeKeyAndOrderFront(nil)
+        }
+        guard let refresh else { return }
+        refreshTask?.cancel()
+        refreshTask = Task { [weak self] in
+            // Let the desktop-switch animation settle so the new freeze isn't mid-slide.
+            try? await Task.sleep(nanoseconds: 250_000_000)
+            guard !Task.isCancelled else { return }
+            guard let fresh = try? await refresh() else { return }
+            guard !Task.isCancelled, let self, self.continuation != nil else { return }
+            self.apply(snapshots: fresh.snapshots, windows: fresh.windows)
+        }
+    }
+
+    private func apply(snapshots fresh: [DisplaySnapshot], windows freshWindows: [SCWindow]) {
+        windows = freshWindows
+        for overlay in overlays {
+            guard let view = overlay.contentView as? OverlayView,
+                  let snapshot = fresh.first(where: { $0.displayID == view.snapshot.displayID }) else { continue }
+            view.update(snapshot: snapshot, windows: freshWindows)
+        }
+        snapshots = fresh
+        if windows.isEmpty, mode == .window { toggleMode(force: .area) }
+    }
+
+    func toggleMode(force: SelectionMode? = nil) {
+        if force == nil, windows.isEmpty { return }
+        mode = force ?? (mode == .area ? .window : .area)
         for overlay in overlays { (overlay.contentView as? OverlayView)?.modeChanged() }
     }
 
@@ -88,12 +142,21 @@ final class SelectionOverlayController {
     func finish(_ result: SelectionResult) {
         guard let continuation else { return }
         self.continuation = nil
+        refreshTask?.cancel()
+        refreshTask = nil
+        if let spaceListener { SpaceObserver.shared.removeListener(spaceListener) }
+        spaceListener = nil
         for overlay in overlays {
             overlay.orderOut(nil)
             overlay.contentView = nil
         }
         overlays.removeAll()
         NSCursor.arrow.set()
+        // Give focus back to the app on this desktop. Leaving Screenmac active with no window here
+        // would make macOS switch to another desktop (or hide windows) on the next activation change.
+        if !wasActive || spaceChanged {
+            FocusRestorer.restore(fallback: spaceChanged ? nil : previousApp)
+        }
         continuation.resume(returning: result)
     }
 }
@@ -122,11 +185,12 @@ final class OverlayWindow: NSWindow {
 
 @MainActor
 final class OverlayView: NSView {
-    let snapshot: DisplaySnapshot
+    private(set) var snapshot: DisplaySnapshot
     private weak var controller: SelectionOverlayController?
-    private let windows: [SCWindow]
+    private var windows: [SCWindow]
     private let purpose: SelectionPurpose
-    private let frozen: NSImage
+    private var frozen: NSImage
+    private var pixelImage: NSImage
 
     var selection: CGRect? { didSet { updateButtons() } }
     private var hoveredWindow: SCWindow?
@@ -163,6 +227,7 @@ final class OverlayView: NSView {
         self.windows = windows
         self.purpose = purpose
         frozen = NSImage(cgImage: snapshot.image, size: snapshot.screen.frame.size)
+        pixelImage = Self.pixelImage(snapshot.image)
         super.init(frame: CGRect(origin: .zero, size: snapshot.screen.frame.size))
         addSubview(confirmButton)
         addSubview(cancelButton)
@@ -177,6 +242,20 @@ final class OverlayView: NSView {
     override func acceptsFirstMouse(for event: NSEvent?) -> Bool { true }
 
     private var mode: SelectionMode { controller?.mode ?? .area }
+
+    private static func pixelImage(_ image: CGImage) -> NSImage {
+        NSImage(cgImage: image, size: CGSize(width: image.width, height: image.height))
+    }
+
+    /// Swap in a fresh freeze of this display (after a desktop switch). The selection is kept.
+    func update(snapshot: DisplaySnapshot, windows: [SCWindow]) {
+        self.snapshot = snapshot
+        self.windows = windows
+        frozen = NSImage(cgImage: snapshot.image, size: snapshot.screen.frame.size)
+        pixelImage = Self.pixelImage(snapshot.image)
+        hoveredWindow = pointer.flatMap { mode == .window ? windowAt($0) : nil }
+        needsDisplay = true
+    }
 
     func modeChanged() {
         hoveredWindow = nil
@@ -319,7 +398,6 @@ final class OverlayView: NSView {
         NSColor.black.setFill()
         frame.fill()
         NSGraphicsContext.current?.imageInterpolation = .none
-        let pixelImage = NSImage(cgImage: snapshot.image, size: CGSize(width: snapshot.image.width, height: snapshot.image.height))
         pixelImage.draw(in: frame, from: src, operation: .copy, fraction: 1, respectFlipped: true, hints: [.interpolation: NSImageInterpolation.none.rawValue])
         let cross = NSBezierPath()
         cross.move(to: CGPoint(x: frame.midX, y: frame.minY))

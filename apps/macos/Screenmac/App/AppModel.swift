@@ -44,6 +44,7 @@ final class AppModel: ObservableObject {
                 self?.quickAccess.dismiss(item.id)
             }
         )
+        SpaceObserver.shared.start()
         hotkeys.start { [weak self] action in self?.perform(action) }
         registerShortcuts()
         preferences.$shortcuts
@@ -119,14 +120,19 @@ final class AppModel: ObservableObject {
         defer { isCapturing = false }
         do {
             try await countdownIfNeeded()
-            let content = try await capturer.content()
-            let snapshots = try await capturer.snapshotDisplays(includeCursor: preferences.includeCursor, hideDesktopIcons: preferences.hideDesktopIcons)
+            let generation = SpaceObserver.shared.generation
+            let (snapshots, windows) = try await freezeForSelection(includeCursor: preferences.includeCursor, hideDesktopIcons: preferences.hideDesktopIcons)
             let overlay = SelectionOverlayController(
                 snapshots: snapshots,
-                windows: capturer.pickableWindows(in: content),
+                windows: windows,
                 mode: mode,
                 purpose: .screenshot,
-                initialSelection: preferences.rememberSelection ? preferences.lastSelection : nil
+                initialSelection: preferences.rememberSelection ? preferences.lastSelection : nil,
+                snapshotGeneration: generation,
+                refresh: { [weak self] in
+                    guard let self else { throw CaptureError.noDisplays }
+                    return try await self.freezeForSelection(includeCursor: self.preferences.includeCursor, hideDesktopIcons: self.preferences.hideDesktopIcons)
+                }
             )
             switch await overlay.run() {
             case .cancelled:
@@ -147,6 +153,13 @@ final class AppModel: ObservableObject {
         } catch {
             present(error)
         }
+    }
+
+    /// Freeze every display and list the windows that can be picked, for the selection overlay.
+    private func freezeForSelection(includeCursor: Bool, hideDesktopIcons: Bool) async throws -> (snapshots: [DisplaySnapshot], windows: [SCWindow]) {
+        let content = try await capturer.content()
+        let snapshots = try await capturer.snapshotDisplays(includeCursor: includeCursor, hideDesktopIcons: hideDesktopIcons)
+        return (snapshots, capturer.pickableWindows(in: content))
     }
 
     private func runFullScreen() async {
@@ -308,9 +321,16 @@ final class AppModel: ObservableObject {
                 let content = try await capturer.content()
                 let target: RecordingTarget
                 if let mode {
-                    let snapshots = try await capturer.snapshotDisplays(includeCursor: false, hideDesktopIcons: false)
-                    let overlay = SelectionOverlayController(snapshots: snapshots, windows: capturer.pickableWindows(in: content),
-                                                             mode: mode, purpose: .recording, initialSelection: nil)
+                    let generation = SpaceObserver.shared.generation
+                    let (snapshots, windows) = try await freezeForSelection(includeCursor: false, hideDesktopIcons: false)
+                    let overlay = SelectionOverlayController(
+                        snapshots: snapshots, windows: windows, mode: mode, purpose: .recording, initialSelection: nil,
+                        snapshotGeneration: generation,
+                        refresh: { [weak self] in
+                            guard let self else { throw CaptureError.noDisplays }
+                            return try await self.freezeForSelection(includeCursor: false, hideDesktopIcons: false)
+                        }
+                    )
                     switch await overlay.run() {
                     case .cancelled:
                         recordingState = .idle

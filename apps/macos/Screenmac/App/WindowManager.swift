@@ -61,6 +61,9 @@ final class WindowManager: NSObject, NSWindowDelegate {
         window.contentViewController = NSHostingController(rootView: root)
         window.setContentSize(size)
         window.delegate = self
+        // Reopening from the menu bar brings the window to the current desktop instead of
+        // switching back to the desktop it was first opened on.
+        window.collectionBehavior = [.moveToActiveSpace, .fullScreenAuxiliary]
         if let autosave { window.setFrameAutosaveName("Screenmac.\(autosave)") }
         if window.frame.origin == .zero { window.center() }
         return window
@@ -84,7 +87,13 @@ final class WindowManager: NSObject, NSWindowDelegate {
     func updateActivationPolicy(forceRegular: Bool = false) {
         let regular = forceRegular || hasVisibleWindows
         let target: NSApplication.ActivationPolicy = regular ? .regular : .accessory
-        if NSApp.activationPolicy() != target { NSApp.setActivationPolicy(target) }
+        guard NSApp.activationPolicy() != target else { return }
+        if target == .accessory, NSApp.isActive {
+            // Hand focus to the app on this desktop first. Otherwise macOS picks one itself,
+            // often on another desktop, and switches there.
+            FocusRestorer.restore(fallback: nil)
+        }
+        NSApp.setActivationPolicy(target)
     }
 }
 
