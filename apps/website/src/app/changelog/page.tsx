@@ -8,6 +8,16 @@ export const metadata: Metadata = {
 
 const ENTRIES = [
   {
+    date: "2026-11-11",
+    title: "Mac app 0.3.0",
+    items: [
+      "Switching desktops with a three-finger swipe while picking an area now brings the capture overlay with you. It shows the desktop you're on and captures that desktop, not the one you left.",
+      "Quick Access, the editor and other Screenmac windows open on the desktop you're using instead of jumping you back to another one.",
+      "Editor: change the background color behind a capture.",
+      "The Terminal installer shows a progress bar, finishes much faster on networks where one of GitHub's download servers is unreachable, and tells you which version it installed.",
+    ],
+  },
+  {
     date: "2026-10-24",
     title: "Mac app 0.2.0, the first public beta",
     items: [

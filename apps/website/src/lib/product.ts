@@ -6,7 +6,7 @@ export const product = {
   name: "Screenmac",
   siteUrl: "https://screenmac.vercel.app",
   /** Must match MARKETING_VERSION in apps/macos (a unit test checks this). */
-  version: "0.2.0",
+  version: "0.3.0",
   repoUrl: "https://github.com/iam8uman/screenmac",
   tagline: "Capture anything. Make it clear. Share it instantly.",
   headline: "Your screen, captured beautifully.",

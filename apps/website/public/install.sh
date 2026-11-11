@@ -8,31 +8,80 @@ REPO="iam8uman/screenmac"
 URL="https://github.com/$REPO/releases/latest/download/Screenmac.zip"
 BUNDLE_ID="app.screenmac.Screenmac"
 
+# Colors only when writing to a terminal that supports them.
+if [[ -t 1 && -z "${NO_COLOR:-}" && "${TERM:-dumb}" != "dumb" ]]; then
+  BOLD=$'\033[1m'; DIM=$'\033[2m'; RESET=$'\033[0m'
+  GREEN=$'\033[38;5;42m'; RED=$'\033[38;5;203m'; ACCENT=$'\033[38;5;99m'
+  GRADIENT=($'\033[38;5;63m' $'\033[38;5;69m' $'\033[38;5;105m' $'\033[38;5;141m' $'\033[38;5;177m' $'\033[38;5;213m')
+  FANCY=1
+else
+  BOLD=""; DIM=""; RESET=""; GREEN=""; RED=""; ACCENT=""; GRADIENT=("" "" "" "" "" ""); FANCY=0
+fi
+
+banner() {
+  local lines=(
+    "  ███████╗ ██████╗██████╗ ███████╗███████╗███╗   ██╗███╗   ███╗ █████╗  ██████╗"
+    "  ██╔════╝██╔════╝██╔══██╗██╔════╝██╔════╝████╗  ██║████╗ ████║██╔══██╗██╔════╝"
+    "  ███████╗██║     ██████╔╝█████╗  █████╗  ██╔██╗ ██║██╔████╔██║███████║██║     "
+    "  ╚════██║██║     ██╔══██╗██╔══╝  ██╔══╝  ██║╚██╗██║██║╚██╔╝██║██╔══██║██║     "
+    "  ███████║╚██████╗██║  ██║███████╗███████╗██║ ╚████║██║ ╚═╝ ██║██║  ██║╚██████╗"
+    "  ╚══════╝ ╚═════╝╚═╝  ╚═╝╚══════╝╚══════╝╚═╝  ╚═══╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝"
+  )
+  local cols
+  cols="$(tput cols 2>/dev/null || echo 80)"
+  echo
+  if (( FANCY == 1 && cols >= 82 )); then
+    local i
+    for i in "${!lines[@]}"; do
+      printf '%s%s%s\n' "${GRADIENT[$i]}" "${lines[$i]}" "$RESET"
+    done
+  else
+    printf '  %sS C R E E N M A C%s\n' "$BOLD$ACCENT" "$RESET"
+  fi
+  printf '\n  %sScreenshots and screen recordings for your Mac%s\n\n' "$DIM" "$RESET"
+}
+
+step() { printf '  %s→%s %s\n' "$ACCENT" "$RESET" "$1"; }
+ok()   { printf '  %s✓%s %s\n' "$GREEN" "$RESET" "$1"; }
+fail() { printf '\n  %s✗ %s%s\n' "$RED" "$1" "$RESET" >&2; exit 1; }
+
+# GitHub serves downloads from several servers. If one is unreachable from this network,
+# curl would otherwise wait over a minute on it; a short connect timeout moves on to the next.
+CURL_OPTS=(-fL --connect-timeout 6 --retry 4 --retry-delay 1 --retry-connrefused)
+
+banner
+
 if [[ "$(uname -s)" != "Darwin" ]]; then
-  echo "Screenmac is a Mac app. Run this on macOS 14 or later." >&2
-  exit 1
+  fail "Screenmac is a Mac app. Run this on macOS 14 or later."
 fi
 MAJOR="$(sw_vers -productVersion | cut -d. -f1)"
 if (( MAJOR < 14 )); then
-  echo "Screenmac needs macOS 14 or later. This Mac has $(sw_vers -productVersion)." >&2
-  exit 1
+  fail "Screenmac needs macOS 14 or later. This Mac has $(sw_vers -productVersion)."
 fi
 
 TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT
 
-echo "→ Downloading the latest Screenmac…"
-curl -fsSL "$URL" -o "$TMP/Screenmac.zip"
-if curl -fsSL "$URL.sha256" -o "$TMP/Screenmac.zip.sha256" 2>/dev/null; then
+step "Downloading the latest Screenmac (about 2 MB)…"
+if [[ -t 2 ]]; then
+  curl "${CURL_OPTS[@]}" --progress-bar "$URL" -o "$TMP/Screenmac.zip" || fail "The download failed. Check your connection and run the command again."
+else
+  curl "${CURL_OPTS[@]}" -sS "$URL" -o "$TMP/Screenmac.zip" || fail "The download failed. Check your connection and run the command again."
+fi
+ok "Downloaded"
+
+if curl "${CURL_OPTS[@]}" -sS "$URL.sha256" -o "$TMP/Screenmac.zip.sha256" 2>/dev/null; then
   EXPECTED="$(awk '{print $1}' "$TMP/Screenmac.zip.sha256")"
   ACTUAL="$(shasum -a 256 "$TMP/Screenmac.zip" | awk '{print $1}')"
   if [[ "$EXPECTED" != "$ACTUAL" ]]; then
-    echo "The download doesn't match its checksum. Nothing was installed; please try again." >&2
-    exit 1
+    fail "The download doesn't match its checksum. Nothing was installed; please try again."
   fi
-  echo "✓ Checksum verified"
+  ok "Checksum verified"
 fi
+
+step "Installing…"
 ditto -x -k "$TMP/Screenmac.zip" "$TMP"
+VERSION="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$TMP/Screenmac.app/Contents/Info.plist" 2>/dev/null || true)"
 
 DEST="/Applications"
 if [[ ! -w "$DEST" ]]; then
@@ -55,12 +104,12 @@ xattr -dr com.apple.quarantine "$DEST/Screenmac.app" 2>/dev/null || true
 # Clear Screenmac's own entry so macOS asks again.
 tccutil reset ScreenCapture "$BUNDLE_ID" >/dev/null 2>&1 || true
 
-echo "✓ Installed to $DEST/Screenmac.app"
+ok "Installed Screenmac${VERSION:+ $VERSION} to $DEST/Screenmac.app"
 echo
-echo "Last step: when macOS asks, turn Screenmac on in"
-echo "  System Settings → Privacy & Security → Screen & System Audio Recording"
-echo "then reopen Screenmac from its menu bar icon."
+printf '  %sLast step:%s when macOS asks, turn Screenmac on in\n' "$BOLD" "$RESET"
+printf '  System Settings → Privacy & Security → Screen & System Audio Recording,\n'
+printf '  then reopen Screenmac from its menu bar icon.\n'
 echo
-echo "Press ⌥⇧⌘4 to capture an area. Enjoy!"
+printf '  Press %s⌥⇧⌘4%s to capture an area. Enjoy!\n\n' "$BOLD$ACCENT" "$RESET"
 
 open "$DEST/Screenmac.app"

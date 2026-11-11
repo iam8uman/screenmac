@@ -5,7 +5,7 @@
 Key facts:
 - Platform: macOS 14 Sonoma or later; one universal build for Apple silicon and Intel.
 - Price: free during the beta. A paid Pro tier is planned but not built and not for sale.
-- Current version: 0.2.0 (beta). Builds are ad-hoc signed and not yet notarized by Apple.
+- Current version: 0.3.0 (beta). Builds are ad-hoc signed and not yet notarized by Apple.
 - Built with SwiftUI, AppKit and Apple's ScreenCaptureKit. Not Electron.
 - Privacy: captures and history stay in a folder on the Mac. There is no upload feature. Redact, blur and pixelate are flattened into the exported pixels.
 - Default shortcuts: Option-Shift-Command-4 area, Option-Shift-Command-2 window, Option-Shift-Command-3 full screen, Option-Shift-Command-5 record.

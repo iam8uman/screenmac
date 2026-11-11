@@ -36,6 +36,9 @@ final class SelectionOverlayController {
 
     private var spaceListener: UUID?
     private var refreshTask: Task<Void, Never>?
+    /// An area confirmed while a fresh freeze was still on its way: finished once it lands,
+    /// so the capture shows the desktop the person is actually on.
+    private var pendingArea: (displayID: CGDirectDisplayID, rect: CGRect)?
     private var spaceChanged = false
     private var wasActive = false
     private var previousApp: NSRunningApplication?
@@ -95,21 +98,59 @@ final class SelectionOverlayController {
     private func spaceDidChange() {
         guard continuation != nil else { return }
         spaceChanged = true
+        // The frozen picture belongs to the desktop the person just left. Until the new one is
+        // frozen, let the live desktop show through (dimmed) so the overlay is clearly on this one.
+        if refresh != nil {
+            for overlay in overlays {
+                overlay.setLive(true)
+                (overlay.contentView as? OverlayView)?.isLive = true
+            }
+        }
         // The overlay joins every desktop, so keep it frontmost and focused on the new one.
+        NSApp.activate(ignoringOtherApps: true)
         for overlay in overlays { overlay.orderFrontRegardless() }
         if let key = overlays.first(where: { NSMouseInRect(NSEvent.mouseLocation, $0.frame, false) }) ?? overlays.first {
             key.makeKeyAndOrderFront(nil)
+            key.makeFirstResponder(key.contentView)
         }
+        NSCursor.crosshair.set()
         guard let refresh else { return }
         refreshTask?.cancel()
         refreshTask = Task { [weak self] in
             // Let the desktop-switch animation settle so the new freeze isn't mid-slide.
-            try? await Task.sleep(nanoseconds: 250_000_000)
+            try? await Task.sleep(nanoseconds: 300_000_000)
             guard !Task.isCancelled else { return }
-            guard let fresh = try? await refresh() else { return }
+            let fresh = try? await refresh()
             guard !Task.isCancelled, let self, self.continuation != nil else { return }
-            self.apply(snapshots: fresh.snapshots, windows: fresh.windows)
+            self.refreshTask = nil
+            if let fresh { self.apply(snapshots: fresh.snapshots, windows: fresh.windows) }
+            self.finishPendingArea()
         }
+    }
+
+    /// True while the overlay is waiting for a fresh freeze after a desktop switch.
+    var isRefreshing: Bool { refreshTask != nil }
+
+    /// The person confirmed an area on `view`. If the displays are being re-frozen after a
+    /// desktop switch, wait for that so the capture isn't of the previous desktop.
+    func confirmArea(on view: OverlayView, rect: CGRect) {
+        if isRefreshing {
+            pendingArea = (view.snapshot.displayID, rect)
+            return
+        }
+        finish(.area(snapshot: view.snapshot, rect: rect))
+    }
+
+    private func finishPendingArea() {
+        guard let pending = pendingArea else { return }
+        pendingArea = nil
+        let view = overlays.lazy.compactMap { $0.contentView as? OverlayView }.first { $0.snapshot.displayID == pending.displayID }
+        guard let view, !view.isLive else {
+            // The fresh freeze didn't arrive; don't capture a picture of the wrong desktop.
+            finish(.cancelled)
+            return
+        }
+        finish(.area(snapshot: view.snapshot, rect: pending.rect))
     }
 
     private func apply(snapshots fresh: [DisplaySnapshot], windows freshWindows: [SCWindow]) {
@@ -118,6 +159,8 @@ final class SelectionOverlayController {
             guard let view = overlay.contentView as? OverlayView,
                   let snapshot = fresh.first(where: { $0.displayID == view.snapshot.displayID }) else { continue }
             view.update(snapshot: snapshot, windows: freshWindows)
+            view.isLive = false
+            overlay.setLive(false)
         }
         snapshots = fresh
         if windows.isEmpty, mode == .window { toggleMode(force: .area) }
@@ -144,6 +187,7 @@ final class SelectionOverlayController {
         self.continuation = nil
         refreshTask?.cancel()
         refreshTask = nil
+        pendingArea = nil
         if let spaceListener { SpaceObserver.shared.removeListener(spaceListener) }
         spaceListener = nil
         for overlay in overlays {
@@ -179,6 +223,12 @@ final class OverlayWindow: NSWindow {
     @available(*, unavailable)
     required init?(coder: NSCoder) { fatalError("init(coder:) is not supported") }
 
+    /// Live: see-through, so the real desktop shows under the dimming while a fresh freeze is taken.
+    func setLive(_ live: Bool) {
+        isOpaque = !live
+        backgroundColor = live ? .clear : .black
+    }
+
     override var canBecomeKey: Bool { true }
     override var canBecomeMain: Bool { true }
 }
@@ -193,6 +243,8 @@ final class OverlayView: NSView {
     private var pixelImage: NSImage
 
     var selection: CGRect? { didSet { updateButtons() } }
+    /// Showing the live desktop instead of the frozen picture (right after a desktop switch).
+    var isLive = false { didSet { if isLive != oldValue { needsDisplay = true } } }
     private var hoveredWindow: SCWindow?
     private var pointer: CGPoint?
 
@@ -294,7 +346,12 @@ final class OverlayView: NSView {
     // MARK: Drawing
 
     override func draw(_ dirtyRect: NSRect) {
-        frozen.draw(in: bounds, from: .zero, operation: .copy, fraction: 1, respectFlipped: true, hints: nil)
+        if isLive {
+            NSColor.clear.setFill()
+            bounds.fill(using: .copy)
+        } else {
+            frozen.draw(in: bounds, from: .zero, operation: .copy, fraction: 1, respectFlipped: true, hints: nil)
+        }
 
         let highlight: CGRect?
         switch mode {
@@ -324,7 +381,8 @@ final class OverlayView: NSView {
 
         if mode == .area, drag == nil || isDrawingNew, let p = pointer {
             drawGuides(at: p)
-            drawLoupe(at: p)
+            // The loupe magnifies the frozen picture, which is stale while live.
+            if !isLive { drawLoupe(at: p) }
         }
         drawHint()
     }
@@ -483,7 +541,8 @@ final class OverlayView: NSView {
         let p = clamp(convert(event.locationInWindow, from: nil))
 
         if mode == .window {
-            if let w = windowAt(p) { controller?.finish(.window(w)) }
+            // The window list is from the previous desktop until the fresh freeze lands.
+            if controller?.isRefreshing != true, let w = windowAt(p) { controller?.finish(.window(w)) }
             return
         }
 
@@ -560,7 +619,7 @@ final class OverlayView: NSView {
 
     @objc private func confirm() {
         guard mode == .area, let s = selection, s.width >= 4, s.height >= 4 else { return }
-        controller?.finish(.area(snapshot: snapshot, rect: s.integral))
+        controller?.confirmArea(on: self, rect: s.integral)
     }
 
     @objc private func cancel() {
