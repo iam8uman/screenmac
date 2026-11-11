@@ -27,13 +27,23 @@ banner() {
     "  ███████║╚██████╗██║  ██║███████╗███████╗██║ ╚████║██║ ╚═╝ ██║██║  ██║╚██████╗"
     "  ╚══════╝ ╚═════╝╚═╝  ╚═╝╚══════╝╚══════╝╚═╝  ╚═══╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝"
   )
+  local small=(
+    "  █▀▀ █▀▀ █▀█ █▀▀ █▀▀ █▄ █ █▀▄▀█ ▄▀█ █▀▀"
+    "  ▄▄█ █▄▄ █▀▄ ██▄ ██▄ █ ▀█ █ ▀ █ █▀█ █▄▄"
+  )
+  # Under `curl | bash` tput can't see the terminal and always says 80, so ask the terminal itself.
   local cols
-  cols="$(tput cols 2>/dev/null || echo 80)"
+  cols="$(stty size </dev/tty 2>/dev/null | awk '{print $2}')"
+  [[ "$cols" =~ ^[0-9]+$ && "$cols" -gt 0 ]] || cols="${COLUMNS:-80}"
   echo
-  if (( FANCY == 1 && cols >= 82 )); then
-    local i
+  local i
+  if (( FANCY == 1 && cols >= 80 )); then
     for i in "${!lines[@]}"; do
       printf '%s%s%s\n' "${GRADIENT[$i]}" "${lines[$i]}" "$RESET"
+    done
+  elif (( FANCY == 1 && cols >= 42 )); then
+    for i in "${!small[@]}"; do
+      printf '%s%s%s\n' "${GRADIENT[$((i * 4))]}" "${small[$i]}" "$RESET"
     done
   else
     printf '  %sS C R E E N M A C%s\n' "$BOLD$ACCENT" "$RESET"
