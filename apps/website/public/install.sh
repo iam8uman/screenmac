@@ -103,23 +103,37 @@ fi
 pkill -x Screenmac 2>/dev/null || true
 sleep 0.5
 
+# The signing team of the installed copy and of the new one ("" or "not set" when ad-hoc).
+team_of() { codesign -dv "$1" 2>&1 | awk -F= '/^TeamIdentifier=/{print $2}'; }
+OLD_TEAM="$( [[ -d "$DEST/Screenmac.app" ]] && team_of "$DEST/Screenmac.app" || true )"
+NEW_TEAM="$(team_of "$TMP/Screenmac.app")"
+
 rm -rf "$DEST/Screenmac.app"
 ditto "$TMP/Screenmac.app" "$DEST/Screenmac.app"
 
-# The file came straight from GitHub, so clear the "downloaded from the internet" flag.
-# This is what skips the "Apple could not verify" popup.
+# The file came straight from GitHub over HTTPS and its checksum matched, so clear the
+# "downloaded from the internet" flag. Releases are notarized, so this only skips the
+# one-time "downloaded from the internet" confirmation.
 xattr -dr com.apple.quarantine "$DEST/Screenmac.app" 2>/dev/null || true
 
-# Each build is a new app to macOS, so an older Screen Recording entry silently stops working.
-# Clear Screenmac's own entry so macOS asks again.
-tccutil reset ScreenCapture "$BUNDLE_ID" >/dev/null 2>&1 || true
+# An update signed by the same Developer ID team keeps its Screen Recording permission.
+# Anything else (an older ad-hoc build, or the first switch to a signed build) leaves an entry
+# that silently stops working, so clear Screenmac's own entry and macOS asks again.
+KEEPS_PERMISSION=0
+if [[ -n "$NEW_TEAM" && "$NEW_TEAM" != "not set" && "$NEW_TEAM" == "$OLD_TEAM" ]]; then
+  KEEPS_PERMISSION=1
+else
+  tccutil reset ScreenCapture "$BUNDLE_ID" >/dev/null 2>&1 || true
+fi
 
 ok "Installed Screenmac${VERSION:+ $VERSION} to $DEST/Screenmac.app"
 echo
-printf '  %sLast step:%s when macOS asks, turn Screenmac on in\n' "$BOLD" "$RESET"
-printf '  System Settings → Privacy & Security → Screen & System Audio Recording,\n'
-printf '  then reopen Screenmac from its menu bar icon.\n'
-echo
+if (( KEEPS_PERMISSION == 0 )); then
+  printf '  %sLast step:%s when macOS asks, turn Screenmac on in\n' "$BOLD" "$RESET"
+  printf '  System Settings → Privacy & Security → Screen & System Audio Recording,\n'
+  printf '  then reopen Screenmac from its menu bar icon.\n'
+  echo
+fi
 printf '  Press %s⌥⇧⌘4%s to capture an area. Enjoy!\n\n' "$BOLD$ACCENT" "$RESET"
 
 open "$DEST/Screenmac.app"

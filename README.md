@@ -23,7 +23,7 @@ If captures fail after an update, choose **Fix Screen Recording Permission…** 
 `.github/workflows/ci.yml` runs on every push and pull request:
 
 - **Website** (Ubuntu): lint, typecheck, Vitest, production build, Playwright e2e on desktop and phone.
-- **Mac app** (macOS 15): XCTest, a universal Release build (`apps/macos/scripts/build-app.sh`), a smoke test that checks the bundle, architectures, signature and entitlements and launches the app for 10 seconds, then `Screenmac.zip` + SHA-256 as a build artifact.
+- **Mac app** (macOS 15): XCTest, a universal Release build (`apps/macos/scripts/build-app.sh`), a smoke test that checks the bundle, architectures, signature and entitlements and launches the app for 10 seconds, then `Screenmac.zip` + SHA-256 as a build artifact. On main and tags the app is signed with the Developer ID certificate from the repo secrets (`DEVELOPER_ID_P12_BASE64`, `DEVELOPER_ID_P12_PASSWORD`, `NOTARY_KEY_P8_BASE64`, `NOTARY_KEY_ID`, `NOTARY_ISSUER_ID`); a release is notarized, stapled and checked with `spctl` first, and nothing is published if any of that fails. Pull requests and forks have no secrets and build ad-hoc.
 - **Release:** when `main` carries a `MARKETING_VERSION` that has no GitHub release yet (or a `v*` tag is pushed), the zip is published as the latest release. To ship a new version, bump `MARKETING_VERSION` in `apps/macos/scripts/generate_xcodeproj.py`, regenerate the project, update `version` in `apps/website/src/lib/product.ts` (a unit test checks they match), and push.
 
 The website deploys to Vercel from `main` (project root directory: `apps/website`).

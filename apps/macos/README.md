@@ -15,6 +15,8 @@ xcodebuild -project apps/macos/Screenmac.xcodeproj -scheme Screenmac -destinatio
 
 The project is signed to run locally ("-" identity), so no Apple developer team is needed to build. The first capture asks for **Screen Recording** permission. macOS applies it after you quit and reopen Screenmac. Each rebuild of a locally signed app can make macOS ask again. For a stable identity, set your team under Signing & Capabilities.
 
+Release builds come from `scripts/build-app.sh`. With `SIGN_IDENTITY="Developer ID Application: …"` it signs inside-out with the hardened runtime, a secure timestamp and `Config/Screenmac.entitlements` (only `com.apple.security.device.audio-input`, for the microphone). Screen Recording and system audio go through ScreenCaptureKit and need no entitlement, and shortcuts use Carbon hot keys, which need neither Accessibility nor Input Monitoring. Don't add entitlements the app doesn't use.
+
 The project uses Xcode 16 folder-synchronized groups: any file added under `Screenmac/` or `ScreenmacTests/` is built automatically. `scripts/generate_xcodeproj.py` regenerates the project if build settings change.
 
 ## What it does

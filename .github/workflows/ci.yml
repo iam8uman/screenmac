@@ -85,7 +85,46 @@ jobs:
           fi
           echo "Version $VERSION"
 
+      # Signs with the Developer ID certificate when the secrets are set (main/tags only;
+      # forks and PRs don't get secrets and fall back to an ad-hoc signed build).
+      - name: Import the Developer ID certificate
+        id: signing
+        env:
+          P12_BASE64: ${{ secrets.DEVELOPER_ID_P12_BASE64 }}
+          P12_PASSWORD: ${{ secrets.DEVELOPER_ID_P12_PASSWORD }}
+        run: |
+          set -euo pipefail
+          if [[ -z "${P12_BASE64:-}" ]]; then
+            echo "No Developer ID secrets, building ad-hoc signed"
+            echo "signed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          KEYCHAIN="$RUNNER_TEMP/signing.keychain-db"
+          KC_PW="$(uuidgen)"
+          echo "$P12_BASE64" | base64 --decode > "$RUNNER_TEMP/cert.p12"
+          security create-keychain -p "$KC_PW" "$KEYCHAIN"
+          security set-keychain-settings -lut 21600 "$KEYCHAIN"
+          security unlock-keychain -p "$KC_PW" "$KEYCHAIN"
+          security import "$RUNNER_TEMP/cert.p12" -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k "$KEYCHAIN"
+          security set-key-partition-list -S apple-tool:,apple: -k "$KC_PW" "$KEYCHAIN" >/dev/null
+          security list-keychains -d user -s "$KEYCHAIN" $(security list-keychains -d user | tr -d '"')
+          rm -f "$RUNNER_TEMP/cert.p12"
+          IDENTITY=$(security find-identity -v -p codesigning "$KEYCHAIN" | awk '/Developer ID Application/ {print $2; exit}')
+          [[ -n "$IDENTITY" ]] || { echo "::error title=Signing::No 'Developer ID Application' identity in the .p12"; exit 1; }
+          echo "identity=$IDENTITY" >> "$GITHUB_OUTPUT"
+          echo "signed=true" >> "$GITHUB_OUTPUT"
+
+      # A release must be notarized. Without the secrets, main still builds and tests ad-hoc,
+      # but nothing is published.
+      - name: Refuse an unsigned release
+        if: steps.version.outputs.release == 'true' && steps.signing.outputs.signed != 'true'
+        run: |
+          echo "::error title=Release blocked::v${{ steps.version.outputs.version }} needs the Developer ID secrets to be signed and notarized. Nothing was published."
+          exit 1
+
       - name: Build Screenmac.app (Release, universal)
+        env:
+          SIGN_IDENTITY: ${{ steps.signing.outputs.identity }}
         run: VERSION="${{ steps.version.outputs.version }}" BUILD_NUMBER="$GITHUB_RUN_NUMBER" apps/macos/scripts/build-app.sh
 
       - name: Smoke test the app
@@ -101,6 +140,14 @@ jobs:
           lipo -archs $BIN | grep -q x86_64
           codesign --verify --deep --strict $APP
           codesign -d --entitlements - $APP 2>/dev/null | grep -q audio-input
+          if codesign -d --entitlements - $APP 2>/dev/null | grep -q get-task-allow; then
+            echo "::error title=Entitlements::get-task-allow is set; notarization would reject it"; exit 1
+          fi
+          codesign -dv $APP 2>&1 | grep -q 'flags=.*runtime' || { echo "::error title=Signing::Hardened runtime is off"; exit 1; }
+          if [[ "${{ steps.signing.outputs.signed }}" == "true" ]]; then
+            codesign -dv $APP 2>&1 | grep -q '^TeamIdentifier=Q42CWB2372$'
+            codesign -dv $APP 2>&1 | grep -q '^Timestamp='
+          fi
           # Launch the real app and make sure it stays up. CI has no Screen Recording grant,
           # so it shows onboarding and waits; it must not crash.
           $BIN > launch.log 2>&1 &
@@ -114,6 +161,38 @@ jobs:
             ls -t ~/Library/Logs/DiagnosticReports 2>/dev/null | head -3
             exit 1
           fi
+
+      # Apple scans the signed app and issues a ticket; stapling it to the app means
+      # Gatekeeper opens it with no warning, even offline. Any failure here fails the job,
+      # so the release step below never runs.
+      - name: Notarize, staple and check with Gatekeeper
+        id: notarize
+        if: steps.signing.outputs.signed == 'true' && steps.version.outputs.release == 'true'
+        env:
+          NOTARY_KEY_P8_BASE64: ${{ secrets.NOTARY_KEY_P8_BASE64 }}
+          NOTARY_KEY_ID: ${{ secrets.NOTARY_KEY_ID }}
+          NOTARY_ISSUER_ID: ${{ secrets.NOTARY_ISSUER_ID }}
+        run: |
+          set -euo pipefail
+          APP=apps/macos/build/Screenmac.app
+          KEY="$RUNNER_TEMP/notary.p8"
+          trap 'rm -f "$KEY"' EXIT
+          echo "$NOTARY_KEY_P8_BASE64" | base64 --decode > "$KEY"
+          NOTARY=(--key "$KEY" --key-id "$NOTARY_KEY_ID" --issuer "$NOTARY_ISSUER_ID")
+          ditto -c -k --keepParent "$APP" "$RUNNER_TEMP/notarize.zip"
+          xcrun notarytool submit "$RUNNER_TEMP/notarize.zip" "${NOTARY[@]}" \
+            --wait --timeout 45m --output-format json | tee notary.json
+          STATUS=$(/usr/bin/python3 -c 'import json;print(json.load(open("notary.json")).get("status",""))')
+          if [[ "$STATUS" != "Accepted" ]]; then
+            ID=$(/usr/bin/python3 -c 'import json;print(json.load(open("notary.json")).get("id",""))')
+            [[ -n "$ID" ]] && xcrun notarytool log "$ID" "${NOTARY[@]}" || true
+            echo "::error title=Notarization::Apple returned '${STATUS:-no status}'. Nothing was published."
+            exit 1
+          fi
+          xcrun stapler staple "$APP"
+          xcrun stapler validate "$APP"
+          spctl --assess --type execute --verbose=2 "$APP"
+          echo "notarized=true" >> "$GITHUB_OUTPUT"
 
       - name: Zip
         run: |
@@ -129,7 +208,7 @@ jobs:
             apps/macos/build/Screenmac.zip.sha256
 
       - name: Publish release
-        if: steps.version.outputs.release == 'true'
+        if: steps.version.outputs.release == 'true' && steps.notarize.outputs.notarized == 'true'
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ steps.version.outputs.version }}
@@ -150,4 +229,4 @@ jobs:
 
             **Or download `Screenmac.zip`**, unzip it and drag Screenmac into Applications. Needs macOS 14 or later (Apple silicon and Intel).
 
-            Screenmac isn't notarized yet, so the first time you open a downloaded copy macOS asks first. On macOS 15: System Settings → Privacy & Security → **Open Anyway**. On macOS 14: right-click Screenmac → **Open**. Then allow **Screen Recording** when asked, reopen Screenmac, and press **⌥⇧⌘4**.
+            Signed with a Developer ID and notarized by Apple, so it opens like any other app. Allow **Screen Recording** when asked, reopen Screenmac, and press **⌥⇧⌘4**.
