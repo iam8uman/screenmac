@@ -69,7 +69,7 @@ export function Showcase() {
   const flat = reduce || settled;
 
   return (
-    <section id="editor" aria-labelledby="editor-title" className="scroll-mt-20 overflow-x-clip px-3 pb-10 sm:px-4 md:px-6 md:pb-14">
+    <section id="editor" data-no-reveal aria-labelledby="editor-title" className="scroll-mt-20 overflow-x-clip px-3 pb-10 sm:px-4 md:px-6 md:pb-14">
       <div className="mx-auto max-w-7xl">
         <div ref={ref} className="relative [perspective:1800px]">
           {!flat ? (
@@ -103,7 +103,7 @@ export function Showcase() {
               setSettled(true);
             }}
           >
-            <div className="rounded-[24px] bg-paper-raised p-1.5 shadow-[0_0_0_1px_var(--sm-line),0_50px_100px_-50px_rgba(23,22,28,0.45)] md:rounded-[26px] md:p-2">
+            <div data-capture-window className="rounded-[24px] bg-paper-raised p-1.5 shadow-[0_0_0_1px_var(--sm-line),0_50px_100px_-50px_rgba(23,22,28,0.45)] md:rounded-[26px] md:p-2">
               <Editor />
             </div>
           </motion.div>

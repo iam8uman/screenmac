@@ -1,23 +1,29 @@
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
-import { Kbd } from "@/components/ui/Badge";
-import { primaryCta, shortcuts } from "@/lib/product";
+import { primaryCta, product, shortcuts } from "@/lib/product";
 import { CaptureMarquee } from "./CaptureMarquee";
+import { CaptureStage, CaptureTriggers } from "./capture/CaptureStage";
 
 /**
- * Centered hero: the pill says what it is and what it costs, the headline sells the feeling,
- * one primary action, and the live editor (Showcase) peeks in right below.
+ * Centered hero on a working capture surface (see CaptureStage): the pill says what it is and what
+ * it costs, the headline sells the feeling, one primary action, and the visitor can take a real
+ * capture of the page right here. The live editor (Showcase) peeks in right below.
  */
 export function Hero() {
   const cta = primaryCta();
+  const facts = [
+    "Native Swift",
+    "ScreenCaptureKit",
+    product.notarized ? "Notarized by Apple" : "Open source",
+    `macOS ${product.minimumMacOS}+`,
+  ];
 
   return (
-    <section className="relative flex flex-col justify-center px-4 pb-10 pt-10 text-center md:min-h-[calc(100svh-4rem-9rem)] md:px-6 md:pb-12 md:pt-12">
-      {/* Fills the first screen minus a 9rem strip where the live editor peeks in. */}
+    <CaptureStage className="flex flex-col justify-center px-4 pb-12 pt-12 text-center md:min-h-[calc(100svh-5rem-8rem)] md:px-6 md:pb-14 md:pt-16">
       <div className="mx-auto flex w-full max-w-5xl flex-col items-center">
         <Link
           href="/#install"
-          className="sm-rise group inline-flex max-w-full items-center gap-3 rounded-2xl bg-paper-raised py-2 pl-4 pr-1.5 text-left text-sm leading-5 text-ink-muted ring-1 ring-inset ring-line transition-[background-color,color] duration-150 hover:bg-paper-sunk hover:text-ink sm:rounded-full sm:py-1.5 sm:leading-normal"
+          className="sm-rise group inline-flex max-w-full cursor-pointer items-center gap-3 rounded-2xl bg-paper-raised py-2 pl-4 pr-1.5 text-left text-sm leading-5 text-ink-muted ring-1 ring-inset ring-line transition-[background-color,color] duration-150 hover:bg-paper-sunk hover:text-ink sm:rounded-full sm:py-1.5 sm:leading-normal"
         >
           <span className="min-w-0">
             <span className="font-medium text-ink">Free for macOS</span>
@@ -36,51 +42,58 @@ export function Hero() {
           </span>
         </Link>
 
-        <div className="mt-9 inline-block max-w-full md:mt-10">
+        <div className="mt-9 inline-block max-w-full md:mt-11">
           <CaptureMarquee>
             <h1 className="text-balance text-[clamp(2.7rem,8vw,6.4rem)] font-medium leading-[0.98] tracking-[-0.045em] text-ink [overflow-wrap:break-word]">
               Your screen,
               <br />
-              captured beautifully.
+              captured <span className="bg-gradient-to-br from-accent to-[#a78bfa] bg-clip-text text-transparent">beautifully.</span>
             </h1>
           </CaptureMarquee>
         </div>
 
-        <div className="sm-rise mt-14 flex flex-col items-center gap-3 [animation-delay:120ms] sm:flex-row sm:gap-2 md:mt-16">
+        <p className="sm-rise mt-12 max-w-xl text-[1.0625rem] leading-relaxed text-ink-muted [animation-delay:80ms] md:mt-14 md:text-lg">
+          Capture an area, a window or a whole display, mark it up, hide what&apos;s private, and share it in seconds.
+        </p>
+
+        <div className="sm-rise mt-8 flex flex-col items-center gap-3 [animation-delay:140ms] sm:flex-row sm:gap-2">
           <Link
             href={cta.href}
-            className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-ink px-6 text-base font-medium text-paper shadow-[0_1px_0_rgba(255,255,255,0.12)_inset,0_10px_24px_-12px_rgba(23,22,28,0.6)] transition-[background-color,transform] duration-150 ease-out hover:bg-ink/85 active:scale-[0.97]"
+            className="group inline-flex h-12 cursor-pointer items-center justify-center gap-2 rounded-xl bg-ink px-6 text-base font-medium text-paper shadow-[0_1px_0_rgba(255,255,255,0.12)_inset,0_10px_24px_-12px_rgba(23,22,28,0.6)] transition-[background-color,transform] duration-150 ease-out hover:bg-ink/85 active:scale-[0.97]"
           >
             Download free for Mac
+            <ArrowRight className="size-4 transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden="true" />
           </Link>
           <Link
             href="#editor"
-            className="inline-flex h-12 items-center justify-center rounded-xl bg-paper-raised px-5 text-base font-medium text-ink ring-1 ring-inset ring-line-strong transition-[background-color,color,transform] duration-150 ease-out hover:bg-paper-sunk active:scale-[0.97]"
+            className="inline-flex h-12 cursor-pointer items-center justify-center rounded-xl bg-paper-raised px-5 text-base font-medium text-ink ring-1 ring-inset ring-line-strong transition-[background-color,color,transform] duration-150 ease-out hover:bg-paper-sunk active:scale-[0.97]"
           >
             Try the editor
           </Link>
         </div>
 
-        <dl
-          className="sm-rise mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-sm text-ink-muted [animation-delay:200ms]"
-          aria-label="Default shortcuts"
+        <ul
+          className="sm-rise mt-5 flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1 text-[13px] text-ink-faint [animation-delay:200ms]"
+          aria-label="Built with"
         >
-          {[
-            { keys: shortcuts.area, label: "Area" },
-            { keys: shortcuts.window, label: "Window" },
-            { keys: shortcuts.fullScreen, label: "Full screen" },
-          ].map((row) => (
-            <div key={row.label} className="flex items-center gap-2">
-              <dt className="order-last">{row.label}</dt>
-              <dd className="flex gap-1">
-                {row.keys.map((key) => (
-                  <Kbd key={key}>{key}</Kbd>
-                ))}
-              </dd>
-            </div>
+          {facts.map((fact, i) => (
+            <li key={fact} className="flex items-center gap-2.5">
+              {i > 0 ? <span className="size-1 rounded-full bg-line-strong" aria-hidden="true" /> : null}
+              {fact}
+            </li>
           ))}
-        </dl>
+        </ul>
+
+        <div className="sm-rise mt-12 [animation-delay:280ms] md:mt-14">
+          <CaptureTriggers
+            items={[
+              { kind: "area", label: "Area", keys: shortcuts.area },
+              { kind: "window", label: "Window", keys: shortcuts.window },
+              { kind: "full", label: "Full screen", keys: shortcuts.fullScreen },
+            ]}
+          />
+        </div>
       </div>
-    </section>
+    </CaptureStage>
   );
 }

@@ -5,6 +5,7 @@ import { GeistSans } from "geist/font/sans";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
+import { ScrollReveals } from "@/components/motion/ScrollReveals";
 import { product } from "@/lib/product";
 import { shareDescription, shareOpenGraph, shareTitle } from "@/lib/share";
 import "./globals.css";
@@ -45,6 +46,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {children}
         </main>
         <SiteFooter />
+        <ScrollReveals />
         <Suspense fallback={null}>
           <GoogleAnalytics />
         </Suspense>

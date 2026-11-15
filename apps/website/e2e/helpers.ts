@@ -16,10 +16,33 @@ export async function waitForEditor(page: Page) {
   await expect(surface(page)).toBeVisible();
 }
 
+/** The element's box once it has stopped moving (the page scrolls smoothly, so a box read mid-scroll is stale). */
+async function settledBox(target: Locator) {
+  let previous: Awaited<ReturnType<Locator["boundingBox"]>> = null;
+  for (let i = 0; i < 60; i += 1) {
+    const box = await target.boundingBox();
+    if (box && previous && box.x === previous.x && box.y === previous.y) return box;
+    previous = box;
+    await target.page().waitForTimeout(50);
+  }
+  throw new Error("Element never stopped moving");
+}
+
 /** Drag across the canvas between two points given as fractions of its size. */
 export async function dragOnCanvas(page: Page, from: [number, number], to: [number, number], target?: Locator) {
-  const box = await (target ?? surface(page)).boundingBox();
-  if (!box) throw new Error("Editor surface is not laid out");
+  const el = target ?? surface(page);
+  let box = await settledBox(el);
+  // Both ends of the drag must be on screen, or the pointer events land on nothing.
+  const viewport = page.viewportSize()!;
+  const onScreen = (b: typeof box, [fx, fy]: [number, number]) => {
+    const y = b.y + b.height * fy;
+    const x = b.x + b.width * fx;
+    return y >= 0 && y <= viewport.height && x >= 0 && x <= viewport.width;
+  };
+  if (!onScreen(box, from) || !onScreen(box, to)) {
+    await el.evaluate((node) => node.scrollIntoView({ block: "center", behavior: "instant" }));
+    box = await settledBox(el);
+  }
   await page.mouse.move(box.x + box.width * from[0], box.y + box.height * from[1]);
   await page.mouse.down();
   const steps = 8;

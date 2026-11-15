@@ -133,7 +133,15 @@ test("the page is light from the top: header and hero use the paper background",
   await page.goto("/");
   const paper = "rgb(245, 244, 239)";
   const bg = (selector: string) => page.locator(selector).first().evaluate((el) => getComputedStyle(el).backgroundColor);
-  await expect.poll(() => bg("header")).toBe(paper);
+  // The header is a floating pill of translucent paper over the page.
+  const lightness = async () => {
+    const color = await bg("header > div");
+    const oklab = color.match(/^oklab\(([\d.]+)/);
+    if (oklab) return Number(oklab[1]);
+    const rgb = color.match(/\d+/g)!.slice(0, 3).map(Number);
+    return Math.min(...rgb) / 255;
+  };
+  await expect.poll(lightness).toBeGreaterThan(0.95);
   expect(await page.evaluate(() => getComputedStyle(document.body).backgroundColor)).toBe(paper);
   const heading = page.getByRole("heading", { level: 1 });
   expect(await heading.evaluate((el) => getComputedStyle(el).color)).toBe("rgb(23, 22, 28)");
@@ -231,4 +239,46 @@ test("llms.txt and robots.txt welcome search and AI crawlers", async ({ page }) 
   const robots = await (await page.request.get("/robots.txt")).text();
   for (const bot of ["GPTBot", "ClaudeBot", "PerplexityBot"]) expect(robots).toContain(`User-Agent: ${bot}`);
   expect(robots).not.toMatch(/Disallow: \/\n/);
+});
+
+test("the hero takes a real capture: drag, shortcuts, and Quick Access", async ({ page, isMobile }) => {
+  test.skip(isMobile, "Dragging a selection is a mouse behavior; the tap path is covered below");
+  await page.goto("/");
+  const heading = page.getByRole("heading", { level: 1 });
+  await expect(heading).toBeVisible();
+  const box = await heading.boundingBox();
+  if (!box) throw new Error("Headline is not laid out");
+
+  // Drag across the headline: a selection, then Quick Access with a live thumbnail.
+  await page.mouse.move(box.x + 20, box.y + 10);
+  await page.mouse.down();
+  await page.mouse.move(box.x + box.width - 20, box.y + box.height - 10, { steps: 8 });
+  await page.mouse.up();
+  const card = page.getByRole("dialog", { name: "Quick Access" });
+  await expect(card).toContainText("Area captured");
+  await expect(card.getByRole("link", { name: "Get the app" })).toHaveAttribute("href", "/#install");
+  await page.keyboard.press("Escape");
+  await expect(card).toBeHidden();
+
+  // Screenmac's own shortcuts work on the page.
+  await page.keyboard.press("Meta+Alt+Shift+Digit3");
+  await expect(card).toContainText("Full screen captured");
+  await page.keyboard.press("Meta+Alt+Shift+Digit4");
+  await expect(card).toBeHidden();
+  await expect(page.getByText("Drag to capture")).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(page.getByText("Drag to capture")).toBeHidden();
+
+  // The thumbnail is a clone, so the page still has exactly one editor anchor.
+  await expect(page.locator("#editor")).toHaveCount(1);
+});
+
+test("capture buttons work by touch and area capture can be cancelled", async ({ page }) => {
+  await page.goto("/");
+  const triggers = page.getByRole("group", { name: "Try a capture" });
+  await triggers.getByRole("button", { name: /^Area/ }).click();
+  await page.getByRole("button", { name: /Cancel/ }).click();
+  await expect(page.getByText("Drag to capture")).toBeHidden();
+  await triggers.getByRole("button", { name: /^Full screen/ }).click();
+  await expect(page.getByRole("dialog", { name: "Quick Access" })).toContainText("Full screen captured");
 });
