@@ -16,6 +16,7 @@ const links = [
   { href: "/#install", label: "Install" },
   { href: "/pricing", label: "Pricing" },
   { href: "/editor", label: "Editor" },
+  { href: "/blog", label: "Guides" },
 ];
 
 export function SiteHeader() {

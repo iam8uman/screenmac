@@ -19,6 +19,8 @@ Key facts:
 - [Features](https://www.screenmac.app/features): Every capability with its status: in the Mac beta, in the browser editor, or planned.
 - [Browser editor](https://www.screenmac.app/editor): The annotation editor running in the browser; open your own screenshot, mark it up and export a PNG.
 - [Pricing](https://www.screenmac.app/pricing): Free beta; Pro is listed as not available.
+- [Guides](https://www.screenmac.app/blog): All screenshot and screen recording guides by topic.
+- [Free tools](https://www.screenmac.app/tools): Browser tools and quizzes.
 
 ## Releases
 
@@ -30,6 +32,16 @@ Key facts:
 - [Support](https://www.screenmac.app/support): Help with permissions and common problems.
 - [Privacy](https://www.screenmac.app/privacy): What the app and the website do and don't collect.
 - [Terms](https://www.screenmac.app/terms): Terms of use.
+
+## Free tools
+
+- [Screenshot Editor](https://www.screenmac.app/editor): Annotate, blur, pixelate and crop a screenshot in your browser, then export a PNG. Nothing is uploaded.
+- [Mac Screenshot Shortcuts Finder](https://www.screenmac.app/tools/mac-screenshot-shortcuts): Pick what you want to capture and where it should go; get the exact macOS shortcut.
+- [Which Mac Screenshot Tool Do You Need?](https://www.screenmac.app/quiz/which-mac-screenshot-tool): Six questions to find out whether the built-in tools are enough or which kind of app fits.
+
+## Screenshots
+
+- [How to Screenshot on a Mac: Every Shortcut and Option](https://www.screenmac.app/blog/how-to-screenshot-on-mac): Every way to take a screenshot on a Mac: full screen, an area, a window without its shadow, to the clipboard, with a timer, and how to change where screenshots are saved.
 
 ## Related apps by the same developer
 

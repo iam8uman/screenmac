@@ -62,7 +62,7 @@ function faqPage() {
   };
 }
 
-function JsonLd({ data }: { data: object }) {
+export function JsonLd({ data }: { data: object }) {
   // JSON.stringify output is safe here except for "</script>", which can't appear in this data; escape "<" anyway.
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data).replace(/</g, "\\u003c") }} />;
 }

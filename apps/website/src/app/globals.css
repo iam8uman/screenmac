@@ -167,3 +167,27 @@
   animation: sm-rise 520ms cubic-bezier(0.23, 1, 0.32, 1) both;
 }
 
+
+/* Guides: long-form article typography (blog posts and tool explainers). */
+.article { color: var(--color-ink-muted); font-size: 1.0625rem; line-height: 1.75; }
+.article > * { max-width: 42rem; }
+.article h2 { color: var(--color-ink); font-size: clamp(1.45rem, 2.6vw, 1.85rem); font-weight: 600; letter-spacing: -0.025em; line-height: 1.2; margin: 2.6rem 0 0.8rem; }
+.article h3 { color: var(--color-ink); font-size: 1.2rem; font-weight: 600; letter-spacing: -0.015em; margin: 2rem 0 0.5rem; }
+.article p, .article ul, .article ol { margin: 0 0 1.1rem; }
+.article ul { list-style: disc; padding-left: 1.25rem; }
+.article ol { list-style: decimal; padding-left: 1.4rem; }
+.article li { margin: 0.35rem 0; }
+.article li::marker { color: var(--color-accent); }
+.article strong { color: var(--color-ink); font-weight: 600; }
+.article a { color: var(--color-ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--color-line-strong); }
+.article a:hover { text-decoration-color: var(--color-accent); }
+.article code { font-family: var(--font-mono); font-size: 0.9em; background: var(--color-paper-sunk); padding: 0.1em 0.35em; border-radius: 6px; color: var(--color-ink); }
+.article pre { background: var(--color-paper-sunk); padding: 1rem 1.1rem; border-radius: 12px; overflow-x: auto; }
+.article pre code { background: none; padding: 0; }
+.article kbd { font-family: var(--font-mono); font-size: 0.85em; padding: 0.08em 0.45em; border-radius: 6px; border: 1px solid var(--color-line-strong); background: var(--color-paper-raised); color: var(--color-ink); box-shadow: 0 1px 0 var(--color-line-strong); }
+.article blockquote { border-left: 3px solid var(--color-accent); background: var(--color-accent-soft); padding: 0.8rem 1rem; border-radius: 0 12px 12px 0; margin: 1.4rem 0; }
+.article table { width: 100%; border-collapse: collapse; margin: 1.4rem 0; font-size: 0.95rem; }
+.article th, .article td { text-align: left; padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--color-line); vertical-align: top; }
+.article th { color: var(--color-ink); font-weight: 600; background: var(--color-paper-sunk); }
+.article img { border-radius: 14px; border: 1px solid var(--color-line); }
+@media (max-width: 640px) { .article table { display: block; overflow-x: auto; } }

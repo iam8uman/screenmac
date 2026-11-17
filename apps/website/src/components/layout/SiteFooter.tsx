@@ -14,6 +14,17 @@ const groups = [
     ],
   },
   {
+    title: "Learn",
+    links: [
+      { href: "/blog", label: "Guides" },
+      { href: "/tools", label: "Free tools" },
+      { href: "/tools/mac-screenshot-shortcuts", label: "Screenshot shortcuts" },
+      { href: "/quiz/which-mac-screenshot-tool", label: "Screenshot tool quiz" },
+      { href: "https://www.windowmac.app/", label: "Windowmac" },
+      { href: "https://www.slidemac.app/", label: "Slidemac" },
+    ],
+  },
+  {
     title: "Help",
     links: [
       { href: "/support", label: "Support" },
@@ -27,7 +38,7 @@ const groups = [
 export function SiteFooter() {
   return (
     <footer className="border-t border-line">
-      <div className="mx-auto grid max-w-[75rem] gap-10 px-4 py-14 md:grid-cols-[1.6fr_1fr_1fr] md:px-6">
+      <div className="mx-auto grid max-w-[75rem] gap-10 px-4 py-14 md:grid-cols-[1.6fr_1fr_1fr_1fr] md:px-6">
         <div>
           <Logo />
           <p className="mt-4 max-w-xs text-sm leading-6 text-ink-muted">

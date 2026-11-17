@@ -4,23 +4,26 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "node scripts/lint-content.mjs && node scripts/build-llms.mjs && next build && node scripts/check-links.mjs",
     "start": "next start",
     "lint": "eslint .",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
-    "typecheck": "next typegen && tsc --noEmit"
+    "typecheck": "next typegen && tsc --noEmit",
+    "lint:content": "node scripts/lint-content.mjs"
   },
   "dependencies": {
+    "@screenmac/design-tokens": "workspace:*",
     "geist": "^1.8.2",
+    "gray-matter": "4.0.3",
     "lucide-react": "^1.61.0",
+    "marked": "16.4.1",
     "motion": "^12.43.0",
     "next": "16.4.2",
     "react": "19.3.0",
     "react-dom": "19.3.0",
-    "zod": "^4.6.7",
-    "@screenmac/design-tokens": "workspace:*"
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@playwright/test": "^1.64.1",
