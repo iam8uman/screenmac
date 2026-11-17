@@ -4,14 +4,14 @@
 
 A native macOS app for screenshots and screen recordings, plus its website with a working in-browser annotation editor.
 
-**Website:** https://screenmac.vercel.app · **Download:** [latest release](https://github.com/iam8uman/screenmac/releases/latest)
+**Website:** https://www.screenmac.app · **Download:** [latest release](https://github.com/iam8uman/screenmac/releases/latest)
 
 ## Install
 
 Paste this into Terminal. It downloads the latest release, checks its checksum, puts Screenmac in Applications and opens it:
 
 ```bash
-curl -fsSL https://screenmac.vercel.app/install.sh | bash
+curl -fsSL https://www.screenmac.app/install.sh | bash
 ```
 
 Or download [`Screenmac.zip`](https://github.com/iam8uman/screenmac/releases/latest/download/Screenmac.zip), unzip it and drag Screenmac into Applications. It needs macOS 14 or later and runs natively on Apple silicon and Intel. Builds aren't notarized yet, so the first launch of a downloaded copy needs **System Settings → Privacy & Security → Open Anyway** (macOS 15) or right-click → **Open** (macOS 14). Then allow Screen Recording, reopen Screenmac, and press **⌥⇧⌘4**.

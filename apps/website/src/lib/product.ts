@@ -4,7 +4,7 @@
  */
 export const product = {
   name: "Screenmac",
-  siteUrl: "https://screenmac.vercel.app",
+  siteUrl: "https://www.screenmac.app",
   /** Must match MARKETING_VERSION in apps/macos (a unit test checks this). */
   version: "0.3.0",
   repoUrl: "https://github.com/iam8uman/screenmac",
@@ -18,7 +18,7 @@ export const product = {
   downloadUrl: "https://github.com/iam8uman/screenmac/releases/latest/download/Screenmac.zip" as string | null,
   checksumUrl: "https://github.com/iam8uman/screenmac/releases/latest/download/Screenmac.zip.sha256",
   releasesUrl: "https://github.com/iam8uman/screenmac/releases",
-  installCommand: "curl -fsSL https://screenmac.vercel.app/install.sh | bash",
+  installCommand: "curl -fsSL https://www.screenmac.app/install.sh | bash",
   /** Ad-hoc signed by CI. Flip once builds are signed with a Developer ID and notarized. */
   notarized: false,
   billingLive: false,

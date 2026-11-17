@@ -3,6 +3,7 @@ import { FAQ } from "@/components/landing/FAQ";
 import { PricingSection } from "@/components/landing/PricingSection";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/pricing" },
   title: "Pricing",
   description: "Screenmac is free during the Mac beta. Pro has no price yet and isn't for sale.",
 };

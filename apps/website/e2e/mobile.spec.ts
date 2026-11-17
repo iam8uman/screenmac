@@ -55,5 +55,5 @@ test("phone visitors can send the install link to their Mac", async ({ page, con
   await expect(card).toBeVisible();
   await card.getByRole("button", { name: "Send the link to my Mac" }).click();
   await expect(card.getByRole("button", { name: "Link copied" })).toBeVisible();
-  expect(await page.evaluate(() => navigator.clipboard.readText())).toBe("https://screenmac.vercel.app/#install");
+  expect(await page.evaluate(() => navigator.clipboard.readText())).toBe("https://www.screenmac.app/#install");
 });

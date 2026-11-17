@@ -5,6 +5,7 @@ import { LinkButton } from "@/components/ui/Button";
 import { product } from "@/lib/product";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/download" },
   title: "Download",
   description: `Download Screenmac ${product.version} for macOS ${product.minimumMacOS} or later, or install it with one line in Terminal.`,
 };

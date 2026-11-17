@@ -3,6 +3,7 @@ import { PageHeader, Prose } from "@/components/layout/PageHeader";
 import { product } from "@/lib/product";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/support" },
   title: "Support",
   description: "Fix common Screenmac issues: permissions, shortcuts, copying, and exports.",
 };

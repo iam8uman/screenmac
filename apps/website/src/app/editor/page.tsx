@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Editor } from "@/features/editor/ui/Editor";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/editor" },
   title: "Editor",
   description: "Annotate a screenshot in your browser: arrows, text, steps, blur, redaction, crop, and backgrounds. Export a PNG. Nothing is uploaded.",
 };

@@ -18,6 +18,9 @@ export const metadata: Metadata = {
   },
   description: product.description,
   applicationName: product.name,
+  alternates: { canonical: "/", types: { "text/markdown": "/llms.txt" } },
+  authors: [{ name: "Suman Sharma", url: "https://github.com/iam8uman" }],
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 } },
   // The share image itself comes from app/opengraph-image.png and app/twitter-image.png.
   openGraph: shareOpenGraph,
   twitter: {

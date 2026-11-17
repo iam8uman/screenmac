@@ -5,6 +5,7 @@ import { PageHeader } from "@/components/layout/PageHeader";
 import { LinkButton } from "@/components/ui/Button";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/features" },
   title: "Features",
   description: "Every Screenmac capability and its real status: in the browser editor, coming in the Mac app, or planned.",
 };

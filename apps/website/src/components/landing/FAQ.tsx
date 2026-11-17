@@ -25,7 +25,7 @@ export const FAQS: { q: string; a: React.ReactNode; plain?: string }[] = [
   {
     q: "Is it safe to paste a curl command into Terminal?",
     plain:
-      "It's worth checking first, and you can: the whole script is about 70 lines at screenmac.vercel.app/install.sh. It downloads the latest release from GitHub, checks it against its published SHA-256, copies Screenmac into Applications and resets only Screenmac's own Screen Recording entry. It never asks for your password.",
+      "It's worth checking first, and you can: the whole script is about 70 lines at www.screenmac.app/install.sh. It downloads the latest release from GitHub, checks it against its published SHA-256, copies Screenmac into Applications and resets only Screenmac's own Screen Recording entry. It never asks for your password.",
     a: (
       <>
         It&apos;s worth checking first, and you can:{" "}

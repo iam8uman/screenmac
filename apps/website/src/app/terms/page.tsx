@@ -3,6 +3,7 @@ import { PageHeader, Prose } from "@/components/layout/PageHeader";
 import { product } from "@/lib/product";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/terms" },
   title: "Terms",
   description: "Terms for using the Screenmac website, editor, and Mac beta.",
 };

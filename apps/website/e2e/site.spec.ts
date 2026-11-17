@@ -19,7 +19,7 @@ test("install section offers the one-liner, a real download, and the script", as
   await page.goto("/#install");
   const install = page.locator("#install");
   await expect(install.getByRole("heading", { name: "Install in a minute." })).toBeVisible();
-  await expect(install.getByTestId("install-command")).toHaveText("curl -fsSL https://screenmac.vercel.app/install.sh | bash");
+  await expect(install.getByTestId("install-command")).toHaveText("curl -fsSL https://www.screenmac.app/install.sh | bash");
   await expect(install.getByRole("link", { name: "Download Screenmac.zip" })).toHaveAttribute(
     "href",
     "https://github.com/iam8uman/screenmac/releases/latest/download/Screenmac.zip",
@@ -184,7 +184,7 @@ test("shared links get a large preview image and a real title", async ({ page })
   expect(await meta('meta[property="og:image:height"]')).toBe("630");
   expect(await meta('meta[property="og:image:alt"]')).toContain("Screenmac");
   expect(await meta('meta[property="og:title"]')).toContain("Screenmac");
-  expect(await meta('meta[property="og:url"]')).toBe("https://screenmac.vercel.app");
+  expect(await meta('meta[property="og:url"]')).toBe("https://www.screenmac.app");
   expect(await meta('meta[name="twitter:card"]')).toBe("summary_large_image");
   expect(await meta('meta[name="twitter:image"]')).toMatch(/twitter-image\.png/);
 
@@ -195,7 +195,7 @@ test("shared links get a large preview image and a real title", async ({ page })
     expect(res.headers()["content-type"]).toContain("image/png");
   }
   expect((await page.request.get("/sitemap.xml")).status()).toBe(200);
-  expect(await (await page.request.get("/robots.txt")).text()).toContain("Sitemap: https://screenmac.vercel.app/sitemap.xml");
+  expect(await (await page.request.get("/robots.txt")).text()).toContain("Sitemap: https://www.screenmac.app/sitemap.xml");
 });
 
 test("subpages share the same preview image", async ({ page }) => {

@@ -9,24 +9,29 @@ Key facts:
 - Built with SwiftUI, AppKit and Apple's ScreenCaptureKit. Not Electron.
 - Privacy: captures and history stay in a folder on the Mac. There is no upload feature. Redact, blur and pixelate are flattened into the exported pixels.
 - Default shortcuts: Option-Shift-Command-4 area, Option-Shift-Command-2 window, Option-Shift-Command-3 full screen, Option-Shift-Command-5 record.
-- Install: `curl -fsSL https://screenmac.vercel.app/install.sh | bash`, or download Screenmac.zip from GitHub Releases.
+- Install: `curl -fsSL https://www.screenmac.app/install.sh | bash`, or download Screenmac.zip from GitHub Releases.
 - Source: https://github.com/iam8uman/screenmac (by Suman Sharma).
 
 ## Product
 
-- [Home](https://screenmac.vercel.app/): What Screenmac does, a live in-browser annotation editor, install instructions and FAQ.
-- [Download and install](https://screenmac.vercel.app/download): The one-line installer, the zip download, first-launch steps and building from source.
-- [Features](https://screenmac.vercel.app/features): Every capability with its status: in the Mac beta, in the browser editor, or planned.
-- [Browser editor](https://screenmac.vercel.app/editor): The annotation editor running in the browser; open your own screenshot, mark it up and export a PNG.
-- [Pricing](https://screenmac.vercel.app/pricing): Free beta; Pro is listed as not available.
+- [Home](https://www.screenmac.app/): What Screenmac does, a live in-browser annotation editor, install instructions and FAQ.
+- [Download and install](https://www.screenmac.app/download): The one-line installer, the zip download, first-launch steps and building from source.
+- [Features](https://www.screenmac.app/features): Every capability with its status: in the Mac beta, in the browser editor, or planned.
+- [Browser editor](https://www.screenmac.app/editor): The annotation editor running in the browser; open your own screenshot, mark it up and export a PNG.
+- [Pricing](https://www.screenmac.app/pricing): Free beta; Pro is listed as not available.
 
 ## Releases
 
 - [Latest release](https://github.com/iam8uman/screenmac/releases/latest): Screenmac.zip and its SHA-256 checksum, built by GitHub Actions.
-- [Changelog](https://screenmac.vercel.app/changelog): What changed in each version.
+- [Changelog](https://www.screenmac.app/changelog): What changed in each version.
 
 ## Optional
 
-- [Support](https://screenmac.vercel.app/support): Help with permissions and common problems.
-- [Privacy](https://screenmac.vercel.app/privacy): What the app and the website do and don't collect.
-- [Terms](https://screenmac.vercel.app/terms): Terms of use.
+- [Support](https://www.screenmac.app/support): Help with permissions and common problems.
+- [Privacy](https://www.screenmac.app/privacy): What the app and the website do and don't collect.
+- [Terms](https://www.screenmac.app/terms): Terms of use.
+
+## Related apps by the same developer
+
+- [Windowmac](https://www.windowmac.app/): Free, open-source window manager for macOS. Hold Option and flick a window into place.
+- [Slidemac](https://www.slidemac.app/): Turns the edges of a Mac trackpad into sliders for volume, brightness, app switching and keyboard light.

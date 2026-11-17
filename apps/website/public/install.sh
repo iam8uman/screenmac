@@ -1,6 +1,6 @@
 #!/bin/bash
 # Screenmac installer: downloads the latest release from GitHub and puts it in Applications.
-#   curl -fsSL https://screenmac.vercel.app/install.sh | bash
+#   curl -fsSL https://www.screenmac.app/install.sh | bash
 # Source: https://github.com/iam8uman/screenmac
 set -euo pipefail
 
