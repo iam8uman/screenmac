@@ -179,7 +179,7 @@ test("shared links get a large preview image and a real title", async ({ page })
   await page.goto("/");
   const meta = (selector: string) => page.locator(selector).first().getAttribute("content");
   const ogImage = await meta('meta[property="og:image"]');
-  expect(ogImage).toMatch(/^https:\/\/screenmac\.vercel\.app\/opengraph-image\.png/);
+  expect(ogImage).toMatch(/^https:\/\/www\.screenmac\.app\/opengraph-image\.png/);
   expect(await meta('meta[property="og:image:width"]')).toBe("1200");
   expect(await meta('meta[property="og:image:height"]')).toBe("630");
   expect(await meta('meta[property="og:image:alt"]')).toContain("Screenmac");
