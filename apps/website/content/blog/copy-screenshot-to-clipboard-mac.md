@@ -25,6 +25,8 @@ sources:
     url: "https://support.apple.com/en-us/102646"
   - title: "Apple Mac User Guide: Take screenshots or screen recordings"
     url: "https://support.apple.com/guide/mac-help/take-screenshots-or-screen-recordings-mh26782/mac"
+  - title: "Apple Support: Continuity features and requirements"
+    url: "https://support.apple.com/en-us/102418"
 seoTitle: "Copy a Screenshot to Clipboard on Mac (Control Shortcut)"
 seoDescription: "Copy a Mac screenshot to the clipboard instead of saving it: add Control to any shortcut, or set Clipboard as the default under Options, Save to."
 draft: true
@@ -81,6 +83,10 @@ The clipboard holds only the most recent item, so paste the screenshot before yo
 ## Should I copy or save?
 
 Copy when the image is going straight into one conversation or document and you will not need it again. Save when you might reuse it, need to attach it later, or want a record. You can also do both: take the screenshot normally, then drag the floating thumbnail into the chat or document before it disappears. The file still saves.
+
+## Can I paste a copied screenshot on my iPhone or iPad?
+
+Apple's Continuity features include Universal Clipboard, which lets you copy on one Apple device and paste on another nearby device signed in to the same Apple Account. Copy the screenshot with <kbd>Control</kbd>-<kbd>Shift</kbd>-<kbd>Command</kbd>-<kbd>4</kbd>, then paste it on the other device shortly after. Check Apple's Continuity requirements page if it does not appear, or save the screenshot as a file and send it with AirDrop instead.
 
 ## How do I copy, then hide private details?
 

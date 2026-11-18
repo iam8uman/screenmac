@@ -78,6 +78,16 @@ Add `-i` to drag over an area instead (`screencapture -i -T 3 ~/Desktop/delayed.
 
 If you need to show a hover state in action, a short screen recording often explains it better than a still. Use **Options → Timer** in the same toolbar with **Record Selected Portion**, so recording starts after you have positioned the pointer. See [how to record your screen on a Mac](/blog/record-screen-mac).
 
+## Why did my timed screenshot capture the wrong thing?
+
+A few common surprises:
+
+- **The countdown ended before the menu opened.** Five seconds goes quickly. Switch to 10 seconds and open the menu straight after clicking Capture.
+- **A portion capture missed the tooltip.** The frame is fixed when you click Capture. Place it a little larger than you need, then crop afterwards.
+- **The pointer is missing.** Turn on **Show Mouse Pointer** in Options if the hover only makes sense with the pointer visible.
+- **The thumbnail from the last capture is in the shot.** If you take several timed captures in a row, swipe the previous thumbnail away first, or turn the floating thumbnail off.
+- **The menu opens off the edge of the frame.** Menus near the bottom or right of the screen open in the other direction. Move the window so the menu has room.
+
 ## What should I do with the timed screenshot?
 
 A timed screenshot is often a full-screen capture, because you set it before you knew exactly where the menu would open. Crop it down before sharing, and check the edges for open tabs and notifications. The free [screenshot editor](/editor) crops, adds arrows or numbered steps, and blurs anything private, then exports a PNG without uploading anything.

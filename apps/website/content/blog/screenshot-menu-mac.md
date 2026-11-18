@@ -75,6 +75,17 @@ Turn on **Show Mouse Pointer** in Options if you want the pointer in the shot, w
 
 When you capture a menu with Space and a click, macOS treats it like a window and keeps its soft shadow and rounded corners, saved as transparent pixels. Apple documents holding <kbd>Option</kbd> as you click to leave out the shadow for [window screenshots](/blog/screenshot-window-without-shadow-mac); try the same with menus, or crop the shadow off afterwards. Rounded corners still show small transparent areas; the [window frame tool](/tools/screenshot-window-frame) can place the image on a solid background.
 
+## Can I record a menu being used instead?
+
+Sometimes a still image is not enough: the steps are a chain of menus and submenus, or a hover reveals something that only makes sense in motion. A short screen recording shows it better.
+
+1. Press <kbd>Shift</kbd>-<kbd>Command</kbd>-<kbd>5</kbd> and choose **Record Selected Portion**.
+2. Draw the frame around the area where the menus will open.
+3. In **Options**, turn on **Show Mouse Clicks** so viewers see each click.
+4. Click **Record**, walk through the menus slowly, then stop with <kbd>Command</kbd>-<kbd>Control</kbd>-<kbd>Esc</kbd>.
+
+Keep these clips short and trim the dead time at the start. See [how to record your screen on a Mac](/blog/record-screen-mac) and [how to trim a screen recording](/blog/trim-screen-recording-mac).
+
 ## How do I make menu screenshots clear for documentation?
 
 Menus are small, so a little markup goes a long way:

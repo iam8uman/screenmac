@@ -70,6 +70,17 @@ The Screenshot app's **Save to** list offers the desktop, Documents, the clipboa
 
 Screenshots taken on an iPhone do go into Photos, and with iCloud Photos on they appear in Photos on your Mac too. From there you can drag one out to Finder to get a file, or open it to mark it up.
 
+## How do I find screenshots once they are in Photos?
+
+Photos treats imported screenshots like any other image, so a little organization pays off:
+
+- **Make an album** called Screenshots, or one per project, and drag imported screenshots into it.
+- **Add a caption** in the Info window with the reason you kept the screenshot, such as "booking reference" or "warranty".
+- **Mark as Favorite** the ones you will need again, such as tickets.
+- **Copy text** from them with Live Text when you need a reference number: select it and choose Copy Text.
+
+When a screenshot has served its purpose, delete it from Photos as well. With iCloud Photos on, deleting it on your Mac removes it from your other devices too.
+
 ## How do I keep screenshots under control?
 
 Screenshots pile up fast. A dedicated folder plus occasional cleanup works better than letting them collect on the desktop. Copying straight to the clipboard (add <kbd>Control</kbd> to the shortcut) for screenshots you only need once helps too. [Screenmac](/download) also keeps a local capture history, so you can find past captures without saving every one as a file.

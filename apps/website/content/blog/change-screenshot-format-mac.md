@@ -85,6 +85,16 @@ The JPG lands on your desktop. `-i` makes it interactive; leave it out to captur
 
 The [PNG vs JPG for screenshots](/blog/png-vs-jpg-screenshots) explainer goes into the trade-offs.
 
+## Why are my screenshots so large as PNG?
+
+Retina displays have a lot of pixels, and PNG stores every one of them without loss. A full-screen capture on a large Retina display can be several megabytes, especially when the screen shows photos or gradients, which PNG compresses poorly.
+
+Before changing the format, try these:
+
+- **Capture less.** An area or window capture is often a fraction of the full screen.
+- **Resize.** Halving the width and height of a Retina screenshot cuts the pixel count to a quarter and still looks sharp on most screens. Use **Tools → Adjust Size** in Preview, or the 50% option in the [format converter](/tools/image-format-converter).
+- **Convert only photo-heavy screenshots.** For screens full of text and flat colors, JPG is often not much smaller and blurs the text.
+
 ## Do capture apps let you choose the format?
 
 Many do; check the app's settings. The free browser [screenshot editor](/editor) exports PNG with any redaction flattened into the pixels, and [Screenmac](/download) lets you copy, save or drag each capture from its Quick Access preview. If you need a different format afterwards, run the PNG through the converter.

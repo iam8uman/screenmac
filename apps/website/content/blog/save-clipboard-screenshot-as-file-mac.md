@@ -72,6 +72,12 @@ Preview is quickest when you only want the file, and the editor is quickest when
 
 Preview's Export menu shows HEIC, JPEG, JPEG-2000, OpenEXR, PDF, PNG and TIFF, and more if you hold Option while opening the Format menu.
 
+## How do I check what is on the clipboard?
+
+If you are not sure the screenshot is still there, Finder can show you. In Finder, choose **Edit → Show Clipboard**. A small window shows the current clipboard contents. If it shows text or nothing, the screenshot has been replaced and you need to take it again.
+
+This is also a quick check before pasting into a chat: you see exactly what will be sent, rather than finding out after the message has gone.
+
 ## How do I avoid losing copied screenshots?
 
 - **Save by default, copy on purpose.** Keep Save to set to a folder and add <kbd>Control</kbd> only when you will paste straight away. See [how to copy a screenshot to the clipboard](/blog/copy-screenshot-to-clipboard-mac).

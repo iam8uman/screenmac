@@ -73,6 +73,17 @@ You lose the quick markup window and the drag-and-drop shortcut. Neither is hard
 
 Capture apps usually have their own preview. Screenmac shows a **Quick Access** preview after each capture from which you copy, save or drag the image, or open its editor with arrows, numbered steps, blur and redaction. It is separate from Apple's thumbnail, so you can turn Apple's off and still have a preview for captures taken with Screenmac's own shortcuts. [Download Screenmac](/download) if that suits you, or try the editor first in your browser at [/editor](/editor).
 
+## How do I use the thumbnail better instead of turning it off?
+
+If the thumbnail mostly gets in the way because of timing, a few habits make it useful rather than annoying:
+
+- **Swipe right** as soon as it appears when you just want the file. It saves straight away.
+- **Drag it into the destination**, such as a chat, an email or a folder, instead of opening Finder afterwards.
+- **Hover to keep it** while you decide; it stays until you move the pointer away.
+- **Control-click it** for quick choices such as saving to the clipboard.
+
+Dragging the thumbnail straight into a message can replace both the clipboard shortcut and the hunt through the desktop.
+
 ## What else can I set in Options?
 
 The same menu holds the other screenshot settings:

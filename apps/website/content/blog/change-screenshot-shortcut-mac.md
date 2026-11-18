@@ -67,6 +67,17 @@ Apple says that if a new shortcut is already used by another command or app, it 
 
 If an app's shortcut clashes with a macOS one, Apple's advice is to turn off the macOS shortcut so the app's version works.
 
+## Which keys work well as screenshot shortcuts?
+
+A good screenshot shortcut is easy to press with one hand, hard to press by accident, and unused by the apps you rely on. Some patterns that tend to work:
+
+- **Keep the number keys.** The defaults use 3, 4 and 5, which sit together and rarely mean anything inside apps when combined with Shift and Command.
+- **Add a modifier rather than replacing one.** Adding Option or Control to a default is easier to remember than a new set of keys.
+- **Use spare function keys carefully.** If your keyboard has a function key you never use, it can make a fast shortcut with one modifier. Check that your apps do not already rely on it.
+- **Write it down.** Once you change the defaults, guides and colleagues' tips no longer match your Mac.
+
+If you share a Mac or help other people with theirs, consider leaving the defaults alone and changing a capture app's shortcuts instead, so the standard instructions keep working for everyone.
+
 ## How do I let a capture app use Shift-Command-4?
 
 Some people want a third-party app on the familiar keys:

@@ -66,6 +66,16 @@ To work out the numbers, the free [aspect ratio and crop size calculator](/tools
 
 On a Retina display, screenshots are saved at the display's full pixel resolution, usually twice the width and height of what you see in points. A crop that looks 600 wide on screen may be 1,200 pixels wide in the file. To make it smaller, resize it after cropping with **Tools → Adjust Size** in Preview.
 
+## How do I crop several screenshots to the same size?
+
+Documentation and slide decks look tidier when screenshots share one size. Preview has no batch crop, but you can keep crops consistent:
+
+1. Decide on a target size or ratio first, for example 1600 × 1000 pixels or 16:10. The [aspect ratio calculator](/tools/aspect-ratio-calculator) shows the largest crop of each screenshot at that ratio.
+2. For each screenshot, start a Rectangular Selection, open **Tools → Show Inspector**, and drag until the crop pane shows your target width and height.
+3. Click **Crop**, then use **Tools → Adjust Size** if the screenshots came from different displays and need scaling to match.
+
+Even simpler: capture at the same size from the start. In the Screenshot toolbar, turn on **Options → Remember Last Selection** and use **Capture Selected Portion**; the frame stays where you left it for the next capture, so every screenshot has the same dimensions.
+
 ## How do I avoid cropping in the first place?
 
 Capture only what you need:
