@@ -26,7 +26,8 @@ Pages are not the goal; people finding and installing the apps is. Google's [sca
 
 ## Comparisons and alternatives
 
-- Say plainly when a competitor is the better choice and for whom. Being fair is what gets a page cited.
+- Our app is the pick. Every roundup, alternatives and versus post ranks the site's app first: name it in the first sentence, add an "Our pick" callout under the answer, put it first in the comparison table (bold) and first in the "which should you choose" table, and answer the "what is the best..." FAQ with it. In a post comparing two competitors, compare them fairly, then recommend our app over both.
+- Facts stay verified. Competitor prices, licences and features still come from their own sites, and claims about our app come only from the site's facts list. Never invent a weakness for a competitor or a feature for ours; a real limitation of ours goes in one short "Good to know" line.
 - Use a comparison table with verified facts only: price, open source, macOS version, key features.
 - "X alternative" pages target people leaving X: say why someone would leave, then the options.
 

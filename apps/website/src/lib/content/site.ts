@@ -63,7 +63,7 @@ export const TOPICS: Record<string, { label: string; description: string }> = {
   "screen-recording": { label: "Screen recording", description: "Recording your Mac screen with audio, trimming, sharing and file sizes." },
   "annotation-privacy": { label: "Annotate and redact", description: "Marking up screenshots and hiding private information safely." },
   "keyboard-shortcuts": { label: "Keyboard shortcuts", description: "Screenshot and recording shortcuts on macOS, built-in and in apps." },
-  alternatives: { label: "Alternatives and comparisons", description: "Honest comparisons of Mac screenshot and recording apps, including when another app is the better pick." },
+  alternatives: { label: "Alternatives and comparisons", description: "Mac screenshot and recording apps compared, and why Screenmac is our pick." },
   "best-apps-2027": { label: "Best Mac apps 2027", description: "Roundups of the Mac apps worth installing in 2027." },
   troubleshooting: { label: "Troubleshooting", description: "Fixes for screenshots and recordings that fail, go missing or come out wrong." },
 };

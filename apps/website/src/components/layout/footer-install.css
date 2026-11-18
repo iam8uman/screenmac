@@ -1,0 +1,119 @@
+/* Tokens for the footer install band (see foot-term rules below). */
+:root {
+  --ft-accent: #5B4CF5; --ft-accent-2: #D787FF;
+  --ft-ink: var(--sm-ink); --ft-soft: var(--sm-ink-muted); --ft-muted: var(--sm-ink-faint);
+  --ft-line: var(--sm-line); --ft-surface: var(--sm-paper-raised); --ft-bg: var(--sm-paper);
+  --ft-faint: color-mix(in srgb, var(--sm-ink) 9%, transparent);
+  --ft-display: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif; --ft-body: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif; --ft-mono: var(--font-geist-mono), ui-monospace, monospace;
+}
+/* Footer install band: the real installer replayed in a terminal, then the oversized wordmark.
+   Shared by the landing page and the guides. Brand values come from the --ft-* tokens above. */
+.ft { position: relative; isolation: isolate; }
+.ft-band {
+  display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(28px, 5vw, 64px); align-items: center;
+  padding: clamp(48px, 7vw, 88px) 0 clamp(32px, 4vw, 48px);
+}
+.ft .ft-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px; margin: 0 0 18px;
+  font: 600 12px/1 var(--ft-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--ft-muted);
+}
+.ft-dot { width: 8px; height: 8px; border-radius: 50%; background: #28C840; box-shadow: 0 0 0 4px rgba(40, 200, 64, .16); animation: ft-pulse 2.4s ease-in-out infinite; }
+@keyframes ft-pulse { 50% { box-shadow: 0 0 0 7px rgba(40, 200, 64, 0); } }
+.ft .ft-title {
+  margin: 0 0 14px; max-width: 16ch; color: var(--ft-ink); text-transform: none;
+  font: 800 clamp(32px, 4.4vw, 52px)/1 var(--ft-display); letter-spacing: -.04em; text-wrap: balance;
+}
+.ft .ft-title em {
+  font-style: normal; display: block;
+  background: linear-gradient(95deg, var(--ft-accent), var(--ft-accent-2)); -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.ft .ft-sub { margin: 0 0 22px; max-width: 42ch; color: var(--ft-soft); font: 400 16px/1.6 var(--ft-body); }
+.ft .ft-sub a { color: var(--ft-ink); text-decoration: underline; text-decoration-color: var(--ft-accent); text-underline-offset: 3px; }
+.ft-cmd {
+  display: flex; align-items: center; gap: 8px; max-width: 100%; padding: 6px 6px 6px 14px; border-radius: 12px;
+  background: var(--ft-surface); border: 1px solid var(--ft-line);
+}
+.ft-cmd code {
+  flex: 1; min-width: 0; overflow-x: auto; white-space: nowrap; scrollbar-width: none;
+  background: none !important; padding: 0 !important; color: var(--ft-ink); font: 500 13.5px/1.4 var(--ft-mono);
+}
+.ft-cmd code::before { content: "$ "; color: var(--ft-accent); }
+.ft-copy-btn {
+  flex: none; height: 34px; padding: 0 14px; border: 0; border-radius: 8px; cursor: pointer;
+  background: var(--ft-ink); color: var(--ft-bg); font: 600 13px/1 var(--ft-body); transition: background .2s, transform .15s;
+}
+.ft-copy-btn:hover { background: var(--ft-accent); color: #fff; }
+.ft-copy-btn:active { transform: scale(.96); }
+
+/* The terminal window. Always dark, like Terminal.app with a dark profile. */
+.ft-term {
+  margin: 0; min-width: 0; border-radius: 14px; overflow: hidden; background: #0E0D12; color: #E6E3EE;
+  border: 1px solid rgba(255, 255, 255, .08);
+  box-shadow: 0 40px 80px -40px rgba(0, 0, 0, .55), 0 0 0 1px rgba(0, 0, 0, .25), 0 1px 0 rgba(255, 255, 255, .06) inset;
+  transform: perspective(1400px) rotateY(-4deg) rotateX(1.5deg); transition: transform .8s cubic-bezier(.2, .8, .2, 1);
+}
+.ft-term:hover { transform: none; }
+.ft-bar {
+  display: flex; align-items: center; gap: 7px; height: 34px; padding: 0 10px 0 13px;
+  background: #1B1A21; border-bottom: 1px solid rgba(255, 255, 255, .06);
+}
+.ft-bar i { width: 11px; height: 11px; border-radius: 50%; background: #FF5F57; }
+.ft-bar i:nth-child(2) { background: #FEBC2E; }
+.ft-bar i:nth-child(3) { background: #28C840; }
+.ft-bar span { flex: 1; text-align: center; margin-right: 40px; color: #8F8B99; font: 500 12px/1 var(--ft-body); }
+.ft-replay {
+  height: 22px; padding: 0 9px; border-radius: 6px; border: 1px solid rgba(255, 255, 255, .12); cursor: pointer;
+  background: transparent; color: #B9B5C4; font: 500 11px/1 var(--ft-body); opacity: 0; transition: opacity .25s, background .2s;
+}
+.ft-term:hover .ft-replay, .ft-replay:focus-visible { opacity: 1; }
+.ft-replay:hover { background: rgba(255, 255, 255, .08); color: #fff; }
+.ft-screen {
+  container-type: inline-size; margin: 0; padding: 16px 18px 18px; overflow: hidden; background: none !important;
+  font: 400 12.5px/1.55 var(--ft-mono); white-space: pre; tab-size: 2;
+}
+.ft-l { display: block; min-height: 1.55em; }
+.ft-l[hidden] { display: none; }
+.ft-ps { color: var(--ft-accent-2); font-weight: 600; }
+.ft-in .ft-typed { color: #fff; }
+/* The banner scales with the window so the widest app name still fits on one row. */
+.ft-ban {
+  color: var(--c, var(--ft-accent)); font-weight: 700; line-height: 1.02; min-height: 0;
+  font-size: min(12.5px, calc(100cqw / (var(--cols, 80) * .6)));
+  text-shadow: 0 0 10px color-mix(in srgb, var(--c, var(--ft-accent)) 30%, transparent); letter-spacing: 0;
+}
+.ft-dim { color: #8F8B99; }
+.ft-step { color: var(--ft-accent-2); font-weight: 400; }
+.ft-ok { color: #3DDC84; font-weight: 400; }
+.ft-prog { color: #E6E3EE; }
+.ft-pct { color: #E6E3EE; }
+.ft-b { color: #fff; font-weight: 700; }
+.ft-caret { display: inline-block; width: .6em; height: 1.15em; vertical-align: -.2em; background: #E6E3EE; animation: ft-blink 1.05s steps(1) infinite; }
+@keyframes ft-blink { 50% { opacity: 0; } }
+.ft-playing .ft-caret { animation: none; }
+
+/* Oversized wordmark: a faint outline-ish fill that floods with the brand colour on hover. */
+.ft-mark-wrap { overflow: hidden; }
+.ft-mark-wrap .ft-mark {
+  margin: 0 0 -.2em; padding: 0; text-align: center; white-space: nowrap; user-select: none; cursor: default;
+  font: 800 clamp(3.5rem, 16.5vw, 14rem)/1 var(--ft-display); letter-spacing: -.06em;
+  background: linear-gradient(180deg, var(--ft-accent) 0%, var(--ft-accent-2) 42%, var(--ft-faint) 50%, var(--ft-faint) 100%);
+  background-size: 100% 240%; background-position: 0 100%;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  -webkit-mask-image: linear-gradient(180deg, #000 30%, transparent 92%); mask-image: linear-gradient(180deg, #000 30%, transparent 92%);
+  transition: background-position 1.1s cubic-bezier(.2, .8, .2, 1);
+}
+.ft-mark-wrap .ft-mark:hover { background-position: 0 0; }
+
+@media (max-width: 900px) {
+  .ft-band { grid-template-columns: 1fr; }
+  .ft-term { transform: none; }
+  .ft .ft-title { max-width: 20ch; }
+}
+@media (max-width: 520px) {
+  .ft-screen { padding: 12px 12px 14px; font-size: 11px; }
+  .ft-cmd code { font-size: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ft-term, .ft-mark-wrap .ft-mark { transition: none; }
+  .ft-dot, .ft-caret { animation: none; }
+}

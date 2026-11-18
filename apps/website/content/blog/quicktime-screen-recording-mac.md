@@ -1,7 +1,7 @@
 ---
 title: "How to Screen Record With QuickTime Player"
 slug: quicktime-screen-recording-mac
-description: "Use QuickTime Player for screen recordings on a Mac: start with File, New Screen Recording, choose a mic and show clicks, then trim, split and export at a smaller size in the same app. When QuickTime is the better choice."
+description: "Use QuickTime Player for screen recordings on a Mac: start with File > New Screen Recording, choose a mic and show clicks, then trim, split and export at a smaller size in the same app. When it is the right choice."
 publishedAt: 2026-11-17
 type: how-to
 tags:

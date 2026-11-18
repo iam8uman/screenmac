@@ -1,7 +1,7 @@
 ---
-title: "Shottr vs CleanShot X: Which Should You Use?"
+title: "Shottr vs CleanShot X (and the Free App That Does Both Jobs)"
 slug: shottr-vs-cleanshot-x
-description: "Shottr is a fast, pay-what-you-want screenshot tool; CleanShot X is a paid all-in-one capture suite with recording and cloud. A fair comparison of price, features and who each one suits."
+description: "Shottr is a pay-what-you-want screenshot tool; CleanShot X is a paid suite with recording and cloud. How they compare, and why Screenmac, free with recording and real redaction, is our pick."
 publishedAt: 2026-11-17
 type: comparison
 tags:
@@ -10,7 +10,7 @@ primaryApp: screenmac
 feature: quiz/which-mac-screenshot-tool
 faq:
   - question: "Is Shottr better than CleanShot X?"
-    answer: "For screenshots alone, Shottr covers most of what people need, including scrolling capture and OCR, and you can pay $0. CleanShot X is better if you also need screen recording, a video editor or cloud share links."
+    answer: "Shottr is better for free screenshots with scrolling capture and OCR; CleanShot X adds recording and cloud links for a price. If you want screenshots, markup, real redaction and recording in one free app, Screenmac does both jobs."
   - question: "Is Shottr free?"
     answer: "Shottr's site says you can name your price or enter $0. Most features are available to free users, and the app occasionally asks you to consider buying it."
   - question: "Does Shottr record video?"
@@ -30,9 +30,9 @@ seoTitle: "Shottr vs CleanShot X: Features, Price and Who Wins"
 seoDescription: "Shottr vs CleanShot X compared fairly: pay-what-you-want screenshots with OCR and scrolling, or a paid suite with recording, video editing and cloud links."
 draft: false
 ---
-**Shottr** is a small, fast screenshot tool you can get for whatever you choose to pay, including nothing, with scrolling capture, OCR, a pixel ruler and a color picker. **CleanShot X** is a paid all-in-one capture suite that adds screen recording, a video editor, overlays, pinned screenshots and its own cloud with share links. If you only take screenshots, Shottr is likely enough.
+**Shottr** is a small, fast screenshot tool you can get for whatever you choose to pay, with scrolling capture, OCR and a pixel ruler, but no recording. **CleanShot X** adds recording, a video editor and its own cloud, for $35 or more. Our pick over both is **Screenmac**: free like Shottr, records the screen like CleanShot X, and flattens redaction into the pixels with nothing uploaded.
 
-If you record your screen or share links to captures every day, CleanShot X is worth paying for.
+> **Our pick: Screenmac.** Screenshots, markup, real redaction and recording in one free native app. [Download it](/download) or try the [editor in your browser](/editor).
 
 ## How do Shottr and CleanShot X compare?
 
@@ -84,12 +84,12 @@ Its limits: it costs money, cloud storage on Basic is 1 GB, and if you do not ne
 | Record tutorials, demos or bug videos | CleanShot X | Recording, overlays and editor |
 | Share links to captures with your team | CleanShot X | Built-in cloud with access controls |
 | Want scrolling capture without paying | Shottr | Free with scrolling |
-| Need a local-only workflow with recording | Neither is ideal; see below | |
+| Want screenshots and recording free, with nothing uploaded | **Screenmac** | Capture, markup, real redaction and MP4 recording |
 
-Both are excellent at what they target. The honest answer for many people is Shottr for screenshots plus the built-in <kbd>Shift</kbd>-<kbd>Command</kbd>-<kbd>5</kbd> recorder for the occasional video.
+Shottr leaves you without a recorder and CleanShot X costs money. That gap is why we built Screenmac.
 
-## Is there a free option that also records?
+## Why is Screenmac our pick over both?
 
-If you want capture, annotation, redaction and recording in one free app and do not need scrolling capture or OCR, [Screenmac](/download) is worth a look. It is a native app for macOS 14 Sonoma or later with an editor whose blur, pixelate and redact are flattened into the exported pixels, MP4 recording with an optional microphone, and no uploads. It is a free beta, so expect rough edges, and it is not notarized by Apple yet. You can try the same editor in your browser at [/editor](/editor) before installing.
+[Screenmac](/download) gives you the part of Shottr people use most and the part of CleanShot X people pay for, free. It is a native app for macOS 14 Sonoma or later: capture an area, a window or a display, mark it up with arrows, numbered steps and text, and redact, blur or pixelate with the result flattened into the exported pixels, so nothing hidden can be recovered. It records the screen to MP4 with an optional microphone, and nothing is ever uploaded. Scrolling capture and OCR are planned. Good to know: it is a free beta and not notarized by Apple yet. You can try the same editor in your browser at [/editor](/editor) before installing.
 
 For a wider view, see [CleanShot X alternatives](/blog/cleanshot-x-alternatives) and the [best screenshot apps for Mac in 2027](/blog/best-screenshot-apps-mac-2027), or take the [screenshot tool quiz](/quiz/which-mac-screenshot-tool).

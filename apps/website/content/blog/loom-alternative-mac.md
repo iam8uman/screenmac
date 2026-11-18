@@ -1,7 +1,7 @@
 ---
 title: "Loom Alternatives for Mac That Record Locally"
 slug: loom-alternative-mac
-description: "Want Loom-style screen recordings without the cloud or the free plan limits? Compare local Mac recorders: the built-in tool, OBS Studio, CleanShot X, Snagit, Kap and Screenmac."
+description: "The best Loom alternative that records locally is Screenmac: free MP4 recording plus screenshots and redaction, nothing uploaded. Then OBS Studio, Kap, CleanShot X and Snagit."
 publishedAt: 2026-11-17
 type: alternative
 tags:
@@ -11,7 +11,7 @@ primaryApp: screenmac
 feature: quiz/which-mac-screen-recorder
 faq:
   - question: "Is there a Loom alternative that saves videos locally on a Mac?"
-    answer: "Yes. The built-in Shift-Command-5 recorder, OBS Studio, Kap and Screenmac all save recordings as files on your Mac. CleanShot X and Snagit also save locally, with optional cloud sharing."
+    answer: "Yes: Screenmac. It records a display, an area or a window to MP4 with an optional microphone and saves it on your Mac, with no upload feature at all. The built-in recorder, OBS Studio and Kap also save files locally."
   - question: "What are the limits of Loom's free plan?"
     answer: "Loom's pricing page lists the free Starter plan at 25 videos per person, 5-minute recordings and quality up to 720p. Business, at $18 per user per month, removes those limits."
   - question: "Which free Loom alternative records the webcam too?"
@@ -37,9 +37,9 @@ seoTitle: "Loom Alternatives for Mac: Record Locally, Free or Paid"
 seoDescription: "Loom alternatives for Mac that keep recordings on your machine: the built-in recorder, OBS, CleanShot X, Snagit, Kap and Screenmac, with verified prices."
 draft: false
 ---
-If you want Loom-style recordings that **stay on your Mac**, the built-in **Shift-Command-5** recorder, **OBS Studio**, **Kap** and **Screenmac** are free and save plain video files locally. **CleanShot X** and **Snagit** are paid and add a webcam overlay and editing, with cloud sharing optional.
+The best Loom alternative for recordings that **stay on your Mac** is **Screenmac**. It records the screen to MP4 with your microphone, takes screenshots you can mark up and redact in the same app, and has no upload feature, no 5-minute cap and no 25-video limit. It is free. If you need a webcam bubble, **OBS Studio** is the free option; **CleanShot X** and **Snagit** are paid.
 
-Loom is still the better choice if you want a link the moment you stop recording, with comments and viewer stats, and you are happy for videos to live on its servers.
+> **Our pick: Screenmac.** Record and explain without sending your screen to anyone's cloud. [Download it](/download).
 
 ## Why look for a Loom alternative?
 
@@ -56,26 +56,26 @@ Prices and features come from each app's own site, checked on the date of this g
 
 | App | Price | Webcam | Audio | Output | Cloud |
 | --- | --- | --- | --- | --- | --- |
+| **Screenmac (our pick)** | **Free beta** | **No** | **Optional mic** | **MP4** | **None** |
 | Built-in (Shift-Command-5) | Free | No | Mic; system audio on macOS 27+ | .mov | None |
 | OBS Studio | Free, open source | Yes, as a scene source | Mixer with filters | Video files, plus streaming | None |
 | Kap | Free, open source | Not listed | Optional audio | GIF, MP4, WebM, APNG | Share plugins |
-| Screenmac | Free beta | No | Optional mic | MP4 | None |
 | CleanShot X | $35 one-time | Camera overlay | Mic and computer audio | MP4 or GIF | Optional own cloud |
 | Snagit | $39/year | Yes | Mic, system audio | Video | Optional Screencast |
 
-## Which free option is closest to Loom?
+## 1. Screenmac: the best local Loom alternative
+
+Screenmac is our app and our top pick. It records the screen (a display, an area or a window) to **MP4 with an optional microphone**, saves locally and has **no upload feature** at all. The same app takes screenshots and opens them in an editor with arrows, numbered steps and redaction, which is useful when a quick video and an annotated screenshot are both part of explaining something.
+
+Because files stay on your Mac, you share them however your team already does, with no plan limits on length or count. It is free during its beta and needs macOS 14 Sonoma or later. Good to know: there is no webcam overlay yet. [Download Screenmac](/download).
+
+## What are the other free options?
 
 **OBS Studio** is the only free option here that can put your webcam over the screen, a common feature of video messaging tools. Its site describes scenes built from window captures, images, text, webcams and capture cards, with an audio mixer, and it requires macOS 13 or newer. The trade-off is setup: you build a scene once, then start and stop recordings from OBS.
 
 **The built-in recorder** is the fastest to start: press <kbd>Shift</kbd>-<kbd>Command</kbd>-<kbd>5</kbd>, pick an area or window, choose a microphone in Options and record. It has no camera bubble, but for a quick "here is how to do it" video it is often all you need. See [how to record your screen on a Mac](/blog/record-screen-mac).
 
 **Kap** is a small, open-source recorder that exports GIF, MP4, WebM and APNG and needs macOS 12 or later. It is handy for short clips and GIFs.
-
-## Where does Screenmac fit?
-
-Screenmac is made by this site. It records the screen (a display, an area or a window) to **MP4 with an optional microphone**, saves locally and has **no upload feature** at all. The same app takes screenshots and opens them in an editor with arrows, numbered steps and redaction, which is useful when a quick video and an annotated screenshot are both part of explaining something.
-
-It has no webcam overlay, no video editor and no share links, so it is not a like-for-like Loom replacement. It is free during its beta and needs macOS 14 Sonoma or later. [Download Screenmac](/download) if local recording plus screenshots is what you are after.
 
 ## Which paid apps replace Loom best?
 
@@ -94,10 +94,11 @@ You lose Loom's viewer analytics and timestamped comments, but you keep control 
 
 | You want | Pick |
 | --- | --- |
+| The best free, local Loom replacement | **Screenmac** |
 | Instant links, comments, viewer stats | Loom |
 | Free, local, webcam bubble | OBS Studio |
 | Free, local, quick and simple | Built-in recorder |
-| Free, local, plus annotated screenshots | Screenmac |
+| Free, local, plus annotated screenshots | **Screenmac** |
 | Paid, polished, local with optional cloud | CleanShot X |
 | Paid, Mac and Windows | Snagit |
 

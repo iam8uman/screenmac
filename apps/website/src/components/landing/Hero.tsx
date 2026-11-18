@@ -4,6 +4,11 @@ import { primaryCta, product, shortcuts } from "@/lib/product";
 import { CaptureMarquee } from "./CaptureMarquee";
 import { CaptureStage, CaptureTriggers } from "./capture/CaptureStage";
 
+const makerApps = [
+  { name: "Windowmac", href: "https://www.windowmac.app/", icon: "https://www.windowmac.app/icon.png" },
+  { name: "Slidemac", href: "https://www.slidemac.app/", icon: "https://slidemac.vercel.app/icon.png" },
+];
+
 /**
  * Centered hero on a working capture surface (see CaptureStage): the pill says what it is and what
  * it costs, the headline sells the feeling, one primary action, and the visitor can take a real
@@ -83,6 +88,25 @@ export function Hero() {
             </li>
           ))}
         </ul>
+
+        <p className="sm-rise mt-5 inline-flex flex-wrap items-center justify-center gap-x-2 gap-y-1.5 rounded-2xl bg-accent-soft/60 px-4 py-2 text-[12.5px] font-medium text-ink-faint ring-1 ring-inset ring-accent/15 [animation-delay:240ms] sm:rounded-full">
+          From the maker of
+          {makerApps.map((app, i) => (
+            <span key={app.name} className="inline-flex items-center gap-2">
+              {i > 0 ? <span aria-hidden="true">&amp;</span> : null}
+              <a
+                href={app.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-1.5 rounded-md px-1 py-0.5 text-ink transition-colors hover:bg-accent/10"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={app.icon} alt="" width={16} height={16} className="size-4 rounded transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-110" />
+                <b className="font-semibold">{app.name}</b>
+              </a>
+            </span>
+          ))}
+        </p>
 
         <div className="sm-rise mt-12 [animation-delay:280ms] md:mt-14">
           <CaptureTriggers
