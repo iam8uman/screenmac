@@ -79,7 +79,7 @@ export function Install({ headingLevel = 2 }: { headingLevel?: 1 | 2 }) {
             id="install-title"
             className="text-balance text-[clamp(2.3rem,5.4vw,3.9rem)] font-medium leading-[1.02] tracking-[-0.04em] text-ink"
           >
-            Install in a minute.
+            Get it on your Mac.
           </Heading>
           <p className="mt-4 text-pretty text-lg leading-8 text-ink-muted">
             One line in Terminal is the quickest. Prefer to click? Download the

@@ -20,7 +20,7 @@ export function FinalCTA() {
         </h2>
         <p className="mt-4 max-w-xl text-lg leading-8 text-white/80">
           {ready
-            ? "Paste one line into Terminal and press your first shortcut a minute from now."
+            ? "Paste one line into Terminal. About 10 sec, then press your first shortcut."
             : "We'll email you once when there's a signed beta build to download. Nothing else."}
         </p>
         <div className="mt-8 max-w-2xl">

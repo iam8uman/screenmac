@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { Logo } from "@/components/brand/Logo";
 import { product } from "@/lib/product";
-import { FooterInstall, FooterWordmark } from "./FooterInstall";
+import { FooterInstallSlot } from "./FooterInstallSlot";
+import { FooterWordmark } from "./FooterInstall";
 
 const maker = [
   {
@@ -58,11 +59,7 @@ const groups = [
 export function SiteFooter() {
   return (
     <footer className="border-t border-line">
-      <div className="border-b border-line">
-        <div className="mx-auto max-w-[75rem] px-4 md:px-6">
-          <FooterInstall />
-        </div>
-      </div>
+      <FooterInstallSlot />
       <div className="mx-auto grid max-w-[75rem] gap-10 px-4 py-14 md:grid-cols-[1.6fr_1fr_1fr_1fr] md:px-6">
         <div>
           <Logo />

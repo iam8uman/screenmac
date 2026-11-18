@@ -18,7 +18,7 @@ test("landing page explains the product and every primary CTA has a destination"
 test("install section offers the one-liner, a real download, and the script", async ({ page, context, browserName }) => {
   await page.goto("/#install");
   const install = page.locator("#install");
-  await expect(install.getByRole("heading", { name: "Install in a minute." })).toBeVisible();
+  await expect(install.getByRole("heading", { name: "Get it on your Mac." })).toBeVisible();
   await expect(install.getByTestId("install-command")).toHaveText("curl -fsSL https://www.screenmac.app/install.sh | bash");
   await expect(install.getByRole("link", { name: "Download Screenmac.zip" })).toHaveAttribute(
     "href",
@@ -87,7 +87,7 @@ test("FAQ opens and matches the privacy claims", async ({ page }) => {
 
 test("download page offers the real build and the waitlist API never fakes success", async ({ page }) => {
   await page.goto("/download");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Install in a minute.");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Get it on your Mac.");
   await expect(page.getByRole("link", { name: "Download Screenmac.zip" })).toHaveAttribute("href", /releases\/latest\/download\/Screenmac\.zip$/);
   await expect(page.getByRole("link", { name: "View the source" })).toHaveAttribute("href", "https://github.com/iam8uman/screenmac");
 

@@ -3,6 +3,7 @@ import { FAQ } from "@/components/landing/FAQ";
 import { FeaturesSection } from "@/components/landing/Features";
 import { FinalCTA } from "@/components/landing/FinalCTA";
 import { Install } from "@/components/install/Install";
+import { FooterInstall } from "@/components/layout/FooterInstall";
 import { Hero } from "@/components/landing/Hero";
 import { HowItWorks } from "@/components/landing/HowItWorks";
 import { PricingSection } from "@/components/landing/PricingSection";
@@ -22,6 +23,9 @@ export default function HomePage() {
       <HomeStructuredData />
       <Hero />
       <Showcase />
+      <div className="mx-auto max-w-[75rem] px-4 md:px-6">
+        <FooterInstall />
+      </div>
       <Install />
       <HowItWorks />
       <FeaturesSection />

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Install } from "@/components/install/Install";
+import { FooterInstall } from "@/components/layout/FooterInstall";
 import { DownloadStructuredData } from "@/components/seo/StructuredData";
 import { LinkButton } from "@/components/ui/Button";
 import { product } from "@/lib/product";
@@ -15,6 +16,9 @@ export default function DownloadPage() {
   return (
     <>
       <DownloadStructuredData />
+      <div className="mx-auto max-w-[75rem] px-4 md:px-6">
+        <FooterInstall />
+      </div>
       <Install headingLevel={1} />
       <div className="px-4 py-16 md:px-6 md:py-20">
         <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-2">
