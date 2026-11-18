@@ -44,8 +44,8 @@ export default function PrivacyPage() {
         <section>
           <h2>Analytics</h2>
           <p>
-            This site uses Google Analytics to count page views. It does not collect image content, text you type into
-            the editor, or clipboard contents. The Mac app still does not send captures anywhere.
+            This site uses Google Analytics and Vercel Web Analytics to count page views. Vercel Web Analytics sets no
+            cookies. Neither collects image content, text you type into the editor, or clipboard contents. The Mac app still does not send captures anywhere.
           </p>
         </section>
         <section>

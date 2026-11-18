@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@screenmac/design-tokens": "workspace:*",
+    "@vercel/analytics": "2.0.1",
     "geist": "^1.8.2",
     "gray-matter": "4.0.3",
     "lucide-react": "^1.61.0",
