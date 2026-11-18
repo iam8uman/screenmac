@@ -18,6 +18,7 @@ for (const file of files) {
   const get = (k) => (fm.match(new RegExp(`^${k}:\\s*"?(.*?)"?\\s*$`, 'm')) || [])[1];
   const slug = get('slug');
   const draft = /^draft:\s*true/m.test(fm);
+  const problems = [];
   const where = `${file}`;
   if (slug !== file.replace(/\.md$/, '')) errors.push(`${where}: slug "${slug}" must match the file name`);
   if (seen.has(slug)) errors.push(`${where}: duplicate slug (also ${seen.get(slug)})`);
@@ -25,19 +26,19 @@ for (const file of files) {
   const seoTitle = (get('seoTitle') || '').toLowerCase();
   if (seenTitles.has(seoTitle)) errors.push(`${where}: duplicate seoTitle (also ${seenTitles.get(seoTitle)})`);
   seenTitles.set(seoTitle, file);
-  if (/[—]/.test(raw)) errors.push(`${where}: contains an em dash; rewrite the sentence`);
+  if (/[—]/.test(raw)) problems.push(`${where}: contains an em dash; rewrite the sentence`);
   const words = body.split(/\s+/).filter(Boolean).length;
-  if (words < 600) errors.push(`${where}: only ${words} words; guides need at least 600`);
+  if (words < 600) problems.push(`${where}: only ${words} words; guides need at least 600`);
   const firstPara = body.trim().split(/\n\s*\n/)[0] || '';
-  if (firstPara.startsWith('#')) errors.push(`${where}: start with a direct-answer paragraph, not a heading`);
+  if (firstPara.startsWith('#')) problems.push(`${where}: start with a direct-answer paragraph, not a heading`);
   if (firstPara.split(/\s+/).length > 75) warn.push(`${where}: first paragraph is long (${firstPara.split(/\s+/).length} words); keep the answer tight`);
   const h2s = (body.match(/^## /gm) || []).length;
-  if (h2s < 3) errors.push(`${where}: needs at least 3 H2 sections`);
+  if (h2s < 3) problems.push(`${where}: needs at least 3 H2 sections`);
   const internal = (body.match(/\]\(\/(?!\/)[^)]*\)/g) || []).length;
-  if (internal < 3) errors.push(`${where}: needs at least 3 internal links (found ${internal})`);
-  if (/^# /m.test(body)) errors.push(`${where}: do not use an H1 in the body; the title is the H1`);
-  if (/lorem ipsum|TODO|TBD|\[citation needed\]/i.test(body)) errors.push(`${where}: placeholder text left in`);
-  if (draft) continue;
+  if (internal < 3) problems.push(`${where}: needs at least 3 internal links (found ${internal})`);
+  if (/^# /m.test(body)) problems.push(`${where}: do not use an H1 in the body; the title is the H1`);
+  if (/lorem ipsum|TODO|TBD|\[citation needed\]/i.test(body)) problems.push(`${where}: placeholder text left in`);
+  (draft ? warn : errors).push(...problems.map((m) => (draft ? `${m} [draft]` : m)));
 }
 
 for (const w of warn) console.warn(`warn  ${w}`);

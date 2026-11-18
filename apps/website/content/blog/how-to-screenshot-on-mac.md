@@ -66,7 +66,7 @@ The **Options** menu in that toolbar controls:
 - **Show Floating Thumbnail:** turn off the corner preview if it gets in the way.
 - **Show Mouse Pointer:** include or hide the pointer in captures.
 
-Whatever you choose stays set for the next screenshot. For recording, see our [screen recording guides](/blog/topics/how-to/).
+Whatever you choose stays set for the next screenshot. For recording, see [how to record your screen on a Mac](/blog/record-screen-mac).
 
 ## How do I copy a screenshot to the clipboard?
 

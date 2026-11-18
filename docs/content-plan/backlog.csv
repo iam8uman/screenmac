@@ -1,0 +1,103 @@
+slug,title,target_query,type,tags,primary_app,wave,feature,status
+editor,Screenshot Editor,online screenshot editor blur,tool,annotation-privacy,screenmac,1,,published
+mac-screenshot-shortcuts,Mac Screenshot Shortcuts Finder,mac screenshot shortcuts,tool,keyboard-shortcuts,screenmac,1,,published
+screen-recording-file-size-calculator,Screen Recording File Size Calculator,screen recording file size calculator,tool,screen-recording,screenmac,1,,published
+image-format-converter,Screenshot Format Converter,convert png to jpg in browser,tool,screenshots,screenmac,1,,published
+aspect-ratio-calculator,Aspect Ratio and Crop Size Calculator,aspect ratio calculator for images,tool,screenshots,screenmac,1,,published
+screenshot-window-frame,Screenshot Window Frame and Background,add window frame and background to screenshot,tool,annotation-privacy,screenmac,1,,published
+which-mac-screenshot-tool,Which Mac Screenshot Tool Do You Need?,which screenshot app for mac quiz,quiz,screenshots,screenmac,1,,published
+which-mac-screen-recorder,Which Mac Screen Recorder Fits You?,which screen recorder for mac,quiz,screen-recording,screenmac,1,,published
+screenshot-privacy-check,Are Your Screenshots Leaking Private Data?,screenshot privacy check,quiz,annotation-privacy,screenmac,1,,published
+mac-screenshot-skills-quiz,Mac Screenshot Skills Quiz,mac screenshot quiz,quiz,keyboard-shortcuts,screenmac,1,,published
+how-to-screenshot-on-mac,How to Screenshot on a Mac: Every Shortcut and Option,how to screenshot on mac,how-to,screenshots;how-to;keyboard-shortcuts,screenmac,1,tools/mac-screenshot-shortcuts,published
+screenshot-window-without-shadow-mac,How to Screenshot a Window Without the Shadow on Mac,mac screenshot window without shadow,how-to,screenshots;how-to,screenmac,1,tools/screenshot-window-frame,published
+where-do-screenshots-go-mac,Where Do Screenshots Go on a Mac?,where do screenshots go on mac,how-to,screenshots;how-to,screenmac,1,tools/mac-screenshot-shortcuts,published
+change-screenshot-location-mac,How to Change Where Screenshots Are Saved on Mac,change screenshot location mac,how-to,screenshots;how-to,screenmac,1,tools/mac-screenshot-shortcuts,published
+scrolling-screenshot-mac,How to Take a Scrolling Screenshot on Mac,scrolling screenshot mac,how-to,screenshots;how-to,screenmac,1,quiz/which-mac-screenshot-tool,published
+mac-screenshot-not-working,Mac Screenshot Not Working? Fixes That Work,mac screenshot not working,troubleshooting,troubleshooting;screenshots,screenmac,1,tools/mac-screenshot-shortcuts,published
+copy-text-from-screenshot-mac,How to Copy Text From a Screenshot on Mac,copy text from screenshot mac,how-to,screenshots;how-to,screenmac,1,,published
+snipping-tool-for-mac,What Is the Snipping Tool on Mac?,snipping tool for mac,explainer,screenshots;keyboard-shortcuts,screenmac,1,tools/mac-screenshot-shortcuts,published
+record-screen-mac,How to Record Your Screen on a Mac,how to screen record on mac,how-to,screen-recording;how-to,screenmac,1,quiz/which-mac-screen-recorder,published
+record-screen-with-audio-mac,How to Screen Record on Mac With Internal Audio,screen record with internal audio mac,how-to,screen-recording;how-to,screenmac,1,quiz/which-mac-screen-recorder,published
+trim-screen-recording-mac,How to Trim a Screen Recording on Mac,trim screen recording mac,how-to,screen-recording;how-to,screenmac,1,tools/screen-recording-file-size-calculator,published
+reduce-screen-recording-file-size-mac,How to Make a Mac Screen Recording Smaller,reduce screen recording file size mac,how-to,screen-recording;how-to,screenmac,1,tools/screen-recording-file-size-calculator,published
+screen-recording-permission-mac,How to Fix Screen Recording Permission on Mac,screen recording permission mac,troubleshooting,troubleshooting;screen-recording,screenmac,1,,published
+blur-part-of-screenshot-mac,How to Blur Part of a Screenshot on Mac,blur part of screenshot mac,how-to,annotation-privacy;how-to,screenmac,1,editor,published
+pixelate-vs-blur-vs-black-box,"Pixelate, Blur or Black Box: Which Redaction Is Safe?",is blurring text in a screenshot safe,explainer,annotation-privacy,screenmac,1,quiz/screenshot-privacy-check,published
+redact-sensitive-info-screenshot,How to Redact Sensitive Information in a Screenshot,redact screenshot before sharing,how-to,annotation-privacy;how-to,screenmac,1,editor,published
+remove-metadata-from-screenshot-mac,How to Remove Metadata From a Screenshot on Mac,remove metadata from screenshot mac,how-to,annotation-privacy;screenshots,screenmac,1,tools/image-format-converter,published
+cleanshot-x-alternatives,CleanShot X Alternatives for Mac,cleanshot x alternative,alternative,alternatives,screenmac,1,quiz/which-mac-screenshot-tool,published
+shottr-vs-cleanshot-x,Shottr vs CleanShot X: Which Should You Use?,shottr vs cleanshot x,comparison,alternatives,screenmac,1,quiz/which-mac-screenshot-tool,published
+snagit-alternative-mac,Snagit Alternatives for Mac,snagit alternative mac,alternative,alternatives,screenmac,1,quiz/which-mac-screenshot-tool,published
+loom-alternative-mac,Loom Alternatives for Mac That Record Locally,loom alternative mac,alternative,alternatives;screen-recording,screenmac,1,quiz/which-mac-screen-recorder,published
+best-screenshot-apps-mac-2027,Best Screenshot Apps for Mac in 2027,best screenshot app for mac 2027,roundup,best-apps-2027;screenshots,screenmac,1,quiz/which-mac-screenshot-tool,published
+best-free-screen-recorders-mac-2027,Best Free Screen Recorders for Mac in 2027,best free screen recorder for mac 2027,roundup,best-apps-2027;screen-recording,screenmac,1,quiz/which-mac-screen-recorder,published
+copy-screenshot-to-clipboard-mac,How to Copy a Screenshot to the Clipboard on Mac,copy screenshot to clipboard mac,how-to,screenshots;keyboard-shortcuts,screenmac,2,tools/mac-screenshot-shortcuts,planned
+change-screenshot-format-mac,How to Change the Screenshot File Format on Mac,change screenshot format mac,how-to,screenshots;how-to,screenmac,2,tools/image-format-converter,planned
+convert-screenshot-png-to-jpg-mac,How to Convert a Screenshot From PNG to JPG on Mac,convert png screenshot to jpg mac,how-to,screenshots;how-to,screenmac,2,tools/image-format-converter,planned
+timed-screenshot-mac,How to Take a Timed Screenshot on Mac,screenshot timer mac,how-to,screenshots;how-to,screenmac,2,tools/mac-screenshot-shortcuts,planned
+screenshot-menu-mac,How to Screenshot a Menu or Hover State on Mac,screenshot a menu on mac,how-to,screenshots;how-to,screenmac,2,,planned
+turn-off-screenshot-thumbnail-mac,How to Turn Off the Screenshot Thumbnail on Mac,turn off screenshot preview mac,how-to,screenshots;how-to,screenmac,2,,planned
+save-clipboard-screenshot-as-file-mac,How to Save a Copied Screenshot as a File on Mac,save clipboard image as file mac,how-to,screenshots;how-to,screenmac,2,,planned
+screenshot-black-mac,Why Is My Mac Screenshot or Recording Black?,mac screenshot black screen,troubleshooting,troubleshooting;screenshots,screenmac,2,,planned
+markup-screenshot-preview-mac,How to Mark Up a Screenshot in Preview on Mac,markup screenshot preview mac,how-to,annotation-privacy;how-to,screenmac,2,editor,planned
+change-screenshot-shortcut-mac,How to Change the Screenshot Shortcut on Mac,change screenshot shortcut mac,how-to,keyboard-shortcuts;screenshots,screenmac,2,tools/mac-screenshot-shortcuts,planned
+crop-screenshot-mac,How to Crop a Screenshot on Mac,crop screenshot mac,how-to,screenshots;how-to,screenmac,2,tools/aspect-ratio-calculator,planned
+full-page-screenshot-browser-mac,How to Take a Full-Page Screenshot in a Mac Browser,full page screenshot chrome mac,how-to,screenshots;how-to,screenmac,2,,planned
+png-vs-jpg-screenshots,PNG vs JPG for Screenshots: Which Format to Use,png or jpg for screenshots,explainer,screenshots,screenmac,2,tools/image-format-converter,planned
+record-screen-with-microphone-mac,How to Screen Record With Your Voice on Mac,screen record with microphone mac,how-to,screen-recording;how-to,screenmac,2,,planned
+record-window-mac,How to Record a Single Window on Mac,record one window mac,how-to,screen-recording;how-to,screenmac,2,,planned
+screen-recording-to-gif-mac,How to Make a GIF From a Screen Recording on Mac,screen recording to gif mac,how-to,screen-recording;how-to,screenmac,2,tools/screen-recording-file-size-calculator,planned
+quicktime-screen-recording-mac,How to Screen Record With QuickTime Player,quicktime screen recording,how-to,screen-recording;how-to,screenmac,2,,planned
+screen-recording-no-sound-mac,Mac Screen Recording Has No Sound: How to Fix It,screen recording no sound mac,troubleshooting,troubleshooting;screen-recording,screenmac,2,,planned
+best-screen-recording-settings-tutorials,Best Screen Recording Settings for Tutorials on Mac,best screen recording settings for tutorials,how-to,screen-recording,screenmac,2,tools/screen-recording-file-size-calculator,planned
+annotate-screenshot-mac,"How to Add Arrows, Boxes and Text to a Screenshot on Mac",add arrow to screenshot mac,how-to,annotation-privacy;how-to,screenmac,2,editor,planned
+numbered-steps-screenshot,How to Add Numbered Steps to a Screenshot,numbered steps screenshot,how-to,annotation-privacy;how-to,screenmac,2,editor,planned
+screenshots-for-bug-reports,How to Take Good Screenshots for Bug Reports,screenshot for bug report,how-to,annotation-privacy;screenshots,screenmac,2,editor,planned
+beautify-screenshot-background,How to Add a Background and Padding to a Screenshot,add background to screenshot,how-to,annotation-privacy;screenshots,screenmac,2,tools/screenshot-window-frame,planned
+screenmac-vs-shottr,Screenmac vs Shottr: Free Mac Screenshot Apps Compared,screenmac vs shottr,comparison,alternatives,screenmac,2,quiz/which-mac-screenshot-tool,planned
+screenmac-vs-cleanshot-x,Screenmac vs CleanShot X: An Honest Comparison,screenmac vs cleanshot x,comparison,alternatives,screenmac,2,quiz/which-mac-screenshot-tool,planned
+snagit-vs-cleanshot-x,Snagit vs CleanShot X on Mac,snagit vs cleanshot x,comparison,alternatives,screenmac,2,quiz/which-mac-screenshot-tool,planned
+skitch-alternative-mac,Skitch Alternatives for Mac in Place of an Old App,skitch alternative mac,alternative,alternatives,screenmac,2,editor,planned
+do-you-need-screenshot-app-mac,Do You Need a Screenshot App on a Mac?,do i need a screenshot app on mac,explainer,alternatives;screenshots,screenmac,2,quiz/which-mac-screenshot-tool,planned
+best-apps-for-making-tutorials-mac-2027,Best Apps for Making Tutorials on Mac in 2027,best apps for making tutorials on mac 2027,roundup,best-apps-2027;screen-recording,screenmac,2,quiz/which-mac-screen-recorder,planned
+best-free-mac-apps-2027,Best Free Mac Apps in 2027,best free mac apps 2027,roundup,best-apps-2027,screenmac,2,,planned
+screenshot-one-monitor-mac,How to Screenshot One Monitor on a Mac With Two Screens,screenshot one screen mac dual monitor,how-to,screenshots;how-to,screenmac,3,,planned
+rename-screenshots-mac,How to Rename Screenshots on Mac,rename screenshots mac,how-to,screenshots;how-to,screenmac,3,,planned
+screenshot-with-mouse-pointer-mac,How to Include the Mouse Pointer in a Mac Screenshot,screenshot with cursor mac,how-to,screenshots;how-to,screenmac,3,,planned
+mac-screenshot-resolution,Why Are Mac Screenshots So Large? Retina Resolution Explained,mac screenshot resolution too big,explainer,screenshots,screenmac,3,tools/aspect-ratio-calculator,planned
+reduce-screenshot-file-size-mac,How to Reduce a Screenshot's File Size on Mac,reduce screenshot file size mac,how-to,screenshots;how-to,screenmac,3,tools/image-format-converter,planned
+resize-screenshot-mac,How to Resize a Screenshot on Mac,resize screenshot mac,how-to,screenshots;how-to,screenmac,3,tools/aspect-ratio-calculator,planned
+screenshot-without-keyboard-mac,How to Take a Screenshot on Mac Without the Keyboard,screenshot mac without keyboard,how-to,screenshots;how-to,screenmac,3,,planned
+record-zoom-meeting-mac,How to Record a Zoom Meeting on Mac,record zoom meeting mac,how-to,screen-recording;how-to,screenmac,3,,planned
+record-facetime-call-mac,Can You Record a FaceTime Call on Mac?,record facetime call mac,how-to,screen-recording;how-to,screenmac,3,,planned
+record-iphone-screen-on-mac,How to Record Your iPhone Screen on a Mac,record iphone screen on mac,how-to,screen-recording;how-to,screenmac,3,,planned
+show-mouse-clicks-screen-recording-mac,How to Show Mouse Clicks in a Mac Screen Recording,show clicks screen recording mac,how-to,screen-recording;how-to,screenmac,3,,planned
+hide-notifications-screen-recording-mac,How to Hide Notifications While Screen Recording on Mac,hide notifications while recording mac,how-to,annotation-privacy;screen-recording,screenmac,3,quiz/screenshot-privacy-check,planned
+mov-vs-mp4-screen-recording-mac,MOV or MP4: Why Mac Screen Recordings Are MOV Files,mac screen recording mp4 instead of mov,explainer,screen-recording,screenmac,3,,planned
+screen-recording-wont-stop-mac,Can't Stop a Screen Recording on Mac? How to End It,how to stop screen recording mac,troubleshooting,troubleshooting;screen-recording,screenmac,3,,planned
+highlight-text-in-screenshot,How to Highlight Text in a Screenshot,highlight text in screenshot,how-to,annotation-privacy;how-to,screenmac,3,editor,planned
+screenshots-for-documentation,How to Take Consistent Screenshots for Documentation,screenshots for documentation best practices,how-to,annotation-privacy;screenshots,screenmac,3,tools/aspect-ratio-calculator,planned
+obs-vs-quicktime-mac,OBS vs QuickTime for Recording on Mac,obs vs quicktime,comparison,alternatives;screen-recording,screenmac,3,quiz/which-mac-screen-recorder,planned
+lightshot-alternative-mac,Lightshot Alternatives for Mac,lightshot alternative mac,alternative,alternatives,screenmac,3,editor,planned
+xnapper-alternative-mac,Xnapper Alternatives for Mac,xnapper alternative,alternative,alternatives,screenmac,3,tools/screenshot-window-frame,planned
+best-mac-apps-for-developers-2027,Best Mac Apps for Developers in 2027,best mac apps for developers 2027,roundup,best-apps-2027,screenmac,3,,planned
+screenshot-touch-bar-mac,How to Screenshot the Touch Bar on a MacBook Pro,screenshot touch bar mac,how-to,screenshots;keyboard-shortcuts,screenmac,4,,planned
+screenshot-same-area-mac,How to Screenshot the Same Area Every Time on Mac,screenshot same area mac,how-to,screenshots;how-to,screenmac,4,,planned
+screencapture-command-mac,How to Take Screenshots From Terminal on Mac,screencapture command mac,how-to,screenshots;keyboard-shortcuts,screenmac,4,,planned
+hdr-screenshots-mac,HDR or SDR Screenshots on Mac: What the Setting Does,mac screenshot hdr heif,explainer,screenshots,screenmac,4,tools/image-format-converter,planned
+organize-screenshots-mac,How to Organize Screenshots on Mac,organize screenshots mac,how-to,screenshots;how-to,screenmac,4,,planned
+screen-recording-frame-rate,30 or 60 fps for Screen Recording?,30 vs 60 fps screen recording,explainer,screen-recording,screenmac,4,tools/screen-recording-file-size-calculator,planned
+screen-recording-choppy-mac,Why Is My Mac Screen Recording Choppy?,screen recording laggy mac,troubleshooting,troubleshooting;screen-recording,screenmac,4,,planned
+monosnap-alternative-mac,Monosnap Alternatives for Mac,monosnap alternative,alternative,alternatives,screenmac,4,quiz/which-mac-screenshot-tool,planned
+kap-alternative-mac,Kap Alternatives for Recording Your Mac Screen,kap screen recorder alternative,alternative,alternatives;screen-recording,screenmac,4,quiz/which-mac-screen-recorder,planned
+best-gif-recorders-mac-2027,Best GIF Screen Recorders for Mac in 2027,best gif recorder mac 2027,roundup,best-apps-2027;screen-recording,screenmac,4,tools/screen-recording-file-size-calculator,planned
+screenshot-sharing-privacy-mistakes,Screenshot Mistakes That Leak Private Data,screenshot privacy mistakes,explainer,annotation-privacy,screenmac,4,quiz/screenshot-privacy-check,planned
+screenshot-shadow-transparent-png,Why Mac Window Screenshots Have a Transparent Border,mac window screenshot transparent border,explainer,screenshots;troubleshooting,screenmac,4,tools/screenshot-window-frame,planned
+record-screen-with-webcam-mac,How to Record Your Screen and Webcam Together on Mac,record screen and webcam mac,how-to,screen-recording;how-to,screenmac,3,quiz/which-mac-screen-recorder,planned
+share-screen-recording-mac,How to Share a Screen Recording From a Mac,share screen recording mac,how-to,screen-recording;how-to,screenmac,4,tools/screen-recording-file-size-calculator,planned
+screenshot-multiple-windows-mac,How to Screenshot Two Windows at Once on Mac,screenshot multiple windows mac,how-to,screenshots;how-to,screenmac,4,,planned
+screenshot-to-photos-mac,How to Put Mac Screenshots in the Photos App,save screenshots to photos mac,how-to,screenshots;how-to,screenmac,2,,planned
+screenshot-iphone-mirroring-mac,How to Screenshot Your iPhone From Your Mac,screenshot iphone from mac,how-to,screenshots;how-to,screenmac,3,,planned
+how-to-record-a-tutorial-on-mac,"How to Record a Software Tutorial on Mac, Start to Finish",how to record a tutorial on mac,how-to,screen-recording;how-to,screenmac,3,quiz/which-mac-screen-recorder,planned
+screenshot-thumbnail-drag-and-drop-mac,How to Drag a Screenshot Straight Into an App on Mac,drag screenshot thumbnail into app mac,how-to,screenshots;how-to,screenmac,4,,planned

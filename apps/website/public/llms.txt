@@ -37,11 +37,55 @@ Key facts:
 
 - [Screenshot Editor](https://www.screenmac.app/editor): Annotate, blur, pixelate and crop a screenshot in your browser, then export a PNG. Nothing is uploaded.
 - [Mac Screenshot Shortcuts Finder](https://www.screenmac.app/tools/mac-screenshot-shortcuts): Pick what you want to capture and where it should go; get the exact macOS shortcut.
+- [Screen Recording File Size Calculator](https://www.screenmac.app/tools/screen-recording-file-size-calculator): Estimate how big a recording will be from its bitrate and length, or the bitrate you need to fit a size limit.
+- [Screenshot Format Converter](https://www.screenmac.app/tools/image-format-converter): Convert a screenshot between PNG, JPG and WebP, resize it and strip its metadata, all in your browser.
+- [Aspect Ratio and Crop Size Calculator](https://www.screenmac.app/tools/aspect-ratio-calculator): Find an image's aspect ratio, resize without distortion, and get exact crop or padding sizes for any ratio.
+- [Screenshot Window Frame and Background](https://www.screenmac.app/tools/screenshot-window-frame): Put a screenshot in a simple window or browser frame with padding, background and shadow, then export a PNG.
 - [Which Mac Screenshot Tool Do You Need?](https://www.screenmac.app/quiz/which-mac-screenshot-tool): Six questions to find out whether the built-in tools are enough or which kind of app fits.
+- [Which Mac Screen Recorder Fits You?](https://www.screenmac.app/quiz/which-mac-screen-recorder): Five questions to match how you record (quick clips, tutorials, streams or shared links) to the right kind of recorder.
+- [Are Your Screenshots Leaking Private Data?](https://www.screenmac.app/quiz/screenshot-privacy-check): Six questions about how you capture, hide and share screenshots, with the fixes for any weak spots.
+- [Mac Screenshot Skills Quiz](https://www.screenmac.app/quiz/mac-screenshot-skills-quiz): Seven questions on Mac screenshot shortcuts and options. See where you stand and what to learn next.
 
 ## Screenshots
 
+- [How to Change Where Screenshots Are Saved on Mac](https://www.screenmac.app/blog/change-screenshot-location-mac): Move Mac screenshots off the desktop: set a new folder, the clipboard or an app under Save to in the Screenshot app's Options menu. Steps, tips and what to check if it does not stick.
+- [How to Copy Text From a Screenshot on Mac](https://www.screenmac.app/blog/copy-text-from-screenshot-mac): Use Live Text to copy words out of a screenshot on a Mac: open it in Preview or Photos, select the text, and choose Copy Text. Plus what to do when text will not select.
 - [How to Screenshot on a Mac: Every Shortcut and Option](https://www.screenmac.app/blog/how-to-screenshot-on-mac): Every way to take a screenshot on a Mac: full screen, an area, a window without its shadow, to the clipboard, with a timer, and how to change where screenshots are saved.
+- [How to Screenshot a Window Without the Shadow on Mac](https://www.screenmac.app/blog/screenshot-window-without-shadow-mac): Capture a single Mac window without the drop shadow using Shift-Command-4, Space and Option-click, plus how to remove the shadow from a capture you already took.
+- [How to Take a Scrolling Screenshot on Mac](https://www.screenmac.app/blog/scrolling-screenshot-mac): macOS has no built-in scrolling screenshot. Here is what works instead: Chrome's full-size capture for web pages, and apps such as Shottr, CleanShot X and Snagit for any window.
+- [What Is the Snipping Tool on Mac?](https://www.screenmac.app/blog/snipping-tool-for-mac): The Mac's answer to the Windows Snipping Tool is the Screenshot app, opened with Shift-Command-5. How each Snipping Tool mode maps to a Mac shortcut, and where the Mac differs.
+- [Where Do Screenshots Go on a Mac?](https://www.screenmac.app/blog/where-do-screenshots-go-mac): Mac screenshots save to the desktop by default, named Screenshot with the date and time. How to find them, check your current save folder, and track down captures that went to the clipboard.
+
+## Screen recording
+
+- [How to Record Your Screen on a Mac](https://www.screenmac.app/blog/record-screen-mac): Record your Mac screen with Shift-Command-5 or QuickTime Player: the whole screen, a selected part or (on macOS Tahoe 26 or later) a single window, with your microphone. How to stop, where it saves and what to do next.
+- [How to Screen Record on Mac With Internal Audio](https://www.screenmac.app/blog/record-screen-with-audio-mac): Recording your Mac's own sound depends on your macOS version. macOS 27 Golden Gate adds a System audio option to the Screenshot toolbar; on earlier versions you need an app that captures computer audio.
+- [How to Make a Mac Screen Recording Smaller](https://www.screenmac.app/blog/reduce-screen-recording-file-size-mac): Shrink a Mac screen recording by trimming it, exporting at 1080p, 720p or 480p in QuickTime, choosing HEVC, recording a smaller area or using SDR. What each step saves and when to use it.
+- [How to Trim a Screen Recording on Mac](https://www.screenmac.app/blog/trim-screen-recording-mac): Cut the start and end off a Mac screen recording with the thumbnail's Trim button or QuickTime Player's Edit, Trim. Step by step, plus how to cut out the middle and save a smaller copy.
+
+## Annotate and redact
+
+- [How to Blur Part of a Screenshot on Mac](https://www.screenmac.app/blog/blur-part-of-screenshot-mac): macOS Markup and Preview cannot blur. Here is how to blur or pixelate part of a screenshot on a Mac with a free browser editor or a capture app, and when a solid box is the safer choice.
+- [Pixelate, Blur or Black Box: Which Redaction Is Safe?](https://www.screenmac.app/blog/pixelate-vs-blur-vs-black-box): A solid box flattened into the image is the only redaction that leaves nothing of the original. When blur and pixelate are fine, when they can be reversed, and why a black box in a layered file can leak.
+- [How to Redact Sensitive Information in a Screenshot](https://www.screenmac.app/blog/redact-sensitive-info-screenshot): A before-you-share routine for screenshots: capture less, crop, cover secrets with flattened boxes, check the edges of the frame and the file itself. With steps for Mac and a free browser editor.
+- [How to Remove Metadata From a Screenshot on Mac](https://www.screenmac.app/blog/remove-metadata-from-screenshot-mac): What metadata a Mac screenshot actually carries (no location, but a Screenshot comment, display details and Finder attributes) and how to strip it with a browser re-encode or Terminal.
+
+## Alternatives and comparisons
+
+- [CleanShot X Alternatives for Mac](https://www.screenmac.app/blog/cleanshot-x-alternatives): Leaving CleanShot X over price, cloud or features? Honest alternatives: Shottr, Snagit, Xnapper, Screenmac and the built-in tools, with verified prices and what each does not do.
+- [Loom Alternatives for Mac That Record Locally](https://www.screenmac.app/blog/loom-alternative-mac): Want Loom-style screen recordings without the cloud or the free plan limits? Compare local Mac recorders: the built-in tool, OBS Studio, CleanShot X, Snagit, Kap and Screenmac.
+- [Shottr vs CleanShot X: Which Should You Use?](https://www.screenmac.app/blog/shottr-vs-cleanshot-x): Shottr is a fast, pay-what-you-want screenshot tool; CleanShot X is a paid all-in-one capture suite with recording and cloud. A fair comparison of price, features and who each one suits.
+- [Snagit Alternatives for Mac](https://www.screenmac.app/blog/snagit-alternative-mac): Looking to replace Snagit on a Mac? Compare CleanShot X, Shottr, Screenmac and the built-in tools on price, recording, scrolling capture and step-by-step guides, including when Snagit is still the better pick.
+
+## Best Mac apps 2027
+
+- [Best Free Screen Recorders for Mac in 2027](https://www.screenmac.app/blog/best-free-screen-recorders-mac-2027): The free screen recorders worth using on a Mac in 2027: the built-in Screenshot toolbar, QuickTime Player, OBS Studio, Kap, Screenmac and Loom's free plan. What each records, the limits, and who it suits.
+- [Best Screenshot Apps for Mac in 2027](https://www.screenmac.app/blog/best-screenshot-apps-mac-2027): The screenshot apps worth installing on a Mac in 2027, from the free built-in tool to CleanShot X, Shottr, Snagit, Xnapper and Screenmac. Verified prices, honest strengths and who each one suits.
+
+## Troubleshooting
+
+- [Mac Screenshot Not Working? Fixes That Work](https://www.screenmac.app/blog/mac-screenshot-not-working): When Shift-Command-3, 4 or 5 does nothing, or screenshots come out blank or vanish, work through these checks: shortcut settings, conflicts, the save folder, app restrictions and permissions.
+- [How to Fix Screen Recording Permission on Mac](https://www.screenmac.app/blog/screen-recording-permission-mac): When an app says it cannot record your screen, or captures only show the desktop wallpaper, turn on Screen and System Audio Recording for it in Privacy and Security. Steps, and what to do when it is already on.
 
 ## Related apps by the same developer
 
