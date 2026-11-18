@@ -54,7 +54,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Suspense fallback={null}>
           <GoogleAnalytics />
         </Suspense>
-        <Analytics />
+        {/* Its script is served from /_vercel/insights, which only exists on Vercel; elsewhere it 404s. */}
+        {process.env.VERCEL ? <Analytics /> : null}
       </body>
     </html>
   );
