@@ -2,6 +2,27 @@ import Link from "next/link";
 import { Logo } from "@/components/brand/Logo";
 import { product } from "@/lib/product";
 
+const maker = [
+  {
+    href: "https://www.windowmac.app/",
+    name: "Windowmac",
+    pitch: "Flick windows into place.",
+    icon: "https://www.windowmac.app/icon.png",
+  },
+  {
+    href: "https://www.slidemac.app/",
+    name: "Slidemac",
+    pitch: "Trackpad edges for volume, brightness and apps.",
+    icon: "https://slidemac.vercel.app/icon.png",
+  },
+  {
+    href: "https://ui.sumansharma.info.np",
+    name: "Sumanifest UI",
+    pitch: "UI blocks you can copy, customize, and ship.",
+    icon: "/sumanifest.svg",
+  },
+];
+
 const groups = [
   {
     title: "Product",
@@ -20,8 +41,6 @@ const groups = [
       { href: "/tools", label: "Free tools" },
       { href: "/tools/mac-screenshot-shortcuts", label: "Screenshot shortcuts" },
       { href: "/quiz/which-mac-screenshot-tool", label: "Screenshot tool quiz" },
-      { href: "https://www.windowmac.app/", label: "Windowmac" },
-      { href: "https://www.slidemac.app/", label: "Slidemac" },
     ],
   },
   {
@@ -59,6 +78,25 @@ export function SiteFooter() {
             </ul>
           </div>
         ))}
+      </div>
+      <div className="border-t border-line">
+        <div className="mx-auto max-w-[75rem] px-4 py-10 md:px-6">
+          <h2 className="text-sm font-medium text-ink">From the same maker</h2>
+          <ul className="mt-4 grid gap-3 sm:grid-cols-3">
+            {maker.map((app) => (
+              <li key={app.href}>
+                <a href={app.href} className="flex items-start gap-3 rounded-2xl p-2 transition-colors hover:bg-line/40">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={app.icon} alt="" width={36} height={36} className="size-9 shrink-0 rounded-lg" />
+                  <span>
+                    <span className="block text-sm font-medium text-ink">{app.name}</span>
+                    <span className="mt-0.5 block text-sm leading-5 text-ink-muted">{app.pitch}</span>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
       <div className="border-t border-line">
         <p className="mx-auto max-w-[75rem] px-4 py-5 text-xs text-ink-faint md:px-6">
