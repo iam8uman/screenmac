@@ -6,7 +6,7 @@ export const product = {
   name: "Screenmac",
   siteUrl: "https://www.screenmac.app",
   /** Must match MARKETING_VERSION in apps/macos (a unit test checks this). */
-  version: "0.3.0",
+  version: "0.3.1",
   repoUrl: "https://github.com/iam8uman/screenmac",
   tagline: "Capture anything. Make it clear. Share it instantly.",
   headline: "Your screen, captured beautifully.",
@@ -19,10 +19,8 @@ export const product = {
   checksumUrl: "https://github.com/iam8uman/screenmac/releases/latest/download/Screenmac.zip.sha256",
   releasesUrl: "https://github.com/iam8uman/screenmac/releases",
   installCommand: "curl -fsSL https://www.screenmac.app/install.sh | bash",
-  /** Ad-hoc signed by CI. Flip once builds are signed with a Developer ID and notarized. */
-  notarized: false,
-  billingLive: false,
-  cloudLive: false,
+  /** Releases are signed with a Developer ID, notarized and stapled by CI. */
+  notarized: true,
   copyrightYear: 2026,
 } as const;
 
@@ -33,7 +31,7 @@ export function hasDownloadArtifact(): boolean {
 export function primaryCta(): { href: string; label: string } {
   return hasDownloadArtifact()
     ? { href: "/#install", label: "Download for Mac" }
-    : { href: "/download", label: "Join the Mac beta" };
+    : { href: "/download", label: "Get the Mac app" };
 }
 
 /** Default global shortcuts in the Mac app (apps/macos/Screenmac/Hotkeys/Shortcut.swift). */

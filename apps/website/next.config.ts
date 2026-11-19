@@ -10,6 +10,9 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
   reactCompiler: true,
+  async redirects() {
+    return [{ source: "/pricing", destination: "/", permanent: true }];
+  },
   // Official domain is primary (canonical tags point there); the *.vercel.app host keeps serving as a fallback.
   async headers() {
     return [

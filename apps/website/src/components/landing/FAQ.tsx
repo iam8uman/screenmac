@@ -6,21 +6,21 @@ import { product } from "@/lib/product";
 export const FAQS: { q: string; a: React.ReactNode; plain?: string }[] = [
   {
     q: "Can I download Screenmac today?",
-    plain: `Yes. Version ${product.version} is a free beta. Install it with one line in Terminal or download the zip from GitHub. It isn't notarized by Apple yet, so the first launch of a downloaded copy needs an extra click in System Settings.`,
+    plain: `Yes. Version ${product.version} is out now. Install it with one line in Terminal or download the zip from GitHub. It's signed with a Developer ID and notarized by Apple, so it opens like any other Mac app.`,
     a: (
       <>
-        Yes. Version {product.version} is a free beta.{" "}
+        Yes. Version {product.version} is out now.{" "}
         <Link href="/#install" className="text-ink underline underline-offset-2">
           Install it with one line in Terminal
         </Link>{" "}
-        or download the zip. It isn&apos;t notarized by Apple yet, so the first launch of a downloaded copy needs an extra
-        click in System Settings.
+        or download the zip. It&apos;s signed with a Developer ID and notarized by Apple, so it opens like any other Mac
+        app.
       </>
     ),
   },
   {
     q: "Do I have to allow Screen Recording again after updating?",
-    a: "Sometimes, once. Builds aren't signed with an Apple Developer ID yet, so macOS can treat an update as a new app and the old switch silently stops applying. The installer clears the old entry so macOS asks again. If captures ever fail, choose Fix Screen Recording Permission… from the menu bar icon.",
+    a: "No. Every release is signed with the same Developer ID, so macOS recognizes an update as the same app and keeps the permission. If captures ever fail, choose Fix Screen Recording Permission… from the menu bar icon and macOS will ask again.",
   },
   {
     q: "Is it safe to paste a curl command into Terminal?",
@@ -53,10 +53,6 @@ export const FAQS: { q: string; a: React.ReactNode; plain?: string }[] = [
   {
     q: "Why does macOS ask for Screen Recording permission?",
     a: "macOS requires it before any app can read the screen, even for a single screenshot. If it's off, Screenmac tells you how to turn it on and doesn't pretend a capture happened.",
-  },
-  {
-    q: "Will there be a paid version?",
-    a: "Probably, for features like share links and scrolling capture. None of those are built, nothing is for sale, and the beta stays free.",
   },
 ];
 

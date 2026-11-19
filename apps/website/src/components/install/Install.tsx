@@ -22,13 +22,9 @@ const STEPS: { title: string; body: React.ReactNode }[] = [
     title: "Open it the first time",
     body: (
       <>
-        It isn&apos;t notarized yet, so macOS asks first. On macOS 15, open it
-        once, then choose{" "}
-        <strong className={strong}>
-          System Settings → Privacy &amp; Security → Open Anyway
-        </strong>
-        . On macOS 14, right-click it and choose{" "}
-        <strong className={strong}>Open</strong>.
+        Double-click <strong className={strong}>Screenmac</strong>. It&apos;s
+        notarized by Apple, so it opens straight away like any other Mac
+        app.
       </>
     ),
   },
@@ -211,8 +207,8 @@ export function Install({ headingLevel = 2 }: { headingLevel?: 1 | 2 }) {
           ))}
         </ol>
         <p className="mx-auto mt-8 max-w-3xl text-center text-sm leading-6 text-ink-muted">
-          After an update, macOS may ask for Screen Recording again because
-          builds aren&apos;t notarized yet. If captures stop working, choose{" "}
+          Updates keep your Screen Recording permission. If captures ever stop
+          working, choose{" "}
           <strong className={strong}>Fix Screen Recording Permission…</strong>{" "}
           from the menu bar icon.
         </p>

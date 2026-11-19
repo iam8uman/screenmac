@@ -55,7 +55,7 @@ Prices and features below come from each app's own website, checked when this gu
 
 | App | Price | Scrolling | OCR | Recording | Blur/redact | Upload |
 | --- | --- | --- | --- | --- | --- | --- |
-| **Screenmac (our pick)** | **Free beta** | **No (planned)** | **No (planned)** | **MP4 with mic** | **Redact, blur, pixelate, flattened** | **None** |
+| **Screenmac (our pick)** | **Free** | **No (planned)** | **No (planned)** | **MP4 with mic** | **Redact, blur, pixelate, flattened** | **None** |
 | Built-in Screenshot | Free | No | Via Live Text in Preview | Yes | No | None |
 | CleanShot X | $35 one-time (Basic) | Yes | Yes | MP4 or GIF | Blur, pixelate | Own cloud |
 | Shottr | Name your price, $0 allowed | Yes | Yes | Not listed | Blur, pixelate | Optional S3 |
@@ -66,7 +66,7 @@ Prices and features below come from each app's own website, checked when this gu
 
 Screenmac is our app and our top pick. It is a native app (SwiftUI, AppKit, ScreenCaptureKit) for macOS 14 Sonoma or later. It captures an area, a window or a display with its own shortcuts (Option added to the built-in ones), opens an editor with arrows, shapes, text, numbered steps, highlighter and crop, and **flattens redact, blur and pixelate into the exported pixels**. It also records the screen to MP4 with an optional microphone, keeps a local capture history and has no account or upload feature.
 
-Why it comes first: the capture-to-shared-image loop is faster than anything else here, the redaction is real (the hidden pixels are gone from the export, not covered by a layer), and it costs nothing. Scrolling capture and OCR are planned. Good to know: it is a free beta, and builds are not yet notarized by Apple. **Best for:** almost everyone, and especially anyone who shares screenshots with private data in them. Try the editor in your browser at [/editor](/editor) or [download it](/download).
+Why it comes first: the capture-to-shared-image loop is faster than anything else here, the redaction is real (the hidden pixels are gone from the export, not covered by a layer), and it costs nothing. Scrolling capture and OCR are planned. **Best for:** almost everyone, and especially anyone who shares screenshots with private data in them. Try the editor in your browser at [/editor](/editor) or [download it](/download).
 
 ## 2. CleanShot X: best paid all-in-one
 

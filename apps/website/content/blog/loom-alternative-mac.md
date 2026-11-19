@@ -56,7 +56,7 @@ Prices and features come from each app's own site, checked on the date of this g
 
 | App | Price | Webcam | Audio | Output | Cloud |
 | --- | --- | --- | --- | --- | --- |
-| **Screenmac (our pick)** | **Free beta** | **No** | **Optional mic** | **MP4** | **None** |
+| **Screenmac (our pick)** | **Free** | **No** | **Optional mic** | **MP4** | **None** |
 | Built-in (Shift-Command-5) | Free | No | Mic; system audio on macOS 27+ | .mov | None |
 | OBS Studio | Free, open source | Yes, as a scene source | Mixer with filters | Video files, plus streaming | None |
 | Kap | Free, open source | Not listed | Optional audio | GIF, MP4, WebM, APNG | Share plugins |
@@ -67,7 +67,7 @@ Prices and features come from each app's own site, checked on the date of this g
 
 Screenmac is our app and our top pick. It records the screen (a display, an area or a window) to **MP4 with an optional microphone**, saves locally and has **no upload feature** at all. The same app takes screenshots and opens them in an editor with arrows, numbered steps and redaction, which is useful when a quick video and an annotated screenshot are both part of explaining something.
 
-Because files stay on your Mac, you share them however your team already does, with no plan limits on length or count. It is free during its beta and needs macOS 14 Sonoma or later. Good to know: there is no webcam overlay yet. [Download Screenmac](/download).
+Because files stay on your Mac, you share them however your team already does, with no plan limits on length or count. It is free and needs macOS 14 Sonoma or later. Good to know: there is no webcam overlay yet. [Download Screenmac](/download).
 
 ## What are the other free options?
 

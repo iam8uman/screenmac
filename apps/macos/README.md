@@ -67,4 +67,4 @@ Config/           Info.plist, entitlements
 
 - Minimized windows and content an app protects from capture (for example DRM video) can't be captured. macOS decides this.
 - Scrolling capture and on-device text recognition aren't built yet.
-- The build is not notarized. Distribution needs a Developer ID team.
+- Local builds from `build-app.sh` are ad-hoc signed unless you pass `SIGN_IDENTITY`. Published releases are signed with a Developer ID and notarized by CI.

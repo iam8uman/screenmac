@@ -6,7 +6,6 @@ import { Install } from "@/components/install/Install";
 import { FooterInstall } from "@/components/layout/FooterInstall";
 import { Hero } from "@/components/landing/Hero";
 import { HowItWorks } from "@/components/landing/HowItWorks";
-import { PricingSection } from "@/components/landing/PricingSection";
 import { Privacy } from "@/components/landing/Privacy";
 import { Showcase } from "@/components/landing/Showcase";
 import { HomeStructuredData } from "@/components/seo/StructuredData";
@@ -31,7 +30,6 @@ export default function HomePage() {
       <FeaturesSection />
       <Privacy />
       <Comparison />
-      <PricingSection />
       <FAQ />
       <FinalCTA />
     </>

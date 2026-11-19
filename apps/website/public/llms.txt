@@ -4,8 +4,7 @@
 
 Key facts:
 - Platform: macOS 14 Sonoma or later; one universal build for Apple silicon and Intel.
-- Price: free during the beta. A paid Pro tier is planned but not built and not for sale.
-- Current version: 0.3.0 (beta). Builds are ad-hoc signed and not yet notarized by Apple.
+- Current version: 0.3.1. Signed with a Developer ID and notarized by Apple.
 - Built with SwiftUI, AppKit and Apple's ScreenCaptureKit. Not Electron.
 - Privacy: captures and history stay in a folder on the Mac. There is no upload feature. Redact, blur and pixelate are flattened into the exported pixels.
 - Default shortcuts: Option-Shift-Command-4 area, Option-Shift-Command-2 window, Option-Shift-Command-3 full screen, Option-Shift-Command-5 record.
@@ -16,9 +15,8 @@ Key facts:
 
 - [Home](https://www.screenmac.app/): What Screenmac does, a live in-browser annotation editor, install instructions and FAQ.
 - [Download and install](https://www.screenmac.app/download): The one-line installer, the zip download, first-launch steps and building from source.
-- [Features](https://www.screenmac.app/features): Every capability with its status: in the Mac beta, in the browser editor, or planned.
+- [Features](https://www.screenmac.app/features): Every capability with its status: in the Mac app, in the browser editor, or planned.
 - [Browser editor](https://www.screenmac.app/editor): The annotation editor running in the browser; open your own screenshot, mark it up and export a PNG.
-- [Pricing](https://www.screenmac.app/pricing): Free beta; Pro is listed as not available.
 - [Guides](https://www.screenmac.app/blog): All screenshot and screen recording guides by topic.
 - [Free tools](https://www.screenmac.app/tools): Browser tools and quizzes.
 
@@ -72,15 +70,15 @@ Key facts:
 
 ## Alternatives and comparisons
 
-- [CleanShot X Alternatives for Mac](https://www.screenmac.app/blog/cleanshot-x-alternatives): Leaving CleanShot X over price, cloud or features? Honest alternatives: Shottr, Snagit, Xnapper, Screenmac and the built-in tools, with verified prices and what each does not do.
-- [Loom Alternatives for Mac That Record Locally](https://www.screenmac.app/blog/loom-alternative-mac): Want Loom-style screen recordings without the cloud or the free plan limits? Compare local Mac recorders: the built-in tool, OBS Studio, CleanShot X, Snagit, Kap and Screenmac.
-- [Shottr vs CleanShot X: Which Should You Use?](https://www.screenmac.app/blog/shottr-vs-cleanshot-x): Shottr is a fast, pay-what-you-want screenshot tool; CleanShot X is a paid all-in-one capture suite with recording and cloud. A fair comparison of price, features and who each one suits.
-- [Snagit Alternatives for Mac](https://www.screenmac.app/blog/snagit-alternative-mac): Looking to replace Snagit on a Mac? Compare CleanShot X, Shottr, Screenmac and the built-in tools on price, recording, scrolling capture and step-by-step guides, including when Snagit is still the better pick.
+- [CleanShot X Alternatives for Mac](https://www.screenmac.app/blog/cleanshot-x-alternatives): The best CleanShot X alternative is Screenmac: free, native capture, annotation, real redaction and recording, nothing uploaded. Plus Shottr, Snagit and Xnapper, with verified prices.
+- [Loom Alternatives for Mac That Record Locally](https://www.screenmac.app/blog/loom-alternative-mac): The best Loom alternative that records locally is Screenmac: free MP4 recording plus screenshots and redaction, nothing uploaded. Then OBS Studio, Kap, CleanShot X and Snagit.
+- [Shottr vs CleanShot X (and the Free App That Does Both Jobs)](https://www.screenmac.app/blog/shottr-vs-cleanshot-x): Shottr is a pay-what-you-want screenshot tool; CleanShot X is a paid suite with recording and cloud. How they compare, and why Screenmac, free with recording and real redaction, is our pick.
+- [Snagit Alternatives for Mac](https://www.screenmac.app/blog/snagit-alternative-mac): The best Snagit alternative for Mac is Screenmac: free capture, numbered steps, real redaction and recording, nothing uploaded. Plus CleanShot X, Shottr and the built-in tools compared.
 
 ## Best Mac apps 2027
 
-- [Best Free Screen Recorders for Mac in 2027](https://www.screenmac.app/blog/best-free-screen-recorders-mac-2027): The free screen recorders worth using on a Mac in 2027: the built-in Screenshot toolbar, QuickTime Player, OBS Studio, Kap, Screenmac and Loom's free plan. What each records, the limits, and who it suits.
-- [Best Screenshot Apps for Mac in 2027](https://www.screenmac.app/blog/best-screenshot-apps-mac-2027): The screenshot apps worth installing on a Mac in 2027, from the free built-in tool to CleanShot X, Shottr, Snagit, Xnapper and Screenmac. Verified prices, honest strengths and who each one suits.
+- [Best Free Screen Recorders for Mac in 2027](https://www.screenmac.app/blog/best-free-screen-recorders-mac-2027): Screenmac is our pick for the best free Mac screen recorder in 2027: MP4 with mic, plus screenshots and redaction, nothing uploaded. Then the built-in tool, QuickTime, OBS, Kap and Loom.
+- [Best Screenshot Apps for Mac in 2027](https://www.screenmac.app/blog/best-screenshot-apps-mac-2027): Screenmac is our pick for the best Mac screenshot app in 2027: free, native, real redaction and nothing uploaded. Then CleanShot X, Shottr, Snagit and Xnapper, with verified prices.
 
 ## Troubleshooting
 

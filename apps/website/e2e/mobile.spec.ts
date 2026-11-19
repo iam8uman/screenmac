@@ -14,8 +14,8 @@ test("mobile menu opens, navigates, and closes", async ({ page }) => {
   await page.getByRole("button", { name: "Open menu" }).click();
   const menu = page.getByRole("navigation", { name: "Mobile" });
   await expect(menu).toBeVisible();
-  await menu.getByRole("link", { name: "Pricing" }).click();
-  await expect(page).toHaveURL(/\/pricing$/);
+  await menu.getByRole("link", { name: "Editor" }).click();
+  await expect(page).toHaveURL(/\/editor$/);
   await expect(menu).toBeHidden();
 });
 

@@ -31,8 +31,7 @@ const groups = [
     links: [
       { href: "/features", label: "Features" },
       { href: "/editor", label: "Try the editor" },
-      { href: "/pricing", label: "Pricing" },
-      { href: "/download", label: "Mac beta" },
+      { href: "/download", label: "Download" },
       { href: "/changelog", label: "Changelog" },
     ],
   },

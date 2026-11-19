@@ -5,7 +5,7 @@ import { product } from "@/lib/product";
 export const metadata: Metadata = {
   alternates: { canonical: "/terms" },
   title: "Terms",
-  description: "Terms for using the Screenmac website, editor, and Mac beta.",
+  description: "Terms for using the Screenmac website, editor, and Mac app.",
 };
 
 export default function TermsPage() {
@@ -16,10 +16,10 @@ export default function TermsPage() {
       </PageHeader>
       <Prose>
         <section>
-          <h2>Beta software</h2>
+          <h2>The software</h2>
           <p>
-            Screenmac is beta software provided as is, without warranty. Features may change or be removed before a
-            stable release. Keep copies of anything important.
+            Screenmac is provided as is, without warranty. Features may change between releases. Keep copies of
+            anything important.
           </p>
         </section>
         <section>
@@ -28,10 +28,6 @@ export default function TermsPage() {
             You are responsible for what you capture and share. Don&apos;t record content you aren&apos;t allowed to. macOS
             prevents capture of some protected content, and Screenmac doesn&apos;t try to get around that.
           </p>
-        </section>
-        <section>
-          <h2>Paid plans</h2>
-          <p>Nothing is for sale. If paid plans arrive, they will come with their own terms before anyone is charged.</p>
         </section>
         <section>
           <h2>Contact</h2>

@@ -4,7 +4,7 @@ import { publishedQuizzes, quizPath } from "@/lib/content/quizzes";
 import { publishedTools, toolHref } from "@/lib/content/tools";
 import { product } from "@/lib/product";
 
-const ROUTES = ["", "/download", "/editor", "/features", "/pricing", "/changelog", "/support", "/privacy", "/terms"];
+const ROUTES = ["", "/download", "/editor", "/features", "/changelog", "/support", "/privacy", "/terms"];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const url = (p: string) => `${product.siteUrl}${p}`;

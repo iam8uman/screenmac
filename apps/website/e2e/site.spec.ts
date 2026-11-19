@@ -40,15 +40,12 @@ test("primary navigation reaches real sections and pages", async ({ page }) => {
   const nav = page.getByRole("navigation", { name: "Primary" });
   await nav.getByRole("link", { name: "Features" }).click();
   await expect(page.locator("#features")).toBeInViewport({ timeout: 10_000 });
-  await nav.getByRole("link", { name: "Pricing" }).click();
-  await expect(page).toHaveURL(/\/pricing$/);
-  await expect(page.getByRole("heading", { level: 1, name: "Free while it's in beta." })).toBeVisible();
   await nav.getByRole("link", { name: "Editor" }).click();
   await expect(page).toHaveURL(/\/editor$/);
   await expect(page.getByTestId("editor-surface").filter({ visible: true })).toBeVisible();
 });
 
-for (const path of ["/features", "/pricing", "/download", "/editor", "/privacy", "/terms", "/support", "/changelog"]) {
+for (const path of ["/features", "/download", "/editor", "/privacy", "/terms", "/support", "/changelog"]) {
   test(`page ${path} renders with one h1 and no console errors`, async ({ page }) => {
     const errors: string[] = [];
     page.on("pageerror", (e) => errors.push(String(e)));
@@ -68,12 +65,9 @@ test("unknown routes show a helpful 404", async ({ page }) => {
   await expect(page).toHaveURL(/\/editor$/);
 });
 
-test("pricing never offers a way to buy Pro", async ({ page }) => {
+test("the old pricing page sends visitors home", async ({ page }) => {
   await page.goto("/pricing");
-  const pro = page.getByRole("article", { name: "Pro" });
-  await expect(pro.getByText("Not available")).toBeVisible();
-  await expect(pro.getByRole("link")).toHaveCount(0);
-  await expect(pro.getByRole("button")).toHaveCount(0);
+  await expect(page).toHaveURL(/\/$/);
 });
 
 test("FAQ opens and matches the privacy claims", async ({ page }) => {

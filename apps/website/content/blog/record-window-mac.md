@@ -75,7 +75,7 @@ It is the easiest way to keep private material out of a recording. For a full ch
 | Built-in (Tahoe 26+) | Record Selected Window | Free, .mov |
 | CleanShot X | Window, fullscreen or custom area, MP4 or GIF | Paid, $35 one-time Basic |
 | OBS Studio | Window capture as a scene source | Free, more setup |
-| Screenmac | Display, area or window to MP4 | Free beta, optional microphone, nothing uploaded |
+| Screenmac | Display, area or window to MP4 | Free, optional microphone, nothing uploaded |
 
 Screenmac is made by this site; it needs macOS 14 Sonoma or later, so it is one way to get window recording on Sonoma and Sequoia, where the built-in recorder has no window mode. [Download Screenmac](/download) to try it, or compare more options in the [best free screen recorders for Mac](/blog/best-free-screen-recorders-mac-2027).
 

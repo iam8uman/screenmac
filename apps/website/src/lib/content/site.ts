@@ -52,7 +52,7 @@ export const FACTS = [
   "Annotation editor: arrows, shapes, text, numbered steps, highlighter, crop; redact, blur and pixelate are flattened into the exported pixels.",
   "Screen recording to MP4 with optional microphone.",
   "Quick Access preview to copy, save or drag a capture; local capture history; no account and no uploads.",
-  "Free during the beta. A paid Pro tier is planned but not built and not for sale. Builds are ad-hoc signed, not yet notarized.",
+  "Free to download. Signed with a Developer ID and notarized by Apple, so it opens like any other Mac app and updates keep the Screen Recording permission.",
   "The same annotation editor runs free in the browser at /editor: open, paste or drop an image, mark it up, export a PNG.",
 ];
 

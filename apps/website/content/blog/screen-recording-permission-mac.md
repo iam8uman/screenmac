@@ -70,7 +70,7 @@ The second fix matters most after an **app update**. macOS ties the permission t
 
 ## How do I fix it in Screenmac?
 
-Screenmac uses Apple's ScreenCaptureKit and asks for this permission on first launch. Its builds are ad-hoc signed and not yet notarized by Apple, so after updating, macOS can treat the new build as a new app. If captures fail after an update:
+Screenmac uses Apple's ScreenCaptureKit and asks for this permission on first launch. Every release is signed with the same Developer ID and notarized by Apple, so updates keep the permission. If captures ever fail anyway:
 
 1. Click the Screenmac icon in the menu bar.
 2. Choose **Fix Screen Recording Permission…**. It resets Screenmac's own entry so macOS asks again.

@@ -35,13 +35,6 @@ export default function PrivacyPage() {
           </p>
         </section>
         <section>
-          <h2>The beta list</h2>
-          <p>
-            If you submit your email, it is forwarded to the service we use for the beta announcement and used only
-            for that. If that service isn&apos;t configured, the form says so and nothing is stored.
-          </p>
-        </section>
-        <section>
           <h2>Analytics</h2>
           <p>
             This site uses Google Analytics and Vercel Web Analytics to count page views. Vercel Web Analytics sets no

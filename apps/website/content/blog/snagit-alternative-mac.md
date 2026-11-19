@@ -14,7 +14,7 @@ faq:
   - question: "How much does Snagit cost?"
     answer: "TechSmith's store lists Snagit Individual at $39 per user per year, billed yearly, with a 14-day money-back guarantee."
   - question: "Is there a free Snagit alternative for Mac?"
-    answer: "Yes. The built-in Screenshot tool (Shift-Command-5) is free, Shottr lets you pay $0, and Screenmac is free during its beta."
+    answer: "Yes. The built-in Screenshot tool (Shift-Command-5) is free, Shottr lets you pay $0, and Screenmac is free."
   - question: "Does any alternative have Snagit's Step Capture?"
     answer: "Not in the same form. Snagit turns your clicks into a step-by-step guide. With other apps you place numbered step markers yourself, which Screenmac's and CleanShot X's editors both support."
   - question: "Should Windows and Mac teams leave Snagit?"
@@ -53,7 +53,7 @@ Facts below come from each app's own site, checked on the date of this guide.
 
 | | Snagit | CleanShot X | Shottr | Screenmac (our pick) | Built-in |
 | --- | --- | --- | --- | --- | --- |
-| Price | $39/year | $35 one-time (1 year of updates), or Pro $10/user/mo | Name your price, $0 allowed | Free beta | Free |
+| Price | $39/year | $35 one-time (1 year of updates), or Pro $10/user/mo | Name your price, $0 allowed | Free | Free |
 | Platforms | Mac and Windows | Mac | Mac | Mac (14+) | Mac |
 | Scrolling capture | Yes | Yes | Yes | No (planned) | No |
 | Recording | Yes, webcam and system audio | Yes, MP4 or GIF, computer audio | Not listed | MP4 with optional mic | Yes |
@@ -65,7 +65,7 @@ Facts below come from each app's own site, checked on the date of this guide.
 
 Screenmac is our app and our top pick. It is a native macOS app (SwiftUI, AppKit, ScreenCaptureKit) for macOS 14 Sonoma or later. It captures an area, a window or a display with shortcuts that do not clash with the built-in ones, then opens an editor with arrows, shapes, text, **numbered steps**, highlighter and crop, plus **redact, blur and pixelate** written into the pixels. It records the screen to MP4 with an optional microphone and keeps a local history, with no account and no uploads.
 
-**Choose it if** your Snagit use was capture, annotate, redact, share, which is most people's, and you want that for free and local. Good to know: scrolling capture and OCR are planned, and it is a free beta that is not yet notarized by Apple. Try the editor first at [/editor](/editor), or [download Screenmac](/download).
+**Choose it if** your Snagit use was capture, annotate, redact, share, which is most people's, and you want that for free and local. Good to know: scrolling capture and OCR are planned. Try the editor first at [/editor](/editor), or [download Screenmac](/download).
 
 ## 2. CleanShot X: the paid Mac replacement
 

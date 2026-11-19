@@ -31,8 +31,8 @@ The inherited draft claimed Phases 1–2 complete. Audit findings:
 |---|---|
 | Visual system: Geist type, blue-violet accent, warm paper, charcoal showcase | ✅ |
 | Sticky nav, mobile menu, skip link | ✅ |
-| Hero, showcase editor, features (availability labels), how it works, comparison, pricing, FAQ, CTA, footer | ✅ |
-| Subpages: features, pricing, download, editor, privacy, terms, support, changelog | ✅ |
+| Hero, showcase editor, features (availability labels), how it works, comparison, FAQ, CTA, footer | ✅ |
+| Subpages: features, download, editor, privacy, terms, support, changelog | ✅ |
 | Editor: 14 tools, select/move/resize/delete, inline text, colors, stroke widths | ✅ |
 | Editor: undo/redo, sample switching, open own image, reset, zoom/fit, backdrops | ✅ |
 | Editor: flattened PNG export, clipboard with honest fallback, keyboard shortcuts | ✅ |
@@ -79,7 +79,7 @@ OCR (Vision), floating screenshots, scrolling capture (tested matrix only), back
 | GitHub release with `Screenmac.zip` + SHA-256 when a new version lands on `main` | 🟡 |
 | One-line installer (`/install.sh`) and site Install section pointing at the latest release | ✅ e2e-tested |
 | Stale Screen Recording permission detected and repaired from the app | 🟡 (CaptureErrorTests) |
-| Developer ID signing, notarization, `.dmg` | ⬜ needs an Apple Developer account |
+| Developer ID signing and notarization | ✅ since 0.3.1 (CI notarizes and staples every release) |
 
 ## Current focus
 

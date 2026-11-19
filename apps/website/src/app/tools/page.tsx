@@ -105,8 +105,8 @@ export default function ToolsHub() {
                 <dd>{quizzes.length}</dd>
               </div>
               <div>
-                <dt>Price</dt>
-                <dd>$0</dd>
+                <dt>Sign-up</dt>
+                <dd>None</dd>
               </div>
             </dl>
           </div>

@@ -10,7 +10,7 @@ primaryApp: screenmac
 feature: quiz/which-mac-screenshot-tool
 faq:
   - question: "Is there a free alternative to CleanShot X?"
-    answer: "Yes: Screenmac. It is free during its beta and covers the CleanShot X loop people use most (capture, annotate, redact, record) with nothing uploaded. Shottr is a name-your-price option for scrolling capture and OCR."
+    answer: "Yes: Screenmac. It is free and covers the CleanShot X loop people use most (capture, annotate, redact, record) with nothing uploaded. Shottr is a name-your-price option for scrolling capture and OCR."
   - question: "What does CleanShot X do that the alternatives don't?"
     answer: "It combines scrolling capture, screen recording with computer audio and overlays, a video editor, OCR, pinned screenshots and its own cloud with share links in one app. No single free alternative covers all of that."
   - question: "How much does CleanShot X cost?"
@@ -55,7 +55,7 @@ Prices and features below come from each app's own site, checked on the date of 
 
 | App | Price | Scrolling | Recording | Cloud or upload | Best for |
 | --- | --- | --- | --- | --- | --- |
-| **Screenmac (our pick)** | **Free during beta** | **No (planned)** | **Yes, MP4 with optional mic** | **None** | **Free, local capture and redaction** |
+| **Screenmac (our pick)** | **Free** | **No (planned)** | **Yes, MP4 with optional mic** | **None** | **Free, local capture and redaction** |
 | CleanShot X | $35 one-time, or $10/user/mo Pro | Yes | Yes, MP4 or GIF | Own cloud | Doing everything in one app |
 | Shottr | Name your price, $0 allowed | Yes | Not listed | Optional S3, needs activation | Free screenshots with power tools |
 | Snagit | $39 per year | Yes | Yes, with webcam and system audio | Screencast hosting | Mac and Windows, guides and templates |
@@ -66,7 +66,7 @@ Prices and features below come from each app's own site, checked on the date of 
 
 Screenmac is our app and our top pick. It is a native SwiftUI and ScreenCaptureKit app for macOS 14 Sonoma or later. It captures an area, a window or a display with its own shortcuts, opens an editor with arrows, shapes, text, numbered steps, highlighter, crop and **redact, blur and pixelate that are flattened into the pixels**, records the screen to MP4 with an optional microphone, and keeps a local capture history. There is no account and no upload feature.
 
-**Pick it if** you want the capture-annotate-redact loop of CleanShot X without the cloud and without paying, which is most people who leave. Good to know: scrolling capture and OCR are planned; it is a free beta and builds are not yet notarized by Apple. You can try the editor first in your browser at [/editor](/editor), then [download Screenmac](/download).
+**Pick it if** you want the capture-annotate-redact loop of CleanShot X without the cloud and without paying, which is most people who leave. Good to know: scrolling capture and OCR are planned. You can try the editor first in your browser at [/editor](/editor), then [download Screenmac](/download).
 
 ## 2. Shottr: for scrolling capture and OCR
 

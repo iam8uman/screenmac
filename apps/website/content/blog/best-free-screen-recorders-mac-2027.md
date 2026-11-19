@@ -45,7 +45,7 @@ Features below come from Apple's documentation and each app's own site, checked 
 
 | Recorder | Records | Audio | Output | Limits | Uploads |
 | --- | --- | --- | --- | --- | --- |
-| **Screenmac (our pick)** | **Display, area or window** | **Optional mic** | **MP4** | **Beta, no editor for video** | **None** |
+| **Screenmac (our pick)** | **Display, area or window** | **Optional mic** | **MP4** | **No editor for video** | **None** |
 | Screenshot toolbar | Screen, portion, window (Tahoe 26+) | Mic; system audio on macOS 27+ | .mov | No editing beyond trim | None |
 | QuickTime Player | Screen or portion | Mic | .mov | Basic trim and split | None |
 | OBS Studio | Scenes of windows, displays, webcams, images | Mixer with filters | Video files, live streams | Learning curve | None (streams if you choose) |
@@ -56,7 +56,7 @@ Features below come from Apple's documentation and each app's own site, checked 
 
 Screenmac is our app and our top pick. It is a native macOS app for Sonoma (14) or later that records a display, an area or a window to **MP4 with an optional microphone**, and takes screenshots that open in an editor with arrows, numbered steps and redaction flattened into the pixels. There is no account and no upload feature; recordings and history stay on your Mac.
 
-Why it comes first: one shortcut covers both recordings and screenshots, so the clip and the annotated image you send with it come from the same place, and nothing leaves your Mac. Good to know: it is a free beta, builds are not notarized by Apple yet, and there is no webcam overlay. **Best for:** bug reports, walkthroughs and anyone who explains things with short videos and marked-up screenshots. [Download Screenmac](/download).
+Why it comes first: one shortcut covers both recordings and screenshots, so the clip and the annotated image you send with it come from the same place, and nothing leaves your Mac. Good to know: there is no webcam overlay or video editor yet. **Best for:** bug reports, walkthroughs and anyone who explains things with short videos and marked-up screenshots. [Download Screenmac](/download).
 
 ## 2. The built-in Screenshot toolbar: best for a one-off clip
 

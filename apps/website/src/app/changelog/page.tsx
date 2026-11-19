@@ -9,6 +9,14 @@ export const metadata: Metadata = {
 
 const ENTRIES = [
   {
+    date: "2026-11-18",
+    title: "Mac app 0.3.1",
+    items: [
+      "Signed with a Developer ID and notarized by Apple. Screenmac opens with a double-click, with no trip to System Settings first.",
+      "Updates keep your Screen Recording permission, because every release is signed with the same identity.",
+    ],
+  },
+  {
     date: "2026-11-11",
     title: "Mac app 0.3.0",
     items: [
@@ -20,13 +28,13 @@ const ENTRIES = [
   },
   {
     date: "2026-10-24",
-    title: "Mac app 0.2.0, the first public beta",
+    title: "Mac app 0.2.0, the first public release",
     items: [
       "Download Screenmac.zip from GitHub Releases or install with one line in Terminal. One universal build for Apple silicon and Intel, macOS 14 or later.",
       "Capture an area, a window, or a full screen with global shortcuts, then annotate, copy, or save from the Quick Access preview.",
       "Screen recording to MP4 with optional microphone, plus local capture history.",
       "If captures fail after an update, Fix Screen Recording Permission… in the menu bar resets Screenmac's own permission so macOS asks again.",
-      "Every release is built and tested by GitHub Actions and published with a SHA-256 checksum. Builds aren't notarized by Apple yet.",
+      "Every release is built and tested by GitHub Actions and published with a SHA-256 checksum.",
     ],
   },
   {

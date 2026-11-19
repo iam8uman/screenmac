@@ -14,7 +14,7 @@ Paste this into Terminal. It downloads the latest release, checks its checksum, 
 curl -fsSL https://www.screenmac.app/install.sh | bash
 ```
 
-Or download [`Screenmac.zip`](https://github.com/iam8uman/screenmac/releases/latest/download/Screenmac.zip), unzip it and drag Screenmac into Applications. It needs macOS 14 or later and runs natively on Apple silicon and Intel. Builds aren't notarized yet, so the first launch of a downloaded copy needs **System Settings → Privacy & Security → Open Anyway** (macOS 15) or right-click → **Open** (macOS 14). Then allow Screen Recording, reopen Screenmac, and press **⌥⇧⌘4**.
+Or download [`Screenmac.zip`](https://github.com/iam8uman/screenmac/releases/latest/download/Screenmac.zip), unzip it and drag Screenmac into Applications. It needs macOS 14 or later and runs natively on Apple silicon and Intel. Releases are signed with a Developer ID and notarized by Apple, so it opens like any other app. Allow Screen Recording, reopen Screenmac, and press **⌥⇧⌘4**.
 
 If captures fail after an update, choose **Fix Screen Recording Permission…** from the menu bar icon, or run `tccutil reset ScreenCapture app.screenmac.Screenmac` and reopen Screenmac.
 
