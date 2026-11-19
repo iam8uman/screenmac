@@ -295,6 +295,10 @@ final class OverlayView: NSView {
 
     private var mode: SelectionMode { controller?.mode ?? .area }
 
+    /// Screenshots are taken the moment a fresh drag is released, like macOS's own area capture.
+    /// Recordings keep the Record button so the frame can be adjusted before anything starts.
+    private var capturesOnRelease: Bool { purpose == .screenshot }
+
     private static func pixelImage(_ image: CGImage) -> NSImage {
         NSImage(cgImage: image, size: CGSize(width: image.width, height: image.height))
     }
@@ -477,7 +481,12 @@ final class OverlayView: NSView {
     private func drawHint() {
         let text: String
         switch (mode, purpose) {
-        case (.area, .screenshot): text = windows.isEmpty ? "Drag to select an area. Return captures, Esc cancels." : "Drag to select an area. Space picks a window. Return captures, Esc cancels."
+        case (.area, .screenshot):
+            if selection != nil, drag == nil {
+                text = "Drag a new area, or press Return to capture this one. Esc cancels."
+            } else {
+                text = windows.isEmpty ? "Drag to capture an area. Esc cancels." : "Drag to capture an area. Space picks a window. Esc cancels."
+            }
         case (.area, .recording): text = "Drag to choose the area to record. Return starts, Esc cancels."
         case (.window, .screenshot): text = "Click a window to capture it. Space switches to area. Esc cancels."
         case (.window, .recording): text = "Click a window to record it. Esc cancels."
@@ -590,6 +599,10 @@ final class OverlayView: NSView {
         drag = nil
         if wasNew, let s = selection, s.width < 4 || s.height < 4 {
             selection = nil
+        }
+        if wasNew, capturesOnRelease, selection != nil {
+            confirm()
+            // Still here only if the capture waits on a fresh freeze after a desktop switch.
         }
         updateButtons()
         needsDisplay = true
