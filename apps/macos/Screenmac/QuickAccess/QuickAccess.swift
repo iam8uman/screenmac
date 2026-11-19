@@ -24,48 +24,48 @@ final class QuickAccessModel: ObservableObject {
     @Published var cards: [Card] = []
     @Published var corner: QuickAccessCorner = .bottomRight
     @Published var feedback: [UUID: String] = [:]
-    /// Collapsed, older captures sit as a deck behind the newest one. Hovering the deck fans
-    /// every capture out into a grid that grows away from the corner.
+    /// Collapsed, older captures sit as a deck behind the newest one. Hovering the deck opens
+    /// every capture as one column along the screen edge, scrollable when it's taller than the screen.
     @Published var expanded = false
-    /// How many cards fit in one column of the expanded grid on the current screen.
-    @Published var rows = 4
+    /// The tallest the scrolling column may be on the current screen, padding included.
+    @Published var maxScrollHeight: CGFloat = 600
 }
 
 /// Pure layout math for the Quick Access stack, shared by the panel sizing and the SwiftUI view.
 enum QuickAccessLayout {
     static let card = CGSize(width: 232, height: 158)
     static let spacing: CGFloat = 10
+    /// Room around the cards for their shadows, inside the scroll view so nothing gets clipped.
     static let padding: CGFloat = 12
-    static let headerHeight: CGFloat = 30
+    static let headerHeight: CGFloat = 24
     /// How far each card behind the front one peeks out of the deck.
     static let deckStep: CGFloat = 7
     static let deckDepth = 2
+
+    static var panelWidth: CGFloat { card.width + 2 * padding }
+    /// The header and the gap between it and the column.
+    static var headerBlock: CGFloat { padding + headerHeight }
 
     static func deckPeek(count: Int) -> CGFloat {
         CGFloat(min(max(count - 1, 0), deckDepth)) * deckStep
     }
 
-    static func columns(count: Int, rows: Int) -> Int {
-        max(1, Int((Double(count) / Double(max(rows, 1))).rounded(.up)))
+    /// Height of the cards themselves: the deck, or the full column.
+    static func listHeight(count: Int, expanded: Bool) -> CGFloat {
+        let n = max(count, 1)
+        guard expanded, n > 1 else { return card.height + deckPeek(count: n) }
+        return CGFloat(n) * card.height + CGFloat(n - 1) * spacing
     }
 
-    /// Content size, without the padding around it.
-    static func contentSize(count: Int, rows: Int, expanded: Bool) -> CGSize {
-        guard expanded, count > 1 else {
-            return CGSize(width: card.width, height: card.height + deckPeek(count: count))
-        }
-        let usedRows = min(count, max(rows, 1))
-        let cols = columns(count: count, rows: usedRows)
-        return CGSize(
-            width: CGFloat(cols) * card.width + CGFloat(cols - 1) * spacing,
-            height: headerHeight + spacing + CGFloat(usedRows) * card.height + CGFloat(usedRows - 1) * spacing
-        )
+    /// Height of the scroll view's frame, padding included, capped to what the screen allows.
+    static func scrollHeight(count: Int, expanded: Bool, max maxHeight: CGFloat) -> CGFloat {
+        let full = listHeight(count: count, expanded: expanded) + 2 * padding
+        return expanded && count > 1 ? min(full, maxHeight) : full
     }
 
-    /// Rows that fit in a column of the given height.
-    static func rowsThatFit(height: CGFloat) -> Int {
-        let usable = height - 2 * padding - headerHeight - spacing + spacing
-        return max(1, Int(usable / (card.height + spacing)))
+    static func panelHeight(count: Int, expanded: Bool, maxScroll: CGFloat) -> CGFloat {
+        let scroll = scrollHeight(count: count, expanded: expanded, max: maxScroll)
+        return expanded && count > 1 ? headerBlock + scroll : scroll
     }
 }
 
@@ -73,7 +73,7 @@ enum QuickAccessLayout {
 /// It never takes keyboard focus away from the app you're working in.
 @MainActor
 final class QuickAccessController {
-    static let maxCards = 16
+    static let maxCards = 30
 
     private let model = QuickAccessModel()
     private var panel: NSPanel?
@@ -225,17 +225,13 @@ final class QuickAccessController {
         let area = screen.visibleFrame
         let pad = QuickAccessLayout.padding
 
-        // Rows: as many as fit the screen height; columns: as many as the width allows.
-        var rows = QuickAccessLayout.rowsThatFit(height: area.height - 2 * margin + 2 * pad)
-        let maxCols = max(1, Int((area.width - 2 * margin + QuickAccessLayout.spacing) / (QuickAccessLayout.card.width + QuickAccessLayout.spacing)))
-        let count = max(1, model.cards.count)
-        if QuickAccessLayout.columns(count: count, rows: rows) > maxCols {
-            rows = Int((Double(count) / Double(maxCols)).rounded(.up))
-        }
-        if model.rows != rows { model.rows = rows }
+        // The panel may run from margin to margin along the screen's height; the column scrolls past that.
+        let maxPanel = area.height - 2 * margin + 2 * pad
+        let maxScroll = max(QuickAccessLayout.card.height + 2 * pad, maxPanel - QuickAccessLayout.headerBlock)
+        if model.maxScrollHeight != maxScroll { model.maxScrollHeight = maxScroll }
 
-        let content = QuickAccessLayout.contentSize(count: count, rows: rows, expanded: expanded ?? model.expanded)
-        let size = CGSize(width: content.width + 2 * pad, height: content.height + 2 * pad)
+        let height = QuickAccessLayout.panelHeight(count: model.cards.count, expanded: expanded ?? model.expanded, maxScroll: maxScroll)
+        let size = CGSize(width: QuickAccessLayout.panelWidth, height: height)
         let x: CGFloat
         let y: CGFloat
         switch model.corner {
@@ -267,110 +263,108 @@ private struct QuickAccessStack: View {
         case .topLeft: .topLeading
         }
     }
-    private var showsGrid: Bool { model.expanded && model.cards.count > 1 }
+    /// The newest card sits at the corner; older ones run away from it, toward the far edge.
+    private var listAlignment: Alignment { isBottom ? .bottom : .top }
+    private var showsColumn: Bool { model.expanded && model.cards.count > 1 }
 
     var body: some View {
         let count = model.cards.count
-        let content = QuickAccessLayout.contentSize(count: count, rows: model.rows, expanded: showsGrid)
+        let scrollHeight = QuickAccessLayout.scrollHeight(count: count, expanded: showsColumn, max: model.maxScrollHeight)
 
-        ZStack(alignment: cornerAlignment) {
-            header
-                .offset(y: headerOffset(count: count))
-                .opacity(showsGrid ? 1 : 0)
-                .allowsHitTesting(showsGrid)
+        VStack(spacing: 0) {
+            if showsColumn && isBottom { header.padding(.top, QuickAccessLayout.padding).transition(.opacity) }
+            ScrollView(.vertical, showsIndicators: showsColumn) {
+                cards(count: count)
+                    .padding(QuickAccessLayout.padding)
+            }
+            .scrollDisabled(!showsColumn)
+            // Open at the corner end, so the newest capture stays under the pointer; scroll for older ones.
+            .defaultScrollAnchor(isBottom ? .bottom : .top)
+            .frame(width: QuickAccessLayout.panelWidth, height: scrollHeight)
+            if showsColumn && !isBottom { header.padding(.bottom, QuickAccessLayout.padding).transition(.opacity) }
+        }
+        .onHover { controller.setStackHovering($0) }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: cornerAlignment)
+        .animation(QuickAccessController.spring, value: model.cards)
+        .animation(QuickAccessController.spring, value: model.expanded)
+    }
 
+    private func cards(count: Int) -> some View {
+        ZStack(alignment: listAlignment) {
             ForEach(Array(model.cards.enumerated()), id: \.element.id) { index, card in
                 let placement = placement(index: index)
                 QuickAccessCard(
                     card: card,
                     feedback: model.feedback[card.id],
                     controller: controller,
-                    badge: !showsGrid && index == 0 && count > 1 ? count : nil
+                    badge: !showsColumn && index == 0 && count > 1 ? count : nil
                 )
                 .scaleEffect(placement.scale, anchor: isBottom ? .top : .bottom)
                 .brightness(placement.dim)
                 .opacity(placement.opacity)
-                .offset(placement.offset)
+                .offset(y: placement.offset)
                 .zIndex(Double(-index))
-                .allowsHitTesting(showsGrid || index == 0)
+                .allowsHitTesting(showsColumn || index == 0)
                 .transition(.asymmetric(
                     insertion: .move(edge: isLeading ? .leading : .trailing).combined(with: .opacity),
                     removal: .opacity.combined(with: .scale(scale: 0.92))
                 ))
             }
         }
-        .frame(width: content.width, height: content.height, alignment: cornerAlignment)
-        .onHover { controller.setStackHovering($0) }
-        .padding(QuickAccessLayout.padding)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: cornerAlignment)
-        .animation(QuickAccessController.spring, value: model.cards)
-        .animation(QuickAccessController.spring, value: model.expanded)
+        .frame(
+            width: QuickAccessLayout.card.width,
+            height: QuickAccessLayout.listHeight(count: count, expanded: showsColumn),
+            alignment: listAlignment
+        )
     }
 
     private struct Placement {
-        var offset: CGSize
+        var offset: CGFloat
         var scale: CGFloat = 1
         var opacity: Double = 1
         var dim: Double = 0
     }
 
-    /// Where card `index` sits: in the deck behind the newest one, or in its grid cell.
+    /// Where card `index` sits: in the deck behind the newest one, or in its slot in the column.
     private func placement(index: Int) -> Placement {
-        let card = QuickAccessLayout.card
-        let spacing = QuickAccessLayout.spacing
-        let vertical: CGFloat = isBottom ? -1 : 1
-        let horizontal: CGFloat = isLeading ? 1 : -1
-        if showsGrid {
-            let rows = max(1, min(model.rows, model.cards.count))
-            let row = index % rows
-            let col = index / rows
-            return Placement(offset: CGSize(
-                width: horizontal * CGFloat(col) * (card.width + spacing),
-                height: vertical * CGFloat(row) * (card.height + spacing)
-            ))
+        let direction: CGFloat = isBottom ? -1 : 1
+        if showsColumn {
+            return Placement(offset: direction * CGFloat(index) * (QuickAccessLayout.card.height + QuickAccessLayout.spacing))
         }
         let depth = min(index, QuickAccessLayout.deckDepth)
         return Placement(
-            offset: CGSize(width: 0, height: vertical * CGFloat(depth) * QuickAccessLayout.deckStep),
+            offset: direction * CGFloat(depth) * QuickAccessLayout.deckStep,
             scale: 1 - CGFloat(depth) * 0.05,
             opacity: index > QuickAccessLayout.deckDepth ? 0 : 1,
             dim: -Double(depth) * 0.12
         )
     }
 
-    /// The header sits past the far edge of the grid, on the corner's side.
-    private func headerOffset(count: Int) -> CGFloat {
-        let rows = max(1, min(model.rows, count))
-        let card = QuickAccessLayout.card
-        let distance = CGFloat(rows) * (card.height + QuickAccessLayout.spacing)
-        return (isBottom ? -1 : 1) * distance
-    }
-
     private var header: some View {
         HStack(spacing: 8) {
-            if !isLeading { Spacer(minLength: 0) }
             Text(model.cards.count == 1 ? "1 capture" : "\(model.cards.count) captures")
                 .font(.system(size: 11.5, weight: .semibold))
                 .monospacedDigit()
                 .padding(.horizontal, 10)
-                .frame(height: 24)
+                .frame(height: QuickAccessLayout.headerHeight)
                 .background(.ultraThinMaterial, in: Capsule())
+            Spacer(minLength: 0)
             Button {
                 controller.dismissAll()
             } label: {
                 Label("Close All", systemImage: "xmark")
                     .font(.system(size: 11.5, weight: .semibold))
                     .padding(.horizontal, 10)
-                    .frame(height: 24)
+                    .frame(height: QuickAccessLayout.headerHeight)
                     .background(.ultraThinMaterial, in: Capsule())
             }
             .buttonStyle(.plain)
             .help("Dismiss every capture")
-            if isLeading { Spacer(minLength: 0) }
         }
         .foregroundStyle(.white)
         .environment(\.colorScheme, .dark)
-        .frame(width: QuickAccessLayout.card.width, height: QuickAccessLayout.headerHeight, alignment: isBottom ? .bottom : .top)
+        .padding(.horizontal, QuickAccessLayout.padding)
+        .frame(width: QuickAccessLayout.panelWidth, height: QuickAccessLayout.headerHeight)
         .shadow(color: .black.opacity(0.25), radius: 6, y: 3)
     }
 }
