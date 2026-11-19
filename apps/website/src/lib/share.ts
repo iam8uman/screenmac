@@ -3,7 +3,7 @@ import { product } from "@/lib/product";
 
 export const shareTitle = `${product.name}: free screenshot and screen recording app for Mac`;
 export const shareDescription =
-  "Capture an area, a window or the whole screen, mark it up, hide what's private, and share it in seconds. Native, free, no account.";
+  "Take screenshots and record your screen with audio. Mark it up, hide what's private, and share it in seconds. Native, free, no account.";
 
 /**
  * Link-preview tags shared by every page. The image itself comes from app/opengraph-image.png.

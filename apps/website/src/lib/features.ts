@@ -37,12 +37,23 @@ export const FEATURE_GROUPS: FeatureGroup[] = [
     title: "Capture",
     summary: "One shortcut, then drag. Screenmac picks the right display and keeps Retina detail.",
     features: [
-      { id: "area", name: "Area capture", detail: "Crosshair selection you can nudge and resize before you confirm.", status: "building" },
+      { id: "area", name: "Area capture", detail: "Drag across what you need. It's captured the moment you let go.", status: "building" },
       { id: "window", name: "Window capture", detail: "Hover to highlight a window, click to capture it alone.", status: "building" },
       { id: "fullscreen", name: "Full screen", detail: "The display under your pointer, at native resolution.", status: "building" },
       { id: "hotkeys", name: "Global shortcuts", detail: "Configurable, and checked against the shortcuts macOS already uses.", status: "building" },
-      { id: "recording", name: "Screen recording", detail: "Display, area, or window to MP4, with microphone if you allow it.", status: "building" },
+      { id: "timer", name: "Self-timer", detail: "Wait 3, 5, or 10 seconds first, so menus and tooltips can be open.", status: "building" },
       { id: "scrolling", name: "Scrolling capture", detail: "Long pages stitched into one image, for apps we've tested.", status: "planned" },
+    ],
+  },
+  {
+    id: "record",
+    title: "Record",
+    summary: "The same shortcuts and preview, for when it takes a video to show.",
+    features: [
+      { id: "recording", name: "Screen recording", detail: "A display, an area, or a single window, saved as MP4 at 30 or 60 fps.", status: "building" },
+      { id: "mic", name: "Microphone", detail: "Talk over the recording, from whichever microphone you pick.", status: "building" },
+      { id: "system-audio", name: "System audio", detail: "Sound from your Mac on its own track, separate from the microphone.", status: "building" },
+      { id: "pause", name: "Pause and resume", detail: "A small recording bar to pause, resume, and stop. Paused time is left out.", status: "building" },
     ],
   },
   {

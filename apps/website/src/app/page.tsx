@@ -1,3 +1,4 @@
+import { Capabilities } from "@/components/landing/Capabilities";
 import { Comparison } from "@/components/landing/Comparison";
 import { FAQ } from "@/components/landing/FAQ";
 import { FeaturesSection } from "@/components/landing/Features";
@@ -26,6 +27,7 @@ export default function HomePage() {
         <FooterInstall />
       </div>
       <Install />
+      <Capabilities />
       <HowItWorks />
       <FeaturesSection />
       <Privacy />

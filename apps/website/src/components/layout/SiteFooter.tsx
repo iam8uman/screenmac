@@ -83,7 +83,7 @@ export function SiteFooter() {
       </div>
       <div className="border-t border-line">
         <div className="mx-auto max-w-[75rem] px-4 py-10 md:px-6">
-          <h2 className="text-sm font-medium text-ink">From the same maker</h2>
+          <h2 className="text-sm font-medium text-ink">From the same creator</h2>
           <ul className="mt-4 grid gap-3 sm:grid-cols-3">
             {maker.map((app) => (
               <li key={app.href}>

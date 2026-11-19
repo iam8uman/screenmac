@@ -58,7 +58,7 @@ export function Hero() {
         </div>
 
         <p className="sm-rise mt-12 max-w-xl text-[1.0625rem] leading-relaxed text-ink-muted [animation-delay:80ms] md:mt-14 md:text-lg">
-          Capture an area, a window or a whole display, mark it up, hide what&apos;s private, and share it in seconds.
+          Take screenshots and record your screen. Mark it up, hide what&apos;s private, and share it in seconds.
         </p>
 
         <div className="sm-rise mt-8 flex flex-col items-center gap-3 [animation-delay:140ms] sm:flex-row sm:gap-2">
@@ -90,7 +90,7 @@ export function Hero() {
         </ul>
 
         <p className="sm-rise mt-5 inline-flex flex-wrap items-center justify-center gap-x-2 gap-y-1.5 rounded-2xl bg-accent-soft/60 px-4 py-2 text-[12.5px] font-medium text-ink-faint ring-1 ring-inset ring-accent/15 [animation-delay:240ms] sm:rounded-full">
-          From the maker of
+          From the creator of
           {makerApps.map((app, i) => (
             <span key={app.name} className="inline-flex items-center gap-2">
               {i > 0 ? <span aria-hidden="true">&amp;</span> : null}

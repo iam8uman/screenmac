@@ -11,7 +11,7 @@ export const product = {
   tagline: "Capture anything. Make it clear. Share it instantly.",
   headline: "Your screen, captured beautifully.",
   description:
-    "A native Mac app for screenshots and screen recordings. Capture an area, a window, or a whole display, mark it up, hide what's private, and share it in seconds.",
+    "A native Mac app for screenshots and screen recordings. Capture or record an area, a window, or a whole display, mark it up, hide what's private, and share it in seconds.",
   minimumMacOS: "14",
   email: "hello@screenmac.app",
   /** Built and published by .github/workflows/ci.yml on every new version pushed to main. */
